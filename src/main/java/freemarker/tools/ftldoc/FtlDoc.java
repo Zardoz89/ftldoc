@@ -56,16 +56,31 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.Writer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.Stack;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jcmdline.CmdLineHandler;
-import jcmdline.FileParam;
-import jcmdline.HelpCmdLineHandler;
-import jcmdline.Parameter;
-import freemarker.cache.*;
-import freemarker.core.*;
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.FileTemplateLoader;
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
+import freemarker.core.Comment;
+import freemarker.core.Macro;
+import freemarker.core.TemplateElement;
+import freemarker.core.TextBlock;
 import freemarker.template.Configuration;
 import freemarker.template.SimpleHash;
 import freemarker.template.SimpleSequence;
@@ -145,69 +160,10 @@ public class FtlDoc {
         
     }
     
-    public static void main(String[] args) {
-        // parse command line args
-        FileParam outDirParam = new FileParam("d","output directory",FileParam.NO_ATTRIBUTES, FileParam.REQUIRED);
-        FileParam altTplParam = new FileParam("tpl","alternative templates to use", FileParam.NO_ATTRIBUTES, FileParam.OPTIONAL);
-        FileParam filesArg =
-            new FileParam("file",
-                          "the templates",FileParam.NO_ATTRIBUTES,
-                          FileParam.REQUIRED,
-                          FileParam.MULTI_VALUED);
-        CmdLineHandler cl = new HelpCmdLineHandler("ftldoc help","ftldoc","generates ftldocs",
-                                                   new Parameter[]{outDirParam, altTplParam},
-                                                   new Parameter[]{filesArg});
-        cl.parse(args);
-        File outDir = outDirParam.getFile();
-        
-        // collect all files
-        List files = new ArrayList();
-        Iterator iter = filesArg.getFiles().iterator();
-        while (iter.hasNext())
-        {
-            Object element = iter.next();
-            File f = (File)element;
-            if(!f.exists()) continue;
-            if(f.isFile()) {
-                files.add(f);
-            } else {
-                Object[] tmp = f.listFiles(FTL_FILENAME_FILTER);
-                for(int i=0;i<tmp.length;i++) {
-                    files.add(tmp[i]);
-                }
-            }
-        }
-        
-        // create output directory
-        if(!outDir.exists()) {
-            if(!outDir.mkdirs()) {
-                System.err.println("Cannot create directory " + outDir.getAbsolutePath());
-                return;
-            };
-        }
-        
-        File altTpl = null;
-        if (altTplParam.isSet()) {
-            altTpl = altTplParam.getFile();
-            if (altTpl.isDirectory() && altTpl.canRead()) {
-                // Ensure all the required templates are there
-                for (Templates t: Templates.values()) {
-                    File f = new File(altTpl, t.fileName());
-                    if (! f.canRead()) {
-                        System.err.println("Required template '" + f.getAbsolutePath() + "' not found.");
-                        return;
-                    }
-                }
-                System.out.println("Using set of alternative templates from '" + altTpl.getAbsolutePath() + "'");
-            } else {
-                System.err.println("Invalid alternate templates folder '"+altTpl.getAbsolutePath()+"'");
-                return;
-            }
-        }
-        
-        FtlDoc ftl = new FtlDoc(files, outDir, altTpl);
-        ftl.run();
-    }
+//    public static void process(File outDir, File altTpl ) {
+//        FtlDoc ftl = new FtlDoc(files, outDir, altTpl);
+//        ftl.run();
+//    }
     
     
     private void addCategory(String name) {

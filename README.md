@@ -4,30 +4,44 @@ Generates HTML documentation for FTL templates and macros.
 
 * Original author: [chaquotay](https://github.com/chaquotay/ftldoc)
 * Improvements: [nguillaumin](https://github.com/nguillaumin/ftldoc)
-
-[![Build Status](https://travis-ci.org/nguillaumin/ftldoc.svg)](https://travis-ci.org/nguillaumin/ftldoc)
+* Changed to a maven plugin: [msheppard](https://github.com/msheppard/ftldoc)
 
 ## Usage
 
-    Usage: java -jar ftldoc.jar <options> file,file...
+You'll need to run `mvn install` on this project to install the plugin locally (or deploy it to your local nexus), and then add something like the following to the pom.xml for the project in which you want it to generate documentation.
 
-where:
+```
+...
+    <build>
+        <plugins>
+...
+            <plugin>
+                <groupId>freemarker</groupId>
+                <artifactId>ftldoc-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-documentation</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generate-documentation</goal>
+                        </goals>
+                        <configuration>
+                            <freemarkerFiles>
+                                <freemarkerFile>${project.build.directory}/src/main/resources/example1.ftl</freemarkerFile>
+                                <freemarkerFile>${project.build.directory}/src/main/resources/example2.ftl</freemarkerFile>
+                            </freemarkerFiles>
+                            <templateDirectory>${project.basedir}/src/main/resources/templates</templateDirectory>
+                            <outputDirectory>${project.build.directory}/documentation</outputDirectory>
+                         </configuration>
+                     </execution>
+                 </executions>
+             </plugin>
+...
+        </plugins>
+    </build>
+...
 
-* file = the templates (required)
-
-and options are:
-
-* -?     prints usage to stdout; exits (optional)
-* -d <f> output directory (required)
-* -h     prints usage to stdout; exits (optional)
-* -help  displays verbose help information (optional)
-* -tpl <f> alternative templates to use (optional)
-
-## Maven dependencies
-
-You'll need to install `jcmdline-1.0.1.jar` manually (Provided under `lib/` and available from [here](http://jcmdline.sourceforge.net/)):
-
-`mvn install:install-file -Dfile=lib/jcmdline-1.0.1.jar -DgroupId=jcmdline -DartifactId=jcmdline -Dversion=1.0.1 -Dpackaging=jar`
+```
 
 ## Comment syntax
 
