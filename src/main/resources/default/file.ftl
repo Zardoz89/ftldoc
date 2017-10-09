@@ -123,6 +123,9 @@ function setTitle() {
         </code></dt>
         <dd>
             <br>
+	    <#if macro.@deprecated??> 
+                <@printDeprecated/>
+            </#if>
             <#if macro.comment?has_content>
                 ${macro.comment}<br><br>
             </#if>
@@ -168,6 +171,10 @@ function setTitle() {
 <dt><b>${label}</b></dt>
 <dd>${value}</dd>
 </#if>
+</#macro>
+
+<#macro printDeprecated>
+    <dt>⚠ Deprecated</dt>
 </#macro>
 
 <#macro signature macro>
