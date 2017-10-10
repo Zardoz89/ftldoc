@@ -43,6 +43,18 @@ You'll need to run `mvn install` on this project to install the plugin locally (
 
 ```
 
+### Usage as CLI
+
+(WIP)
+
+Example:
+```
+mvn freemarker:ftldoc-maven-plugin:0.0.2-SNAPSHOT:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
+```
+
+templateDirectory not should be necesary, but on my small test, I need to add it and point to a folder with a valid template files
+
+
 ## Comment syntax
 
 The comments to process must start with a `<#---` tag (3 dashes). This is to mimic the Javadoc behaviour where a `/*` is a standard comment, but `/**` is a Javadoc comment.
