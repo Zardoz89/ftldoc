@@ -1,10 +1,8 @@
 package freemarker.tools.ftldoc;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
@@ -15,7 +13,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Mojo(name = "generate-documentation")
 public class FtlDocMojo extends AbstractMojo {
 
-    @Parameter( property = "outputDirectory", required=true)
+    @Parameter( property = "outputDirectory", required=true, defaultValue ="${project.build.directory}/ftldocs")
     private File outputDirectory;
 
     @Parameter( property = "templateDirectory")
