@@ -55,6 +55,7 @@ package freemarker.tools.ftldoc;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
+import java.io.Serializable;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,6 +73,8 @@ import java.util.Stack;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.tree.TreeNode;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -101,7 +104,7 @@ public class FtlDoc {
             { return name.endsWith(EXT_FTL); }
     };
     
-    private static final Comparator MACRO_COMPARATOR = new Comparator() {
+    private static final Comparator<Map> MACRO_COMPARATOR = new Comparator() {
         public int compare(Object o1, Object o2) {
             return ((Map)o1).get("name").toString().toLowerCase().compareTo(((Map)o2).get("name").toString().toLowerCase());
         }
@@ -126,22 +129,22 @@ public class FtlDoc {
         }
     }
 
-    private SortedMap allCategories = null;
-    private SortedMap categories = null;
-    private List allMacros = null;
-    private List macros = null;
+    private SortedMap<String, List> allCategories = null;
+    private SortedMap<String, List> categories = null;
+    private List<Map<String, Object>> allMacros = null;
+    private List<Map<String, Object>> macros = null;
     private File fOutDir;
     private List fFiles;
-    private List fParsedFiles;
-    private Set fAllDirectories;
+    private List<SimpleHash> fParsedFiles;
+    private Set<File> fAllDirectories;
     private File fAltTemplatesFolder;
     
-    List regions = new LinkedList();
+    List<CategoryRegion> regions = new LinkedList<CategoryRegion>();
     
     private Configuration cfg = null;
     
     
-    public FtlDoc(List files, File outputDir, File altTemplatesFolder) {
+    public FtlDoc(List<File> files, File outputDir, File altTemplatesFolder) {
         cfg = new Configuration();
         cfg.setWhitespaceStripping(false);
         
@@ -150,7 +153,7 @@ public class FtlDoc {
         fAltTemplatesFolder = altTemplatesFolder;
         
         // extracting parent directories of all files
-        fAllDirectories = new HashSet();
+        fAllDirectories = new HashSet<File>();
         Iterator iter = files.iterator();
         while (iter.hasNext())
         {
@@ -176,10 +179,10 @@ public class FtlDoc {
     }
     
     private void createCategoryRegions(Template t) {
-        regions = new LinkedList();
+        regions = new LinkedList<CategoryRegion>();
         
         TemplateElement te = t.getRootTreeNode();
-        Map pc;
+        Map<String, Serializable> pc;
         Comment c;
         Comment regionStart = null;
         
@@ -187,7 +190,7 @@ public class FtlDoc {
         int begincol = 0;
         int beginline = 0;
         
-        Stack nodes = new Stack();
+        Stack<TreeNode> nodes = new Stack<TreeNode>();
         nodes.push(te);
         while(!nodes.isEmpty()) {
             te=(TemplateElement)nodes.pop();
@@ -235,20 +238,20 @@ public class FtlDoc {
         }
     }
     
-    private void addMacro(Map macro) {
+    private void addMacro(Map<String, Object> macro) {
         macros.add(macro);
         allMacros.add(macro);
         String key = (String)macro.get("category");
         if(key==null) key = "";
-        List cat = (List)categories.get(key);
+        List<Map<String, Object>> cat = categories.get(key);
         if(cat==null) {
-            cat = new ArrayList();
+            cat = new ArrayList<Map<String, Object>>();
             categories.put(key,cat);
         }
         cat.add(macro);
-        List allCat = (List)allCategories.get(key);
+        List<Map<String, Object>> allCat = allCategories.get(key);
         if(allCat==null) {
-            allCat = new ArrayList();
+            allCat = new ArrayList<Map<String, Object>>();
             allCategories.put(key,allCat);
         }
         allCat.add(macro);
@@ -260,12 +263,12 @@ public class FtlDoc {
             System.out.println("Generating " + htmlFile.getCanonicalFile() + "...");
             
             Template t_out = cfg.getTemplate(Templates.file.fileName());
-            categories = new TreeMap();
+            categories = new TreeMap<String, List>();
             TemplateElement te = null;
             Comment globalComment = null;
             Template t = cfg.getTemplate(file.getName());
-            macros = new ArrayList();
-            Set comments = new HashSet();
+            macros = new ArrayList<Map<String, Object>>();
+            Set<Comment> comments = new HashSet<Comment>();
             Map ms = t.getMacros();
             
             createCategoryRegions(t);
@@ -318,7 +321,7 @@ public class FtlDoc {
             
             Collections.sort(macros, MACRO_COMPARATOR);
             List l;
-            Iterator iter = categories.values().iterator();
+            Iterator<List> iter = categories.values().iterator();
             while (iter.hasNext())
             {
                 Object element = iter.next();
@@ -359,9 +362,9 @@ public class FtlDoc {
         {
             
             // init global collections
-            allCategories = new TreeMap();
-            allMacros = new ArrayList();
-            fParsedFiles = new ArrayList();
+            allCategories = new TreeMap<String, List>();
+            allMacros = new ArrayList<Map<String, Object>>();
+            fParsedFiles = new ArrayList<SimpleHash>();
             
             
             TemplateLoader[] loaders = new TemplateLoader[fAllDirectories.size()+1];
@@ -376,8 +379,8 @@ public class FtlDoc {
             
             // add loader for every directory
             int i = 1;
-            for (Iterator it = fAllDirectories.iterator(); it.hasNext(); i++) {
-                loaders[i] = new FileTemplateLoader((File) it.next());
+            for (Iterator<File> it = fAllDirectories.iterator(); it.hasNext(); i++) {
+                loaders[i] = new FileTemplateLoader(it.next());
             }
             
             TemplateLoader loader = new MultiTemplateLoader(loaders);
@@ -393,7 +396,7 @@ public class FtlDoc {
             
             // sort categories
             List l;
-            Iterator iter = allCategories.values().iterator();
+            Iterator<List> iter = allCategories.values().iterator();
             while (iter.hasNext())
             {
                 Object element = iter.next();
@@ -482,7 +485,7 @@ public class FtlDoc {
             try
             {
                 Template template = cfg.getTemplate(Templates.overview.fileName());
-                Map root = new HashMap();
+                Map<String, List> root = new HashMap<String, List>();
                 root.put("files",fParsedFiles);
                 template.process(root,out);
                 
@@ -527,8 +530,8 @@ public class FtlDoc {
         catch (java.io.IOException e) {}
     }
     
-    private Map createCommentedMacro(Macro macro, Comment comment, File file) {
-        Map result = new HashMap();
+    private Map<String, Object> createCommentedMacro(Macro macro, Comment comment, File file) {
+        Map<String, Object> result = new HashMap<String, Object>();
         if( macro == null ) {
             throw new IllegalArgumentException("macro == null");
         }
@@ -552,8 +555,8 @@ public class FtlDoc {
         return result;
     }
     
-    private Map parse(Comment comment) {
-        Map result = new HashMap();
+    private Map<String, Serializable> parse(Comment comment) {
+        Map<String, Serializable> result = new HashMap<String, Serializable>();
         
         
         // always return a hash, even if doesn't have any content
@@ -612,10 +615,10 @@ public class FtlDoc {
     }
     
     private CategoryRegion findCategory(TemplateElement te) {
-        Iterator iter = regions.iterator();
+        Iterator<CategoryRegion> iter = regions.iterator();
         while (iter.hasNext())
         {
-            CategoryRegion cc = (CategoryRegion)iter.next();
+            CategoryRegion cc = iter.next();
             if(cc.contains(te)) return cc;
         }
         return null;
