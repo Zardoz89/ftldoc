@@ -53,10 +53,10 @@
 package freemarker.tools.ftldoc;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
-import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -99,14 +99,11 @@ public class FtlDoc {
     
     private static final String EXT_FTL = ".ftl";
     
-    private static final FilenameFilter FTL_FILENAME_FILTER = new FilenameFilter() {
-        public boolean accept(File dir, String name)
-            { return name.endsWith(EXT_FTL); }
-    };
-    
-    private static final Comparator<Map> MACRO_COMPARATOR = new Comparator() {
-        public int compare(Object o1, Object o2) {
-            return ((Map)o1).get("name").toString().toLowerCase().compareTo(((Map)o2).get("name").toString().toLowerCase());
+    private static final Comparator<Map<String, Object>> MACRO_COMPARATOR = new Comparator<Map<String, Object>>() {
+        @Override
+        public int compare(Map<String, Object> lhs, Map<String, Object> rhs) {
+            return lhs.get("name").toString().toLowerCase()
+                    .compareTo(rhs.get("name").toString().toLowerCase());
         }
     };
 
@@ -129,12 +126,12 @@ public class FtlDoc {
         }
     }
 
-    private SortedMap<String, List> allCategories = null;
-    private SortedMap<String, List> categories = null;
+    private SortedMap<String, List<Map<String, Object>>> allCategories = null;
+    private SortedMap<String, List<Map<String, Object>>> categories = null;
     private List<Map<String, Object>> allMacros = null;
     private List<Map<String, Object>> macros = null;
     private File fOutDir;
-    private List fFiles;
+    private List<File> fFiles;
     private List<SimpleHash> fParsedFiles;
     private Set<File> fAllDirectories;
     private File fAltTemplatesFolder;
@@ -163,18 +160,12 @@ public class FtlDoc {
         
     }
     
-//    public static void process(File outDir, File altTpl ) {
-//        FtlDoc ftl = new FtlDoc(files, outDir, altTpl);
-//        ftl.run();
-//    }
-    
-    
     private void addCategory(String name) {
         if(!categories.containsKey(name)) {
-            categories.put(name,new ArrayList());
+            categories.put(name,new ArrayList<Map<String, Object>>());
         }
         if(!allCategories.containsKey(name)) {
-            allCategories.put(name,new ArrayList());
+            allCategories.put(name,new ArrayList<Map<String, Object>>());
         }
     }
     
@@ -263,7 +254,7 @@ public class FtlDoc {
             System.out.println("Generating " + htmlFile.getCanonicalFile() + "...");
             
             Template t_out = cfg.getTemplate(Templates.file.fileName());
-            categories = new TreeMap<String, List>();
+            categories = new TreeMap<String, List<Map<String, Object>>>();
             TemplateElement te = null;
             Comment globalComment = null;
             Template t = cfg.getTemplate(file.getName());
@@ -320,18 +311,9 @@ public class FtlDoc {
             }
             
             Collections.sort(macros, MACRO_COMPARATOR);
-            List l;
-            Iterator<List> iter = categories.values().iterator();
-            while (iter.hasNext())
-            {
-                Object element = iter.next();
-                l = (List)element;
-                Collections.sort(l,MACRO_COMPARATOR);
+            for (List<Map<String, Object>> l : categories.values()) {
+                Collections.sort(l, MACRO_COMPARATOR);
             }
-            
-            
-            
-            
             
             SimpleHash root = new SimpleHash();
             root.put("macros",macros);
@@ -342,10 +324,12 @@ public class FtlDoc {
             }
             root.put("filename",t.getName());
             root.put("categories",categories);
-            FileWriter fw = new FileWriter(htmlFile);
-            t_out.process(root,fw);
-            fw.flush();
-            fw.close();
+            
+            try (OutputStreamWriter outputStream = new OutputStreamWriter (
+                    new FileOutputStream (htmlFile), Charset.forName("UTF-8").newEncoder()))
+            {
+                t_out.process(root, outputStream);
+            }
             fParsedFiles.add(root);
         } catch (Exception e) {
             e.printStackTrace();
@@ -362,7 +346,7 @@ public class FtlDoc {
         {
             
             // init global collections
-            allCategories = new TreeMap<String, List>();
+            allCategories = new TreeMap<String, List<Map<String, Object>>>();
             allMacros = new ArrayList<Map<String, Object>>();
             fParsedFiles = new ArrayList<SimpleHash>();
             
@@ -395,13 +379,8 @@ public class FtlDoc {
             }
             
             // sort categories
-            List l;
-            Iterator<List> iter = allCategories.values().iterator();
-            while (iter.hasNext())
-            {
-                Object element = iter.next();
-                l = (List)element;
-                Collections.sort(l,MACRO_COMPARATOR);
+            for (List<Map<String, Object>> l : allCategories.values()) {
+                Collections.sort(l, MACRO_COMPARATOR);
             }
             
             // create the rest
@@ -416,118 +395,69 @@ public class FtlDoc {
     }
     
     private void createIndexPage() {
-        try
+        File indexFile = new File(fOutDir,"index.html");
+        try (OutputStreamWriter outputStream = new OutputStreamWriter (
+                    new FileOutputStream (indexFile), Charset.forName("UTF-8").newEncoder()))
         {
-            Writer out = new FileWriter(new File(fOutDir,"index.html"));
-            try
-            {
-                
-                Template template = cfg.getTemplate(Templates.index.fileName());
-                template.process(null,out);
-                
-            }
-            catch (java.io.IOException e) {}
-            catch (freemarker.template.TemplateException e) {}
-            
-            out.flush();
-            out.close();
-        }
-        catch (java.io.IOException e) {}
+            Template template = cfg.getTemplate(Templates.index.fileName());
+            template.process(null, outputStream);
+        } catch (java.io.IOException | freemarker.template.TemplateException ex) {}
     }
     
     private void createAllCatPage() {
-        try
+        File categoryFile = new File(fOutDir,"index-all-cat.html");
+        try (OutputStreamWriter outputStream = new OutputStreamWriter (
+                    new FileOutputStream (categoryFile), Charset.forName("UTF-8").newEncoder()))
         {
-            Writer out = new FileWriter(new File(fOutDir,"index-all-cat.html"));
-            try
-            {
-                SimpleHash root = new SimpleHash();
-                root.put("categories", allCategories);
-                Template template = cfg.getTemplate(Templates.indexAllCat.fileName());
-                template.process(root,out);
-                
-            }
-            catch (java.io.IOException e) {}
-            catch (freemarker.template.TemplateException e) {}
-            
-            out.flush();
-            out.close();
-        }
-        catch (java.io.IOException e) {}
+            SimpleHash root = new SimpleHash();
+            root.put("categories", allCategories);
+            Template template = cfg.getTemplate(Templates.indexAllCat.fileName());
+            template.process(root, outputStream);
+        } catch (java.io.IOException | freemarker.template.TemplateException ex) {}
     }
     
     private void createAllAlphaPage() {
-        try
+        File allAlphaFile = new File(fOutDir,"index-all-alpha.html");
+        try (OutputStreamWriter outputStream = new OutputStreamWriter (
+                    new FileOutputStream (allAlphaFile), Charset.forName("UTF-8").newEncoder()))
         {
-            Writer out = new FileWriter(new File(fOutDir,"index-all-alpha.html"));
-            try
-            {
-                SimpleHash root = new SimpleHash();
-                Collections.sort(allMacros, MACRO_COMPARATOR);
-                root.put("macros", allMacros);
-                Template template = cfg.getTemplate(Templates.indexAllAlpha.fileName());
-                template.process(root,out);
-                
-            }
-            catch (java.io.IOException e) {}
-            catch (freemarker.template.TemplateException e) {}
-            
-            out.flush();
-            out.close();
-        }
-        catch (java.io.IOException e) {}
+            SimpleHash root = new SimpleHash();
+            Collections.sort(allMacros, MACRO_COMPARATOR);
+            root.put("macros", allMacros);
+            Template template = cfg.getTemplate(Templates.indexAllAlpha.fileName());
+            template.process(root, outputStream);
+        } catch (java.io.IOException | freemarker.template.TemplateException ex) {}
     }
     
     private void createOverviewPage() {
-        try
+        File overviewFile = new File(fOutDir,"overview.html");
+        try (OutputStreamWriter outputStream = new OutputStreamWriter (
+                    new FileOutputStream (overviewFile), Charset.forName("UTF-8").newEncoder()))
         {
-            Writer out = new FileWriter(new File(fOutDir,"overview.html"));
-            try
-            {
-                Template template = cfg.getTemplate(Templates.overview.fileName());
-                Map<String, List> root = new HashMap<String, List>();
-                root.put("files",fParsedFiles);
-                template.process(root,out);
-                
-            }
-            catch (java.io.IOException e) {}
-            catch (freemarker.template.TemplateException e) {}
-            
-            out.flush();
-            out.close();
-        }
-        catch (java.io.IOException e) {}
+            Template template = cfg.getTemplate(Templates.overview.fileName());
+            Map<String, List> root = new HashMap<String, List>();
+            root.put("files",fParsedFiles);
+            template.process(root, outputStream);
+        } catch (java.io.IOException | freemarker.template.TemplateException ex) {}
     }
     
     private void createFileListPage(String suffix) {
-        try
-        {
-            Writer out = new FileWriter(new File(fOutDir,"files.html"));
-            
-            
-            Collections.sort(fFiles,
-                             new Comparator() {
-                        public int compare(Object o1, Object o2) {
-                            return ((File)o1).getName().compareTo(((File)o2).getName());
-                        }
-                    });
-            
-            try
-            {
-                SimpleHash root = new SimpleHash();
-                root.put("suffix",suffix);
-                root.put("files",fFiles);
-                Template template = cfg.getTemplate(Templates.filelist.fileName());
-                template.process(root,out);
-                
+        Collections.sort(fFiles, new Comparator<File>() {
+            public int compare(File lhs, File rhs) {
+                return lhs.getName().compareTo(rhs.getName());
             }
-            catch (java.io.IOException e) {}
-            catch (freemarker.template.TemplateException e) {}
-            
-            out.flush();
-            out.close();
-        }
-        catch (java.io.IOException e) {}
+        });
+        
+        File filelistFile = new File(fOutDir,"files.html");
+        try (OutputStreamWriter outputStream = new OutputStreamWriter (
+                    new FileOutputStream (filelistFile), Charset.forName("UTF-8").newEncoder()))
+        {
+            SimpleHash root = new SimpleHash();
+            root.put("suffix",suffix);
+            root.put("files",fFiles);
+            Template template = cfg.getTemplate(Templates.filelist.fileName());
+            template.process(root, outputStream);
+        } catch (java.io.IOException | freemarker.template.TemplateException ex) {}
     }
     
     private Map<String, Object> createCommentedMacro(Macro macro, Comment comment, File file) {
@@ -626,7 +556,7 @@ public class FtlDoc {
     
     private class CategoryRegion{
         
-        String name;        
+        String name;
         int begincol;
         int beginline;
         int endcol;
