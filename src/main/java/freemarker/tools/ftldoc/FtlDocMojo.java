@@ -13,7 +13,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 @Mojo(name = "generate-documentation")
 public class FtlDocMojo extends AbstractMojo {
 
-    @Parameter( property = "outputDirectory", required=true, defaultValue ="${project.build.directory}/ftldocs")
+    @Parameter( property = "outputDirectory", defaultValue ="${project.build.directory}/ftldocs")
     private File outputDirectory;
 
     @Parameter( property = "templateDirectory")
@@ -22,7 +22,7 @@ public class FtlDocMojo extends AbstractMojo {
     @Parameter( property = "freemarkerFiles", required=true)
     private File[] freemarkerFiles;
 
-    @Parameter( property = "freemarkerFileExtesion")
+    @Parameter( property = "freemarkerFileExtesion", defaultValue ="ftl")
     private String freemarkerFileExtension;
 
     public void execute() throws MojoExecutionException {
