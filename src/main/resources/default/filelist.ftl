@@ -1,4 +1,7 @@
 <html>
+<head>
+    <meta charset="${.output_encoding}" />
+</head>
 <body>
 <h3>Macro Libraries</h3>
 <#list files as file>

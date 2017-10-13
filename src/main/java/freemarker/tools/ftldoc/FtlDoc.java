@@ -88,6 +88,7 @@ import freemarker.template.Configuration;
 import freemarker.template.SimpleHash;
 import freemarker.template.SimpleSequence;
 import freemarker.template.Template;
+import freemarker.template.Version;
 
 
 /**
@@ -98,6 +99,7 @@ import freemarker.template.Template;
 public class FtlDoc {
     
     private static final String EXT_FTL = ".ftl";
+    private static final String OUTPUT_ENCODING = "UTF-8";
     
     private static final Comparator<Map<String, Object>> MACRO_COMPARATOR = new Comparator<Map<String, Object>>() {
         @Override
@@ -142,8 +144,9 @@ public class FtlDoc {
     
     
     public FtlDoc(List<File> files, File outputDir, File altTemplatesFolder) {
-        cfg = new Configuration();
+        cfg = new Configuration(Configuration.VERSION_2_3_26); // TODO parametrice version compatibility
         cfg.setWhitespaceStripping(false);
+        cfg.setOutputEncoding(OUTPUT_ENCODING);
         
         fOutDir = outputDir;
         fFiles = files;
@@ -151,10 +154,7 @@ public class FtlDoc {
         
         // extracting parent directories of all files
         fAllDirectories = new HashSet<File>();
-        Iterator iter = files.iterator();
-        while (iter.hasNext())
-        {
-            File f = (File)iter.next();
+        for (File f : files) {
             fAllDirectories.add(f.getParentFile());
         }
         
@@ -326,7 +326,7 @@ public class FtlDoc {
             root.put("categories",categories);
             
             try (OutputStreamWriter outputStream = new OutputStreamWriter (
-                    new FileOutputStream (htmlFile), Charset.forName("UTF-8").newEncoder()))
+                    new FileOutputStream (htmlFile), Charset.forName(OUTPUT_ENCODING).newEncoder()))
             {
                 t_out.process(root, outputStream);
             }
@@ -342,9 +342,7 @@ public class FtlDoc {
      */
     public void run() {
      
-        try
-        {
-            
+        try {
             // init global collections
             allCategories = new TreeMap<String, List<Map<String, Object>>>();
             allMacros = new ArrayList<Map<String, Object>>();
@@ -397,7 +395,7 @@ public class FtlDoc {
     private void createIndexPage() {
         File indexFile = new File(fOutDir,"index.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter (
-                    new FileOutputStream (indexFile), Charset.forName("UTF-8").newEncoder()))
+                    new FileOutputStream (indexFile), Charset.forName(OUTPUT_ENCODING).newEncoder()))
         {
             Template template = cfg.getTemplate(Templates.index.fileName());
             template.process(null, outputStream);
@@ -407,7 +405,7 @@ public class FtlDoc {
     private void createAllCatPage() {
         File categoryFile = new File(fOutDir,"index-all-cat.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter (
-                    new FileOutputStream (categoryFile), Charset.forName("UTF-8").newEncoder()))
+                    new FileOutputStream (categoryFile), Charset.forName(OUTPUT_ENCODING).newEncoder()))
         {
             SimpleHash root = new SimpleHash();
             root.put("categories", allCategories);
@@ -419,7 +417,7 @@ public class FtlDoc {
     private void createAllAlphaPage() {
         File allAlphaFile = new File(fOutDir,"index-all-alpha.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter (
-                    new FileOutputStream (allAlphaFile), Charset.forName("UTF-8").newEncoder()))
+                    new FileOutputStream (allAlphaFile), Charset.forName(OUTPUT_ENCODING).newEncoder()))
         {
             SimpleHash root = new SimpleHash();
             Collections.sort(allMacros, MACRO_COMPARATOR);
@@ -432,7 +430,7 @@ public class FtlDoc {
     private void createOverviewPage() {
         File overviewFile = new File(fOutDir,"overview.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter (
-                    new FileOutputStream (overviewFile), Charset.forName("UTF-8").newEncoder()))
+                    new FileOutputStream (overviewFile), Charset.forName(OUTPUT_ENCODING).newEncoder()))
         {
             Template template = cfg.getTemplate(Templates.overview.fileName());
             Map<String, List> root = new HashMap<String, List>();
@@ -450,7 +448,7 @@ public class FtlDoc {
         
         File filelistFile = new File(fOutDir,"files.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter (
-                    new FileOutputStream (filelistFile), Charset.forName("UTF-8").newEncoder()))
+                    new FileOutputStream (filelistFile), Charset.forName(OUTPUT_ENCODING).newEncoder()))
         {
             SimpleHash root = new SimpleHash();
             root.put("suffix",suffix);

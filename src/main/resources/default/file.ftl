@@ -2,60 +2,58 @@
 
 <html>
 <head>
-<title>
-ftldoc
-</title>
-<link rel="stylesheet" type="text/css" href="eclipse.css" />
-<style>
-table {
-    width: 100%;
-}
-td {
-    background-color: White;
-}
-td.heading {
-    padding: 3px;
-    font-weight: bold;
-    font-size: 18px;
-    background-color: #CCCCFF;
-}
-td.category {
-    padding: 3px;
-    font-weight: bold;
-    font-size: 14px;
-    background-color: #DDDDFF;
-}
-div.sourcecode {
-    display: none;
-    border : 1px solid Black;
-    background-color : #DDDDDD; /* #E8E8E8; */
-    padding : 3px;
-    margin-top : 8px;
-}
+    <meta charset="${.output_encoding}" />
+    <title>ftldoc</title>
+    <link rel="stylesheet" type="text/css" href="eclipse.css" />
+    <style>
+        table {
+            width: 100%;
+        }
+        td {
+            background-color: White;
+        }
+        td.heading {
+            padding: 3px;
+            font-weight: bold;
+            font-size: 18px;
+            background-color: #CCCCFF;
+        }
+        td.category {
+            padding: 3px;
+            font-weight: bold;
+            font-size: 14px;
+            background-color: #DDDDFF;
+        }
+        div.sourcecode {
+            display: none;
+            border : 1px solid Black;
+            background-color : #DDDDDD; /* #E8E8E8; */
+            padding : 3px;
+            margin-top : 8px;
+        }
 
 
-span {font-family:Courier; font-size:12px}
-span.directive {color:blue}
-span.userdirective {color:red}
-span.interpolation {color:green}
-span.textblock {color:black}
-span.comment {color:brown}
+        span {font-family:Courier; font-size:12px}
+        span.directive {color:blue}
+        span.userdirective {color:red}
+        span.interpolation {color:green}
+        span.textblock {color:black}
+        span.comment {color:brown}
+    </style>
+    <script language="javascript">
+        function toggle(id) {
+            elem = document.getElementById(id);
+            if(elem.style.display=="block") {
+                elem.style.display="none";
+            } else {
+                elem.style.display="block";
+            }
+        }
 
-</style>
-<script language="javascript">
-function toggle(id) {
-    elem = document.getElementById(id);
-    if(elem.style.display=="block") {
-        elem.style.display="none";
-    } else {
-        elem.style.display="block";
-    }
-}
-
-function setTitle() {
-	parent.document.title="${filename}";
-}
-</script>
+        function setTitle() {
+            parent.document.title="${filename}";
+        }
+    </script>
 </head>
 <body onLoad="setTitle();">
 <#include "nav.ftl">
@@ -123,7 +121,7 @@ function setTitle() {
         </code></dt>
         <dd>
             <br>
-	    <#if macro.@deprecated??>
+        <#if macro.@deprecated??>
                 <@printDeprecated macro.@deprecated/>
             </#if>
             <#if macro.comment?has_content>
@@ -147,34 +145,34 @@ function setTitle() {
 </html>
 
 <#macro printParameters macro>
-<#if macro.@param?has_content>
-<dt><b>Parameters</b></dt>
-<dd>
-<#list macro.@param as param>
-<code>${param.name}</code> - ${param.description}<br>
-</#list>
-</dd>
-</#if>
+    <#if macro.@param?has_content>
+        <dt><b>Parameters</b></dt>
+        <dd>
+            <#list macro.@param as param>
+                <code>${param.name}</code> - ${param.description}<br>
+            </#list>
+        </dd>
+    </#if>
 </#macro>
 
 <#macro printSourceCode macro>
-<dt><a href="javascript:toggle('sc_${macro.name}');">Source Code</a></dt>
-<dd>
-<div class="sourcecode" id="sc_${macro.name}">
-<@ftl.print root=macro.node/>
-</div>
-</dd>
+    <dt><a href="javascript:toggle('sc_${macro.name}');">Source Code</a></dt>
+    <dd>
+        <div class="sourcecode" id="sc_${macro.name}">
+            <@ftl.print root=macro.node/>
+        </div>
+    </dd>
 </#macro>
 
 <#macro printOptional value label>
-<#if value?has_content>
-<dt><b>${label}</b></dt>
-<dd>${value}</dd>
-</#if>
+    <#if value?has_content>
+        <dt><b>${label}</b></dt>
+        <dd>${value}</dd>
+    </#if>
 </#macro>
 
 <#macro printDeprecated reason>
-    <dt>⚠ Deprecated<#if reason?? && reason?trim?length != 0>: ${reason}</#if>
+    <dt>&#9888; Deprecated<#if reason?? && reason?trim?length != 0>: ${reason}</#if>
     </dt><br />
 </#macro>
 
