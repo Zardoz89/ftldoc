@@ -67,6 +67,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.Stack;
@@ -492,7 +493,7 @@ public class FtlDoc {
             return result;
         }
         
-        SimpleSequence params = new SimpleSequence();
+        Map<String, String> paramsCache = new HashMap<>();
         
         Matcher m;
         // remove leading hyphen (last hyphen of '<#---')
@@ -502,24 +503,36 @@ public class FtlDoc {
         String[] lines = LINESPLIT_PATTERN.split(fixedComment);
         String line;
 
+        String lastParamName = "";
         for(int i = 0;i<lines.length;i++) {
             line = lines[i];
             if ((m = PARAM_PATTERN.matcher(line)).matches()) {
-                SimpleHash param = new SimpleHash();
-                param.put("name",m.group(1));
-                param.put("description",m.group(2));
-                params.add(param);
+                lastParamName = m.group(1);
+                paramsCache.put(lastParamName, m.group(2));
+                
             } else if((m = AT_PATTERN.matcher(line)).matches()) {
                 result.put(m.group(1),m.group(2));
+                
             } else if ((m = TEXT_PATTERN.matcher(line)).matches()) {
+                String text;
                 if (line.matches("^\\s+.*$")) {
                     // Line started with spaces, collapse them
                     // in a single one
-                    bufText.append(" " + m.group(1));
+                    text = " " + m.group(1);
                 } else {
-                    bufText.append(m.group(1));
+                    text = m.group(1);
                 }
-                bufText.append("\n");
+                text += "\n";
+                if (lastParamName.length() > 0) {
+                    // We are on a @param block. Append text to it.
+                    String paramDescription = paramsCache.get(lastParamName);
+                    paramDescription += text;
+                    paramsCache.put(lastParamName, paramDescription);
+                
+                } else {
+                    bufText.append(text);
+                }
+                
             } else {
                 // one can prove (with some automat theory) that the
                 // TEXT_PATTERN regex matches *every* string. Under normal
@@ -528,6 +541,14 @@ public class FtlDoc {
             }
         }
         String text = bufText.toString().replaceAll("\n","");
+        
+        SimpleSequence params = new SimpleSequence();
+        for (Entry<String, String> paramEntry : paramsCache.entrySet()) {
+            SimpleHash param = new SimpleHash();
+            param.put("name", paramEntry.getKey());
+            param.put("description", paramEntry.getValue());
+            params.add(param);
+        }
         
         result.put("@param",params);
         result.put("comment",text);
@@ -583,5 +604,4 @@ public class FtlDoc {
             return name;
         }
     }
-    
 }
