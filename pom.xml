@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kstruct</groupId>
     <artifactId>ftldoc-maven-plugin</artifactId>
@@ -86,7 +85,8 @@
         <connection>scm:git:git://github.com/mattsheppard/ftldoc.git</connection>
         <developerConnection>scm:git:ssh://github.com:mattsheppard/ftldoc.git</developerConnection>
         <url>http://github.com/mattsheppard/ftldoc/tree/master</url>
-    </scm>
+      <tag>ftldoc-maven-plugin-0.0.2</tag>
+  </scm>
 
     <distributionManagement>
         <snapshotRepository>

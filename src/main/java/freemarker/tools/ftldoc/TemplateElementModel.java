@@ -10,7 +10,7 @@ import freemarker.core.TemplateElement;
  * An implementation of {@link TemplateNodeModel}.
  * It's able to wrap {@link TemplateElement}-s. 
  *
- * @author Stephan Mueller <stephan at chaquotay dot net>
+ * @author Stephan Mueller - stephan at chaquotay dot net
  * @version $Id: TemplateElementModel.java,v 1.1 2003/08/27 12:49:20 stephanmueller Exp $
  */
 
@@ -85,7 +85,7 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
     /**
      * @return   a boolean
      *
-     * @throws   TemplateModelException
+     * @throws   TemplateModelException TODO - under what circumstances?
      *
      */
     public boolean isEmpty() throws TemplateModelException
@@ -99,7 +99,7 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
      *
      * @return   a TemplateModel
      *
-     * @throws   TemplateModelException
+     * @throws   TemplateModelException TODO - under what circumstances?
      *
      */
     public TemplateModel get(String p0) throws TemplateModelException
@@ -119,7 +119,7 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
      *
      * @return   a TemplateModel
      *
-     * @throws   TemplateModelException
+     * @throws   TemplateModelException TODO - under what circumstances?
      *
      */
     public TemplateModel get(int p0) throws TemplateModelException
@@ -130,7 +130,7 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
     /**
      * @return   an int
      *
-     * @throws   TemplateModelException
+     * @throws   TemplateModelException TODO - under what circumstances?
      *
      */
     public int size() throws TemplateModelException
@@ -141,7 +141,7 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
     /**
      * return   a TemplateNodeModel
      *
-     * @throws   TemplateModelException
+     * @throws   TemplateModelException TODO - under what circumstances?
      *
      */
     public TemplateNodeModel getParentNode() throws TemplateModelException
@@ -152,7 +152,7 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
     /**
      * @return   a String
      *
-     * @throws   TemplateModelException
+     * @throws   TemplateModelException TODO - under what circumstances?
      *
      */
     public String getNodeName() throws TemplateModelException
@@ -186,7 +186,7 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
     /**
      * @return   a String
      *
-     * @throws   TemplateModelException
+     * @throws   TemplateModelException TODO - under what circumstances?
      *
      */
     public String getNodeType() throws TemplateModelException
@@ -200,7 +200,7 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
      * 
      * @return   null
      *
-     * @throws   TemplateModelException
+     * @throws   TemplateModelException TODO - under what circumstances?
      *
      */
     public String getNodeNamespace() throws TemplateModelException
@@ -211,7 +211,7 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
     /**
      * @return   a TemplateSequenceModel
      *
-     * @throws   TemplateModelException
+     * @throws   TemplateModelException TODO - under what circumstances?
      *
      */
     public TemplateSequenceModel getChildNodes() throws TemplateModelException

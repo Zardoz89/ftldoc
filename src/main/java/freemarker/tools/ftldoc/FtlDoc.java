@@ -43,7 +43,7 @@ import freemarker.template.Version;
 /**
  * Main ftldoc class (includes command line tool).
  * 
- * @author Stephan Mueller <stephan at chaquotay dot net>
+ * @author Stephan Mueller - stephan at chaquotay dot net
  */
 public class FtlDoc {
     
