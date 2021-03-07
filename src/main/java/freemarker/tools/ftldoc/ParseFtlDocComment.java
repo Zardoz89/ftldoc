@@ -5,7 +5,7 @@ package freemarker.tools.ftldoc;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -28,19 +28,23 @@ class ParseFtlDocComment
     // @param {TypeExpresion} arg Description
     // @param {TypeExpresion} [arg=defVal] Description
     // @param [arg] Description
-    private static final Pattern JSDOC_PARAM_PATTERN =
-        Pattern
-            .compile("^\\s*(?:--)?\\s*@param\\s*(\\{[a-zA-Z0-9_|<>]*\\})?\\s*([a-zA-Z0-9_=\\[\\]\\-]*)(?:\\s|-)*(.*)$");
+    private static final Pattern JSDOC_PARAM_PATTERN = Pattern.compile(
+        "^\\s*(?:--)?\\s*@param\\s*(\\{[a-zA-Z0-9_,|<>]*\\})?\\s*([a-zA-Z0-9_=\\[\\]\\-\"\"]*)(?:\\s|-)*(.*)$");
     // Regex that detects a "@param XXXX YYYY", where group 1 is XXXX and group 2 it's YYYY
     private static final Pattern PARAM_PATTERN = Pattern.compile("^\\s*(?:--)?\\s*@param\\s*(\\w*)\\s*(.*)$");
     // Regex that detects a "@XXXX YYYY", where group 1 is XXXX and group 2 it's YYYY
     private static final Pattern AT_PATTERN = Pattern.compile("^\\s*(?:--)?\\s*(@\\w+)\\s*(.*)$");
     // Regex that detects a text line
     private static final Pattern TEXT_PATTERN = Pattern.compile("^\\s*(?:--)?(.*)$");
+    // Regex that extracts data from a optional argument
+    private static final Pattern OPTIONAL_PATTERN = Pattern.compile("\\[[a-zA-Z0-9_\\-]*(?:=([a-zA-Z0-9_\"\"])*)?\\]");
 
     private static final String PARAM_KEYWORD = "@param";
-    private static final String DESCRIPTION = "description";
     private static final String NAME = "name";
+    private static final String TYPE = "type";
+    private static final String OPTIONAL = "optional";
+    private static final String DEFAULT_VALUE = "def_val";
+    private static final String DESCRIPTION = "description";
     private static final String SHORT_COMMENT = "short_comment";
     private static final String COMMENT = "comment";
 
@@ -58,8 +62,8 @@ class ParseFtlDocComment
             return Collections.emptyMap();
         }
 
-        Map<String, Serializable> result = new HashMap<>();
-        Map<String, String> paramsCache = new HashMap<>();
+        Map<String, Serializable> result = new LinkedHashMap<>();
+        Map<String, ParamInformation> paramsCache = new LinkedHashMap<>();
 
         Matcher m;
         // remove leading hyphen (last hyphen of '<#---')
@@ -73,16 +77,29 @@ class ParseFtlDocComment
         for (String line2 : lines) {
             line = line2;
             if ((m = JSDOC_PARAM_PATTERN.matcher(line)).matches()) {
-                // TODO Store TypeExpression, if it's optional and the default value
-                lastParamName = m.group(2);
-                lastParamName = StringUtils.removeStart(lastParamName, "[");
-                lastParamName = StringUtils.removeEnd(lastParamName, "]");
-                lastParamName = (StringUtils.split(lastParamName, '='))[0];
-                paramsCache.put(lastParamName, m.group(3));
+                ParamInformation param = new ParamInformation();
+                param.name = m.group(2);
+                param.name = StringUtils.removeStart(param.name, "[");
+                param.name = StringUtils.removeEnd(param.name, "]");
+                param.name = (StringUtils.split(param.name, '='))[0];
+                lastParamName = param.name;
+                param.typeExpression = StringUtils.removeEnd(StringUtils.removeStart(m.group(1), "{"), "}");
+                param.description = m.group(3);
+
+                if ((m = OPTIONAL_PATTERN.matcher(m.group(2))).matches()) {
+                    param.optional = true;
+                    param.defaultValue = m.group(1);
+                }
+
+                paramsCache.put(lastParamName, param);
 
             } else if ((m = PARAM_PATTERN.matcher(line)).matches()) {
-                lastParamName = m.group(1);
-                paramsCache.put(lastParamName, m.group(2));
+                ParamInformation param = new ParamInformation();
+                param.name = m.group(1);
+                lastParamName = param.name;
+                param.description = m.group(2);
+
+                paramsCache.put(lastParamName, param);
 
             } else if ((m = AT_PATTERN.matcher(line)).matches()) {
                 result.put(m.group(1), m.group(2));
@@ -99,9 +116,9 @@ class ParseFtlDocComment
                 text += "\n";
                 if (lastParamName.length() > 0) {
                     // We are on a @param block. Append text to it.
-                    String paramDescription = paramsCache.get(lastParamName);
-                    paramDescription += text;
-                    paramsCache.put(lastParamName, paramDescription);
+                    ParamInformation param = paramsCache.get(lastParamName);
+                    param.description += text;
+                    paramsCache.put(lastParamName, param);
 
                 } else {
                     bufText.append(text);
@@ -117,10 +134,14 @@ class ParseFtlDocComment
         String text = bufText.toString().replaceAll("\n", "");
 
         SimpleSequence params = new SimpleSequence();
-        for (Entry<String, String> paramEntry : paramsCache.entrySet()) {
+        for (Entry<String, ParamInformation> paramEntry : paramsCache.entrySet()) {
             SimpleHash param = new SimpleHash();
+            ParamInformation paramInformation = paramEntry.getValue();
             param.put(NAME, paramEntry.getKey());
-            param.put(DESCRIPTION, paramEntry.getValue());
+            param.put(DESCRIPTION, paramInformation.description);
+            param.put(TYPE, paramInformation.typeExpression);
+            param.put(OPTIONAL, paramInformation.optional);
+            param.put(DEFAULT_VALUE, paramInformation.defaultValue);
             params.add(param);
         }
 
@@ -135,6 +156,15 @@ class ParseFtlDocComment
         }
 
         return result;
+    }
+
+    private static class ParamInformation
+    {
+        String name;
+        String typeExpression;
+        boolean optional = false;
+        String defaultValue;
+        String description;
     }
 
 }

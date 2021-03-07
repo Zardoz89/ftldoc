@@ -1,3 +1,4 @@
+<#ftl encoding="UTF-8" output_format="HTML" />
 <#import "ftl_highlight.ftl" as ftl>
 
 <html>
@@ -149,7 +150,13 @@
         <dt><b>Parameters</b></dt>
         <dd>
             <#list macro.@param as param>
-                <code>${param.name}</code> - ${param.description}<br>
+                <code>${param.name!}</code>
+                <#if param.type?has_content><strong>${param.type!}</strong> </#if>
+                <#if param.optional!false><em>(Optional)</em> </#if>
+                - ${param.description!}<br/>
+                <#if param.def_val?has_content>
+                Default value : ${param.def_val!}<br/>
+                </#if>
             </#list>
         </dd>
     </#if>

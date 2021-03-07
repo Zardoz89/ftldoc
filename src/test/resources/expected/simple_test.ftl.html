@@ -153,7 +153,7 @@
                                     </code>
                                 </dt>
                                 <dd>
-                                     Macro to generate HTML attributes from a hash cintaint <AttributeName : Value> Attribute names are normalized, replacing '_' by '-'
+                                     Macro to generate HTML attributes from a hash cintaint &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;
                                 </dd>
                             </dl>
                         </td>
@@ -216,7 +216,7 @@
                                     </code>
                                 </dt>
                                 <dd>
-                                     Function that emulates C/Java '?' operator
+                                     Function that emulates C/Java &#39;?&#39; operator
                                 </dd>
                             </dl>
                         </td>
@@ -246,7 +246,7 @@
                                     </code>
                                 </dt>
                                 <dd>
-                                     Checks if a String value it's a number
+                                     Checks if a String value it&#39;s a number
                                 </dd>
                             </dl>
                         </td>
@@ -343,7 +343,7 @@
             <br>
         
             
-                 Macro to generate HTML attributes from a hash cintaint <AttributeName : Value> Attribute names are normalized, replacing '_' by '-'<br><br>
+                 Macro to generate HTML attributes from a hash cintaint &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;<br><br>
             
             <dl>
                 
@@ -357,10 +357,18 @@
         <dt><b>Parameters</b></dt>
         <dd>
             
-                <code>exclude</code> - (Optional) A list of attrbute to be ignored 
-<br>
+                <code>vars</code>
+                <strong>Hash</strong> 
+                
+                - Map with pais attribute name - value<br/>
+                
             
-                <code>vars</code> - {Hash} Map with pais attribute name - value<br>
+                <code>exclude</code>
+                
+                <em>(Optional)</em> 
+                - A list of attributes to be ignored 
+<br/>
+                
             
         </dd>
     
@@ -419,8 +427,12 @@
         <dt><b>Parameters</b></dt>
         <dd>
             
-                <code>data</code> - {Hash} Map with pais XXX field - value 
-<br>
+                <code>data</code>
+                <strong>Hash&lt;String,String&gt;</strong> 
+                
+                - Map with pairs XXX field - value 
+<br/>
+                
             
         </dd>
     
@@ -474,7 +486,7 @@
             <br>
         
             
-                 Function that emulates C/Java '?' operator<br><br>
+                 Function that emulates C/Java &#39;?&#39; operator<br><br>
             
             <dl>
                 
@@ -529,7 +541,7 @@
             <br>
         
             
-                 Checks if a String value it's a number<br><br>
+                 Checks if a String value it&#39;s a number<br><br>
             
             <dl>
                 
@@ -601,9 +613,17 @@
         <dt><b>Parameters</b></dt>
         <dd>
             
-                <code>separador</code> - (Optional) Seperator element. By default it's a space (" ")<br>
+                <code>seq</code>
+                
+                
+                - {Sequence} Sequecen to be converted to String<br/>
+                
             
-                <code>seq</code> - {Sequence} Sequecen to be converted to String<br>
+                <code>separador</code>
+                
+                
+                - (Optional) Seperator element. By default it&#39;s a space (&quot; &quot;)<br/>
+                
             
         </dd>
     
@@ -664,9 +684,19 @@
         <dt><b>Parameters</b></dt>
         <dd>
             
-                <code>arrayVar</code> - {String} Variable name that must be a sequence<br>
+                <code>arrayVar</code>
+                <strong>String</strong> 
+                
+                - Variable name that must be a sequence<br/>
+                
             
-                <code>content</code> - (Optinal) Content to be appened to the array pointer by arrayVar<br>
+                <code>content</code>
+                
+                <em>(Optional)</em> 
+                - Content to be appened to the array pointer by arrayVar<br/>
+                
+                Default value : &quot;<br/>
+                
             
         </dd>
     
@@ -728,7 +758,11 @@
         <dt><b>Parameters</b></dt>
         <dd>
             
-                <code>Input</code> - String or Number to be converted to Boolean<br>
+                <code>input</code>
+                <strong>String|Number|Boolean|Object</strong> 
+                
+                - String or Number to be converted to Boolean<br/>
+                
             
         </dd>
     

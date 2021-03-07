@@ -10,8 +10,8 @@
 
 <#---
     Macro that put a value on a array
-    @param arrayVar {String} Variable name that must be a sequence
-    @param content (Optinal) Content to be appened to the array pointer by arrayVar
+    @param {String} arrayVar Variable name that must be a sequence
+    @param [content=""] Content to be appened to the array pointer by arrayVar
 -->
 <#macro putOnArray arrayVar content="">
     <#if content?is_string && content == "">
@@ -35,8 +35,8 @@
 <#---
     Macro to generate HTML attributes from a hash cintaint <AttributeName : Value>
     Attribute names are normalized, replacing '_' by '-'
-    @param vars {Hash} Map with pais attribute name - value
-    @param exclude (Optional) A list of attrbute to be ignored
+    @param {Hash} vars  Map with pais attribute name - value
+    @param [exclude] A list of attributes to be ignored
  -->
 <#macro carry_atribs vars exclude=[]>
     <@compress single_line=true>
@@ -70,7 +70,7 @@
 
 <#---
     Macro to generate data-XXX HTML attributes
-    @param data {Hash} Map with pais XXX field - value
+    @param {Hash<String,String>} data - Map with pairs XXX field - value
  -->
 <#macro data_atribs data={}>
     <#if data?is_hash>
@@ -111,7 +111,7 @@
 
 <#---
     Function that converts a value to a Boolean
-    @param Input String or Number to be converted to Boolean
+    @param {String|Number|Boolean|Object} input String or Number to be converted to Boolean
 -->
 <#function toBool input>
     <#if input?is_boolean>
