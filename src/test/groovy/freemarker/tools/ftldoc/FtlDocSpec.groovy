@@ -10,15 +10,38 @@ import spock.lang.Specification
  */
 class FtlDocSpec extends Specification {
 
-    def "test"() {
-        given:
-        List<File> files = []
-        def ftlDoc = new FtlDoc(files, new File("/tmp/"), null)
+    final temporalFolderString = new File(System.getProperty("java.io.tmpdir"))
+    final outputFolder = new File(temporalFolderString, "/FtlDocSpec/")
 
-        when:
-        System.out.println()
+    def setup() {
+        outputFolder.mkdirs()
+    }
 
-        then:
-        ftlDoc != null
+    def cleanup() {
+        outputFolder.delete()
+    }
+
+    def "Generating output files"() {
+        given: "A simple FTL file with FTLDoc markups"
+        List<File> files = [this.getFileResource("test/simple_test.ftl")]
+        def ftlDoc = new FtlDoc(files, outputFolder, null)
+
+        when: "We run FtlDoc parsing"
+        ftlDoc.run()
+
+        then: "Generates the expected output files on the output folder"
+        def outputFiles = outputFolder.list()
+        outputFiles.contains("index.html")
+        outputFiles.contains("files.html")
+        outputFiles.contains("simple_test.ftl.html")
+        outputFiles.contains("overview.html")
+        outputFiles.contains("index-all-alpha.html")
+        outputFiles.contains("index-all-cat.html")
+
+        (new File(outputFolder, "simple_test.ftl.html")).text == getFileResource("expected/simple_test.ftl.html").text
+    }
+
+    private File getFileResource(path) {
+        return new File(getClass().getClassLoader().getResource(path).toURI())
     }
 }
