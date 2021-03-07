@@ -23,11 +23,19 @@ class ParseFtlDocComment
 {
     private static final Pattern LINESPLIT_PATTERN = Pattern.compile("(\\r\\n)|(\\r)|(\\n)");
 
-    // Regex that detectes a "@param XXXX YYYY", where group 1 is XXXX and group 2 it's YYYY
+    // Regex that detects a JsDoc like @para, where group 1 it's TypeExpression , group 2 it's argument and group 3 is
+    // description. Examples :
+    // @param {TypeExpresion} arg Description
+    // @param {TypeExpresion} [arg=defVal] Description
+    // @param [arg] Description
+    private static final Pattern JSDOC_PARAM_PATTERN =
+        Pattern
+            .compile("^\\s*(?:--)?\\s*@param\\s*(\\{[a-zA-Z0-9_|<>]*\\})?\\s*([a-zA-Z0-9_=\\[\\]\\-]*)(?:\\s|-)*(.*)$");
+    // Regex that detects a "@param XXXX YYYY", where group 1 is XXXX and group 2 it's YYYY
     private static final Pattern PARAM_PATTERN = Pattern.compile("^\\s*(?:--)?\\s*@param\\s*(\\w*)\\s*(.*)$");
-    // Regex that detectes a "@XXXX YYYY", where group 1 is XXXX and group 2 it's YYYY
+    // Regex that detects a "@XXXX YYYY", where group 1 is XXXX and group 2 it's YYYY
     private static final Pattern AT_PATTERN = Pattern.compile("^\\s*(?:--)?\\s*(@\\w+)\\s*(.*)$");
-    // Regex that detectes a text line
+    // Regex that detects a text line
     private static final Pattern TEXT_PATTERN = Pattern.compile("^\\s*(?:--)?(.*)$");
 
     private static final String PARAM_KEYWORD = "@param";
@@ -64,7 +72,15 @@ class ParseFtlDocComment
         String lastParamName = "";
         for (String line2 : lines) {
             line = line2;
-            if ((m = PARAM_PATTERN.matcher(line)).matches()) {
+            if ((m = JSDOC_PARAM_PATTERN.matcher(line)).matches()) {
+                // TODO Store TypeExpression, if it's optional and the default value
+                lastParamName = m.group(2);
+                lastParamName = StringUtils.removeStart(lastParamName, "[");
+                lastParamName = StringUtils.removeEnd(lastParamName, "]");
+                lastParamName = (StringUtils.split(lastParamName, '='))[0];
+                paramsCache.put(lastParamName, m.group(3));
+
+            } else if ((m = PARAM_PATTERN.matcher(line)).matches()) {
                 lastParamName = m.group(1);
                 paramsCache.put(lastParamName, m.group(2));
 

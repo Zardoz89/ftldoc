@@ -49,6 +49,9 @@ class ParseFtlDocCommentSpec extends Specification {
         "@param    arg Description"                                         || "arg"            | "Description"
         "@param arg        Description"                                     || "arg"            | "Description"
         "@param arg2 Ludo ergo sum"                                         || "arg2"           | "Ludo ergo sum"
+        "@param {TypeExp} arg3 - Bla bla bla"                               || "arg3"           | "Bla bla bla"
+        "@param {String|Number} arg3 Bla bla bla"                           || "arg3"           | "Bla bla bla"
+        "@param {Number} [arg=1] Bla bla bla"                               || "arg"            | "Bla bla bla"
     }
 
     @Unroll
