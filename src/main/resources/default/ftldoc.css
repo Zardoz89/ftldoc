@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  color: #4d4e53;
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 0 20px;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+tt,
+code,
+kbd,
+samp {
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  background: #f4f4f4;
+  padding: 1px 5px;
+}
+
+dd {
+  margin: 0.5em 0 1em 0;
+}
+dt {
+  margin: 0;
+}
+
+/* Highlighting code */
+.sourcecode {
+  display: none;
+  padding: 15px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+span.directive {
+  color: blue
+}
+
+span.userdirective {
+  color: red
+}
+
+span.interpolation {
+  color: green
+}
+
+span.textblock {
+  color: black
+}
+
+span.comment {
+  color: brown
+}
+
+
+/* Tables */
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px #0000001a;
+  width: 100%;
+  font-size: 14px;
+  margin: 0;
+}
+
+thead tr,
+thead tr {
+  background-color: #CCCCFF;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+td, th {
+  margin: 0px;
+  text-align: left;
+  vertical-align: top;
+  padding: 10px;
+  display: table-cell;
+}
+
+tr {
+  border-top: 1px solid #eee;
+}
+
+.params td,
+.params .name,
+.name code {
+  color: #4D4E53;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  font-size: 100%;
+}
+
+span.param-type,
+.params td .param-type {
+  color: #606;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+}
+
+td.heading {
+  padding: 3px;
+  font-weight: bold;
+  font-size: 18px;
+  background-color: #CCCCFF;
+}
+
+td.category {
+  padding: 3px;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #DDDDFF;
+}

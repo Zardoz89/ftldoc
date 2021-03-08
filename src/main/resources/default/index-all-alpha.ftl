@@ -1,6 +1,7 @@
 <html>
 <head>
     <meta charset="${.output_encoding}" />
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
     <script language="javascript">
     function setTitle() {
         parent.document.title="ftldoc - Index";

@@ -4,10 +4,12 @@
 package freemarker.tools.ftldoc;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,7 +85,10 @@ class ParseFtlDocComment
                 param.name = StringUtils.removeEnd(param.name, "]");
                 param.name = (StringUtils.split(param.name, '='))[0];
                 lastParamName = param.name;
-                param.typeExpression = StringUtils.removeEnd(StringUtils.removeStart(m.group(1), "{"), "}");
+                param.typeExpressions = Arrays.asList(
+                    StringUtils.split(
+                        StringUtils.removeEnd(StringUtils.removeStart(StringUtils.defaultString(m.group(1)), "{"), "}"),
+                        '|'));
                 param.description = m.group(3);
 
                 if ((m = OPTIONAL_PATTERN.matcher(m.group(2))).matches()) {
@@ -134,15 +139,8 @@ class ParseFtlDocComment
         String text = bufText.toString().replaceAll("\n", "");
 
         SimpleSequence params = new SimpleSequence();
-        for (Entry<String, ParamInformation> paramEntry : paramsCache.entrySet()) {
-            SimpleHash param = new SimpleHash();
-            ParamInformation paramInformation = paramEntry.getValue();
-            param.put(NAME, paramEntry.getKey());
-            param.put(DESCRIPTION, paramInformation.description);
-            param.put(TYPE, paramInformation.typeExpression);
-            param.put(OPTIONAL, paramInformation.optional);
-            param.put(DEFAULT_VALUE, paramInformation.defaultValue);
-            params.add(param);
+        for (ParamInformation param : paramsCache.values()) {
+            params.add(param.toHash());
         }
 
         result.put(PARAM_KEYWORD, params);
@@ -161,10 +159,27 @@ class ParseFtlDocComment
     private static class ParamInformation
     {
         String name;
-        String typeExpression;
+        List<String> typeExpressions = new ArrayList<>();
         boolean optional = false;
         String defaultValue;
         String description;
+
+        SimpleHash toHash()
+        {
+            SimpleHash hash = new SimpleHash();
+            hash.put(NAME, this.name);
+            hash.put(DESCRIPTION, this.description);
+            hash.put(OPTIONAL, this.optional);
+            hash.put(DEFAULT_VALUE, this.defaultValue);
+
+            SimpleSequence typeExpressionsSequence = new SimpleSequence();
+            for (String typeExpression : this.typeExpressions) {
+                typeExpressionsSequence.add(typeExpression);
+            }
+            hash.put(TYPE, typeExpressionsSequence);
+
+            return hash;
+        }
     }
 
 }

@@ -1,46 +1,11 @@
 <#ftl encoding="UTF-8" output_format="HTML" />
 <#import "ftl_highlight.ftl" as ftl>
-
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="${.output_encoding}" />
     <title>ftldoc</title>
-    <link rel="stylesheet" type="text/css" href="eclipse.css" />
-    <style>
-        table {
-            width: 100%;
-        }
-        td {
-            background-color: White;
-        }
-        td.heading {
-            padding: 3px;
-            font-weight: bold;
-            font-size: 18px;
-            background-color: #CCCCFF;
-        }
-        td.category {
-            padding: 3px;
-            font-weight: bold;
-            font-size: 14px;
-            background-color: #DDDDFF;
-        }
-        div.sourcecode {
-            display: none;
-            border : 1px solid Black;
-            background-color : #DDDDDD; /* #E8E8E8; */
-            padding : 3px;
-            margin-top : 8px;
-        }
-
-
-        span {font-family:Courier; font-size:12px}
-        span.directive {color:blue}
-        span.userdirective {color:red}
-        span.interpolation {color:green}
-        span.textblock {color:black}
-        span.comment {color:brown}
-    </style>
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
     <script language="javascript">
         function toggle(id) {
             elem = document.getElementById(id);
@@ -71,7 +36,7 @@
 <#-- end prolog -->
 
 <#-- start summary -->
-<table border="1" cellpadding="4">
+<table>
     <tr><td colspan="2" class="heading">Macro and Function Summary</td></tr>
         <#list categories?keys as category>
             <#if categories[category]?has_content>
@@ -112,7 +77,7 @@
 <br>
 <#-- start details -->
 
-<table border="1" cellpadding="4">
+<table>
     <tr><td colspan="2" class="heading">Macro and Function Detail</td></tr>
 </table>
 <#list macros as macro>
@@ -149,25 +114,48 @@
     <#if macro.@param?has_content>
         <dt><b>Parameters</b></dt>
         <dd>
+        <#if macro.@param?has_content>
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
             <#list macro.@param as param>
-                <code>${param.name!}</code>
-                <#if param.type?has_content><strong>${param.type!}</strong> </#if>
-                <#if param.optional!false><em>(Optional)</em> </#if>
-                - ${param.description!}<br/>
+                <tr>
+                    <td class="name"><code>${param.name!}</code></td>
+                    <td class="type">
+                        <#list param.type as type>
+                            <span class="param-type">${type!}</span>
+                            <#sep>|</#sep>
+                        </#list>
+                    </td>
+                    <td class="description">
+                        <#if param.optional!false><em>(Optional)</em> </#if>
+                        ${param.description!}<br/>
+                    </td>
                 <#if param.def_val?has_content>
                 Default value : ${param.def_val!}<br/>
                 </#if>
+                </tr>
             </#list>
+            </tbody>
+        </table>
+            
+        </#if>
         </dd>
     </#if>
 </#macro>
 
 <#macro printSourceCode macro>
-    <dt><a href="javascript:toggle('sc_${macro.name}');">Source Code</a></dt>
+    <dt><a href="#" onClick="toggle('sc_${macro.name}'); return false;">Source Code</a></dt>
     <dd>
-        <div class="sourcecode" id="sc_${macro.name}">
+        <code class="sourcecode" id="sc_${macro.name}">
             <@ftl.print root=macro.node/>
-        </div>
+        </code>
     </dd>
 </#macro>
 

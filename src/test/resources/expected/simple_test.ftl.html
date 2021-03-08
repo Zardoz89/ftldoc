@@ -1,45 +1,10 @@
 
-
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8" />
     <title>ftldoc</title>
-    <link rel="stylesheet" type="text/css" href="eclipse.css" />
-    <style>
-        table {
-            width: 100%;
-        }
-        td {
-            background-color: White;
-        }
-        td.heading {
-            padding: 3px;
-            font-weight: bold;
-            font-size: 18px;
-            background-color: #CCCCFF;
-        }
-        td.category {
-            padding: 3px;
-            font-weight: bold;
-            font-size: 14px;
-            background-color: #DDDDFF;
-        }
-        div.sourcecode {
-            display: none;
-            border : 1px solid Black;
-            background-color : #DDDDDD; /* #E8E8E8; */
-            padding : 3px;
-            margin-top : 8px;
-        }
-
-
-        span {font-family:Courier; font-size:12px}
-        span.directive {color:blue}
-        span.userdirective {color:red}
-        span.interpolation {color:green}
-        span.textblock {color:black}
-        span.comment {color:brown}
-    </style>
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
     <script language="javascript">
         function toggle(id) {
             elem = document.getElementById(id);
@@ -82,7 +47,7 @@
 
 
 
-<table border="1" cellpadding="4">
+<table>
     <tr><td colspan="2" class="heading">Macro and Function Summary</td></tr>
         
             
@@ -323,7 +288,7 @@
 <br>
 
 
-<table border="1" cellpadding="4">
+<table>
     <tr><td colspan="2" class="heading">Macro and Function Detail</td></tr>
 </table>
 
@@ -356,20 +321,49 @@
     
         <dt><b>Parameters</b></dt>
         <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
             
-                <code>vars</code>
-                <strong>Hash</strong> 
+                <tr>
+                    <td class="name"><code>vars</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">Hash</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Map with pairs of attribute name - value<br/>
+                    </td>
                 
-                - Map with pais attribute name - value<br/>
-                
+                </tr>
             
-                <code>exclude</code>
-                
-                <em>(Optional)</em> 
-                - A list of attributes to be ignored 
+                <tr>
+                    <td class="name"><code>exclude</code></td>
+                    <td class="type">
+                        
+                    </td>
+                    <td class="description">
+                        <em>(Optional)</em> 
+                        A list of attributes to be ignored 
 <br/>
+                    </td>
                 
+                </tr>
             
+            </tbody>
+        </table>
+            
+        
         </dd>
     
 
@@ -380,9 +374,9 @@
     
 
                 
-    <dt><a href="javascript:toggle('sc_carry_atribs');">Source Code</a></dt>
+    <dt><a href="#" onClick="toggle('sc_carry_atribs'); return false;">Source Code</a></dt>
     <dd>
-        <div class="sourcecode" id="sc_carry_atribs">
+        <code class="sourcecode" id="sc_carry_atribs">
             
 
 
@@ -391,7 +385,7 @@
 
 
 
-        </div>
+        </code>
     </dd>
 
             </dl>
@@ -426,14 +420,37 @@
     
         <dt><b>Parameters</b></dt>
         <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
             
-                <code>data</code>
-                <strong>Hash&lt;String,String&gt;</strong> 
-                
-                - Map with pairs XXX field - value 
+                <tr>
+                    <td class="name"><code>data</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">Hash&lt;String,String&gt;</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Map with pairs of XXX field - value 
 <br/>
+                    </td>
                 
+                </tr>
             
+            </tbody>
+        </table>
+            
+        
         </dd>
     
 
@@ -444,9 +461,9 @@
     
 
                 
-    <dt><a href="javascript:toggle('sc_data_atribs');">Source Code</a></dt>
+    <dt><a href="#" onClick="toggle('sc_data_atribs'); return false;">Source Code</a></dt>
     <dd>
-        <div class="sourcecode" id="sc_data_atribs">
+        <code class="sourcecode" id="sc_data_atribs">
             
 
 
@@ -455,7 +472,7 @@
 
 
 
-        </div>
+        </code>
     </dd>
 
             </dl>
@@ -505,9 +522,9 @@
     
 
                 
-    <dt><a href="javascript:toggle('sc_iif');">Source Code</a></dt>
+    <dt><a href="#" onClick="toggle('sc_iif'); return false;">Source Code</a></dt>
     <dd>
-        <div class="sourcecode" id="sc_iif">
+        <code class="sourcecode" id="sc_iif">
             
 
 
@@ -516,7 +533,7 @@
 
 
 
-        </div>
+        </code>
     </dd>
 
             </dl>
@@ -560,9 +577,9 @@
     
 
                 
-    <dt><a href="javascript:toggle('sc_isStringNumber');">Source Code</a></dt>
+    <dt><a href="#" onClick="toggle('sc_isStringNumber'); return false;">Source Code</a></dt>
     <dd>
-        <div class="sourcecode" id="sc_isStringNumber">
+        <code class="sourcecode" id="sc_isStringNumber">
             
 
 
@@ -571,7 +588,7 @@
 
 
 
-        </div>
+        </code>
     </dd>
 
             </dl>
@@ -612,19 +629,45 @@
     
         <dt><b>Parameters</b></dt>
         <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
             
-                <code>seq</code>
+                <tr>
+                    <td class="name"><code>seq</code></td>
+                    <td class="type">
+                        
+                    </td>
+                    <td class="description">
+                        
+                        {Sequence} Sequecen to be converted to String<br/>
+                    </td>
                 
-                
-                - {Sequence} Sequecen to be converted to String<br/>
-                
+                </tr>
             
-                <code>separador</code>
+                <tr>
+                    <td class="name"><code>separador</code></td>
+                    <td class="type">
+                        
+                    </td>
+                    <td class="description">
+                        
+                        (Optional) Seperator element. By default it&#39;s a space (&quot; &quot;)<br/>
+                    </td>
                 
-                
-                - (Optional) Seperator element. By default it&#39;s a space (&quot; &quot;)<br/>
-                
+                </tr>
             
+            </tbody>
+        </table>
+            
+        
         </dd>
     
 
@@ -635,9 +678,9 @@
     
 
                 
-    <dt><a href="javascript:toggle('sc_join');">Source Code</a></dt>
+    <dt><a href="#" onClick="toggle('sc_join'); return false;">Source Code</a></dt>
     <dd>
-        <div class="sourcecode" id="sc_join">
+        <code class="sourcecode" id="sc_join">
             
 
 
@@ -646,7 +689,7 @@
 
 
 
-        </div>
+        </code>
     </dd>
 
             </dl>
@@ -683,21 +726,50 @@
     
         <dt><b>Parameters</b></dt>
         <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
             
-                <code>arrayVar</code>
-                <strong>String</strong> 
+                <tr>
+                    <td class="name"><code>arrayVar</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Variable name that must be a sequence<br/>
+                    </td>
                 
-                - Variable name that must be a sequence<br/>
-                
+                </tr>
             
-                <code>content</code>
-                
-                <em>(Optional)</em> 
-                - Content to be appened to the array pointer by arrayVar<br/>
+                <tr>
+                    <td class="name"><code>content</code></td>
+                    <td class="type">
+                        
+                    </td>
+                    <td class="description">
+                        <em>(Optional)</em> 
+                        Content to be appened to the array pointer by arrayVar<br/>
+                    </td>
                 
                 Default value : &quot;<br/>
                 
+                </tr>
             
+            </tbody>
+        </table>
+            
+        
         </dd>
     
 
@@ -708,9 +780,9 @@
     
 
                 
-    <dt><a href="javascript:toggle('sc_putOnArray');">Source Code</a></dt>
+    <dt><a href="#" onClick="toggle('sc_putOnArray'); return false;">Source Code</a></dt>
     <dd>
-        <div class="sourcecode" id="sc_putOnArray">
+        <code class="sourcecode" id="sc_putOnArray">
             
 
 
@@ -719,7 +791,7 @@
 
 
 
-        </div>
+        </code>
     </dd>
 
             </dl>
@@ -757,13 +829,45 @@
     
         <dt><b>Parameters</b></dt>
         <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
             
-                <code>input</code>
-                <strong>String|Number|Boolean|Object</strong> 
+                <tr>
+                    <td class="name"><code>input</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            |
+                        
+                            <span class="param-type">Number</span>
+                            |
+                        
+                            <span class="param-type">Boolean</span>
+                            |
+                        
+                            <span class="param-type">Object</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        String or Number to be converted to Boolean<br/>
+                    </td>
                 
-                - String or Number to be converted to Boolean<br/>
-                
+                </tr>
             
+            </tbody>
+        </table>
+            
+        
         </dd>
     
 
@@ -772,11 +876,14 @@
 
                 
     
+        <dt><b>Return value</b></dt>
+        <dd>Boolean value being true or false</dd>
+    
 
                 
-    <dt><a href="javascript:toggle('sc_toBool');">Source Code</a></dt>
+    <dt><a href="#" onClick="toggle('sc_toBool'); return false;">Source Code</a></dt>
     <dd>
-        <div class="sourcecode" id="sc_toBool">
+        <code class="sourcecode" id="sc_toBool">
             
 
 
@@ -785,7 +892,7 @@
 
 
 
-        </div>
+        </code>
     </dd>
 
             </dl>

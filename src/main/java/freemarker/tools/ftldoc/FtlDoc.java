@@ -2,6 +2,9 @@ package freemarker.tools.ftldoc;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.nio.charset.Charset;
@@ -21,6 +24,9 @@ import java.util.Stack;
 import java.util.TreeMap;
 
 import javax.swing.tree.TreeNode;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -313,6 +319,7 @@ public class FtlDoc
             this.createAllCatPage();
             this.createAllAlphaPage();
             this.createOverviewPage();
+            this.copyCssFiles();
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -367,6 +374,28 @@ public class FtlDoc
             root.put("files", this.fParsedFiles);
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
+        }
+    }
+
+    private void copyCssFiles()
+        throws IOException
+    {
+        if (this.fAltTemplatesFolder != null) {
+            File[] cssfiles = this.fAltTemplatesFolder.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name)
+                {
+                    return StringUtils.endsWithIgnoreCase(name, ".css");
+                }
+            });
+            for (File cssFile : cssfiles) {
+                FileUtils.copyFileToDirectory(cssFile, this.fOutDir);
+            }
+
+        } else {
+            InputStream in = this.getClass().getResourceAsStream("/default/ftldoc.css");
+            File outputFile = new File(this.fOutDir, "ftldoc.css");
+            FileUtils.copyInputStreamToFile(in, outputFile);
         }
     }
 

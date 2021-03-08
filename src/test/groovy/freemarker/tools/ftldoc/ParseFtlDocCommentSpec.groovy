@@ -55,7 +55,7 @@ class ParseFtlDocCommentSpec extends Specification {
     }
 
     @Unroll
-    def "Parsing #jsdoccomment"() {
+    def "Parsing jsdoc #jsdoccomment"() {
         given:
         def fullComment = "-" + jsdoccomment
 
@@ -70,19 +70,19 @@ class ParseFtlDocCommentSpec extends Specification {
         def param = params.get(0) as SimpleHash
         param.get("name").toString() == name
         param.get("description").toString() == description
-        Objects.toString(param.get("type"), null) == type
+        param.get("type").toList() == type
         param.get("optional").getAsBoolean() == optional
         Objects.toString(param.get("def_val"), null) == defValue
 
         where:
-        jsdoccomment                                    || name     | type                  | optional  | defValue  | description
-        "@param {TypeExp} arg3 - Bla bla bla"           || "arg3"   | "TypeExp"             | false     | null      | "Bla bla bla"
-        "@param {String|Number} arg3 Bla bla bla"       || "arg3"   | "String|Number"       | false     | null      | "Bla bla bla"
-        "@param {Number} [arg] Bla bla bla"             || "arg"    | "Number"              | true      | null      | "Bla bla bla"
-        "@param {Number} [arg=1] Bla bla bla"           || "arg"    | "Number"              | true      | "1"       | "Bla bla bla"
-        "@param [arg] Bla bla bla"                      || "arg"    | null                  | true      | null      | "Bla bla bla"
-        "@param [arg=1] Bla bla bla"                    || "arg"    | null                  | true      | "1"       | "Bla bla bla"
-        "@param {Hash<String,String>} map - Bla"        || "map"    | "Hash<String,String>" | false     | null      | "Bla"
+        jsdoccomment                                    || name     | type                      | optional  | defValue  | description
+        "@param {TypeExp} arg3 - Bla bla bla"           || "arg3"   | ["TypeExp"]               | false     | null      | "Bla bla bla"
+        "@param {String|Number} arg3 Bla bla bla"       || "arg3"   | ["String", "Number"]      | false     | null      | "Bla bla bla"
+        "@param {Number} [arg] Bla bla bla"             || "arg"    | ["Number"]                | true      | null      | "Bla bla bla"
+        "@param {Number} [arg=1] Bla bla bla"           || "arg"    | ["Number"]                | true      | "1"       | "Bla bla bla"
+        "@param [arg] Bla bla bla"                      || "arg"    | []                        | true      | null      | "Bla bla bla"
+        "@param [arg=1] Bla bla bla"                    || "arg"    | []                        | true      | "1"       | "Bla bla bla"
+        "@param {Hash<String,String>} map - Bla"        || "map"    | ["Hash<String,String>"]   | false     | null      | "Bla"
     }
 
     @Unroll

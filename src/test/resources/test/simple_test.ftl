@@ -35,7 +35,7 @@
 <#---
     Macro to generate HTML attributes from a hash cintaint <AttributeName : Value>
     Attribute names are normalized, replacing '_' by '-'
-    @param {Hash} vars  Map with pais attribute name - value
+    @param {Hash} vars  Map with pairs of attribute name - value
     @param [exclude] A list of attributes to be ignored
  -->
 <#macro carry_atribs vars exclude=[]>
@@ -70,7 +70,7 @@
 
 <#---
     Macro to generate data-XXX HTML attributes
-    @param {Hash<String,String>} data - Map with pairs XXX field - value
+    @param {Hash<String,String>} data - Map with pairs of XXX field - value
  -->
 <#macro data_atribs data={}>
     <#if data?is_hash>
@@ -112,6 +112,7 @@
 <#---
     Function that converts a value to a Boolean
     @param {String|Number|Boolean|Object} input String or Number to be converted to Boolean
+    @return Boolean value being true or false
 -->
 <#function toBool input>
     <#if input?is_boolean>

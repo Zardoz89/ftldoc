@@ -1,31 +1,18 @@
 <html>
 <head>
     <meta charset="${.output_encoding}" />
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
     <script language="javascript">
     function setTitle() {
         parent.document.title="ftldoc - Overview";
     }
     </script>
-    <style>
-    table {
-        width: 100%;
-    }
-    td {
-        background-color: White;
-    }
-    td.heading {
-        padding: 3px;
-        font-weight: bold;
-        font-size: 18px;
-        background-color: #CCCCFF;
-    }
-    </style>
 </head>
 <body onLoad="setTitle();">
 <#include "nav.ftl">
 <h3>Overview</h3>
 
-<table border="1" cellpadding="4">
+<table>
     <tr><td colspan="2" class="heading">Library Summary</td></tr>
     <#list files as file>
         <tr>
