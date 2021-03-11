@@ -259,6 +259,8 @@ public class FtlDoc
             }
             root.put("filename", t.getName());
             root.put("categories", this.categories);
+            root.put("files", this.fFiles);
+            root.put("fileSuffix", ".html");
 
             try (OutputStreamWriter outputStream = new OutputStreamWriter(
                 new FileOutputStream(htmlFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
@@ -301,7 +303,15 @@ public class FtlDoc
             TemplateLoader loader = new MultiTemplateLoader(loaders);
             this.cfg.setTemplateLoader(loader);
 
-            // create template for file page
+            // = create template for file page
+            // Sort files
+            Collections.sort(this.fFiles, new Comparator<File>() {
+                @Override
+                public int compare(File lhs, File rhs)
+                {
+                    return lhs.getName().compareTo(rhs.getName());
+                }
+            });
 
             // create file pages
             for (File element : this.fFiles) {
@@ -314,26 +324,13 @@ public class FtlDoc
             }
 
             // create the rest
-            this.createFileListPage(".html");
             this.createIndexPage();
             this.createAllCatPage();
             this.createAllAlphaPage();
-            this.createOverviewPage();
             this.copyCssFiles();
         }
         catch (Exception ex) {
             ex.printStackTrace();
-        }
-    }
-
-    private void createIndexPage()
-    {
-        File indexFile = new File(this.fOutDir, "index.html");
-        try (OutputStreamWriter outputStream = new OutputStreamWriter(
-            new FileOutputStream(indexFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
-            Template template = this.cfg.getTemplate(Templates.index.fileName());
-            template.process(null, outputStream);
-        } catch (java.io.IOException | freemarker.template.TemplateException ex) {
         }
     }
 
@@ -344,6 +341,8 @@ public class FtlDoc
             new FileOutputStream(categoryFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             SimpleHash root = new SimpleHash();
             root.put("categories", this.allCategories);
+            root.put("files", this.fFiles);
+            root.put("fileSuffix", ".html");
             Template template = this.cfg.getTemplate(Templates.indexAllCat.fileName());
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
@@ -358,20 +357,23 @@ public class FtlDoc
             SimpleHash root = new SimpleHash();
             Collections.sort(this.allMacros, MACRO_COMPARATOR);
             root.put("macros", this.allMacros);
+            root.put("files", this.fFiles);
+            root.put("fileSuffix", ".html");
             Template template = this.cfg.getTemplate(Templates.indexAllAlpha.fileName());
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
         }
     }
 
-    private void createOverviewPage()
+    private void createIndexPage()
     {
-        File overviewFile = new File(this.fOutDir, "overview.html");
+        File overviewFile = new File(this.fOutDir, "index.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter(
             new FileOutputStream(overviewFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
-            Template template = this.cfg.getTemplate(Templates.overview.fileName());
-            Map<String, List> root = new HashMap<>();
-            root.put("files", this.fParsedFiles);
+            Template template = this.cfg.getTemplate(Templates.index.fileName());
+            SimpleHash root = new SimpleHash();
+            root.put("files", this.fFiles);
+            root.put("fileSuffix", ".html");
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
         }
@@ -396,28 +398,6 @@ public class FtlDoc
             InputStream in = this.getClass().getResourceAsStream("/default/ftldoc.css");
             File outputFile = new File(this.fOutDir, "ftldoc.css");
             FileUtils.copyInputStreamToFile(in, outputFile);
-        }
-    }
-
-    private void createFileListPage(String suffix)
-    {
-        Collections.sort(this.fFiles, new Comparator<File>() {
-            @Override
-            public int compare(File lhs, File rhs)
-            {
-                return lhs.getName().compareTo(rhs.getName());
-            }
-        });
-
-        File filelistFile = new File(this.fOutDir, "files.html");
-        try (OutputStreamWriter outputStream = new OutputStreamWriter(
-            new FileOutputStream(filelistFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
-            SimpleHash root = new SimpleHash();
-            root.put("suffix", suffix);
-            root.put("files", this.fFiles);
-            Template template = this.cfg.getTemplate(Templates.filelist.fileName());
-            template.process(root, outputStream);
-        } catch (java.io.IOException | freemarker.template.TemplateException ex) {
         }
     }
 

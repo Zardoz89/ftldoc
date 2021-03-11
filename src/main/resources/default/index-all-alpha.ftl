@@ -1,14 +1,15 @@
+<#ftl encoding="UTF-8" output_format="HTML" />
+<#import "lib.ftl" as lib>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="${.output_encoding}" />
     <link rel="stylesheet" type="text/css" href="ftldoc.css" />
-    <script language="javascript">
-    function setTitle() {
-        parent.document.title="ftldoc - Index";
-    }
-    </script>
+    <title>ftldoc - Alphabethic Index</title>
 </head>
-<body onLoad="setTitle();">
+<body>
+<@lib.fileList files fileSuffix/>
+<main>
 <#include "nav.ftl">
 <br/>
 <#assign lastLetter = "" />
@@ -31,5 +32,6 @@
      - ${macro.type?cap_first} in file <a href="${macro.filename}.html">${macro.filename}</a>
     <br/>
 </#list>
+</main>
 </body>
 </html>

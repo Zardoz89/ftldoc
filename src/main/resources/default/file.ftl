@@ -1,10 +1,11 @@
 <#ftl encoding="UTF-8" output_format="HTML" />
 <#import "ftl_highlight.ftl" as ftl>
+<#import "lib.ftl" as lib>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="${.output_encoding}" />
-    <title>ftldoc</title>
+    <title>${filename}</title>
     <link rel="stylesheet" type="text/css" href="ftldoc.css" />
     <script language="javascript">
         function toggle(id) {
@@ -15,13 +16,11 @@
                 elem.style.display="block";
             }
         }
-
-        function setTitle() {
-            parent.document.title="${filename}";
-        }
     </script>
 </head>
-<body onLoad="setTitle();">
+<body>
+<@lib.fileList files fileSuffix/>
+<main>
 <#include "nav.ftl">
 
 <#-- start prolog -->
@@ -106,7 +105,7 @@
 </#list>
 
 <#-- end details -->
-
+</main>
 </body>
 </html>
 

@@ -1,10 +1,18 @@
+<#ftl encoding="UTF-8" output_format="HTML" />
+<#import "lib.ftl" as lib>
+<!DOCTYPE html>
 <html>
-    <head>
+<head>
     <meta charset="${.output_encoding}" />
-    <title>ftldoc</title>
-    </head>
-    <frameset cols="180,*">
-        <frame name="list" src="files.html">
-        <frame name="main" src="overview.html">
-    </frameset>
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
+    <title>ftldoc - Overview</title>
+</head>
+<body>
+<@lib.fileList files fileSuffix/>
+<main>
+<#include "nav.ftl">
+<h3>Overview</h3>
+
+</main>
+</body>
 </html>

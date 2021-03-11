@@ -23,7 +23,9 @@ class FtlDocSpec extends Specification {
 
     def "Generating output files"() {
         given: "A simple FTL file with FTLDoc markups"
-        List<File> files = [this.getFileResource("test/simple_test.ftl")]
+        List<File> files = [
+            this.getFileResource("test/simple_test.ftl")
+        ]
         def ftlDoc = new FtlDoc(files, outputFolder, null)
 
         when: "We run FtlDoc parsing"
@@ -32,9 +34,7 @@ class FtlDocSpec extends Specification {
         then: "Generates the expected output files on the output folder"
         def outputFiles = outputFolder.list()
         outputFiles.contains("index.html")
-        outputFiles.contains("files.html")
         outputFiles.contains("simple_test.ftl.html")
-        outputFiles.contains("overview.html")
         outputFiles.contains("index-all-alpha.html")
         outputFiles.contains("index-all-cat.html")
 
