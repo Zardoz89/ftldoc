@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-html, body {
-  height: 100%;
-  width: 100%;
-}
-
 body {
   color: #4d4e53;
   background-color: #fff;
@@ -19,21 +14,18 @@ body {
 }
 
 /* Basic layout */
-body {
-  display: flex;
-  flex-direction: row;
-}
-
 nav {
-  max-width: 250px;
+  width: 250px;
   background: #fff;
   overflow: auto;
-  flex: 1 0 auto;
   border-right: 1px solid #eee;
+  position: fixed;
+  height: 100vh;
 }
 
 main {
-  flex: 1 1 auto;
+  width: calc(100vw - 250px);
+  float: right;
 }
 
 nav, main {
