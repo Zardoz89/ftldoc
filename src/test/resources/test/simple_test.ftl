@@ -10,6 +10,7 @@
 
 <#---
     Macro that put a value on a array
+    @deprecated Becasue yes
     @param {String} arrayVar Variable name that must be a sequence
     @param [content=""] Content to be appened to the array pointer by arrayVar
 -->
@@ -19,7 +20,7 @@
             <#nested />
         </#local>
     </#if>
-    <#-- freemarker parseando una cadena para generar codigo freemarker que va a ejecutar (metaprograming) -->
+    <#-- freemarker doing some metaprogramming -->
     <#if content?is_string>
         <@"<#assign ${arrayVar} = (${arrayVar}![]) + [content]>"?interpret />
     <#elseif content?is_enumerable>

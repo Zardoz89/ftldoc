@@ -1,3 +1,4 @@
+<#ftl encoding="UTF-8" strip_text="true" />
 <#---
   -- This ftl macro library provides macros used to display nodes
   -- of the AST (=Abstract Syntax Tree) of a FreeMarker template. The
@@ -110,7 +111,11 @@ ${format(.node.start?html)}
 <#---@begin helper macros -->
 
 <#function format text>
-<#return text?replace(" ","&nbsp;")?replace("\n","<br>")>
+<#return text?replace(" ","&nbsp;")?replace("\n","<br/>")>
+</#function>
+
+<#function removeEOL text>
+<#return text?replace("\r\n","")?replace("\n","") />
 </#function>
 
 <#---
@@ -120,7 +125,7 @@ ${format(.node.start?html)}
   -->
 <#macro nobr>
 <#assign text><#nested></#assign>
-${text?replace("\n","")}
+${removeEOL(text)}
 </#macro>
 
 <#---@end -->

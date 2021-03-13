@@ -1,5 +1,5 @@
 <#ftl encoding="UTF-8" output_format="HTML" />
-<#import "lib.ftl" as lib>
+<#import "lib.ftl" as ftl>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +8,8 @@
     <title>ftldoc - Index by category</title>
 </head>
 <body>
-<@lib.fileList files fileSuffix/>
+<@ftl.navigationBar files fileSuffix/>
 <main>
- <#include "nav.ftl">
 <#list categories?keys as category>
     <#if categories[category]?has_content>
         <#if category?has_content>

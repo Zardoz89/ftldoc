@@ -259,8 +259,7 @@ public class FtlDoc
             }
             root.put("filename", t.getName());
             root.put("categories", this.categories);
-            root.put("files", this.fFiles);
-            root.put("fileSuffix", ".html");
+            this.putFilesGlobalVars(root);
 
             try (OutputStreamWriter outputStream = new OutputStreamWriter(
                 new FileOutputStream(htmlFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
@@ -270,6 +269,12 @@ public class FtlDoc
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void putFilesGlobalVars(SimpleHash root)
+    {
+        root.put("files", this.fFiles);
+        root.put("fileSuffix", ".html");
     }
 
     /**
@@ -341,8 +346,7 @@ public class FtlDoc
             new FileOutputStream(categoryFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             SimpleHash root = new SimpleHash();
             root.put("categories", this.allCategories);
-            root.put("files", this.fFiles);
-            root.put("fileSuffix", ".html");
+            this.putFilesGlobalVars(root);
             Template template = this.cfg.getTemplate(Templates.indexAllCat.fileName());
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
@@ -357,8 +361,7 @@ public class FtlDoc
             SimpleHash root = new SimpleHash();
             Collections.sort(this.allMacros, MACRO_COMPARATOR);
             root.put("macros", this.allMacros);
-            root.put("files", this.fFiles);
-            root.put("fileSuffix", ".html");
+            this.putFilesGlobalVars(root);
             Template template = this.cfg.getTemplate(Templates.indexAllAlpha.fileName());
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
@@ -372,8 +375,7 @@ public class FtlDoc
             new FileOutputStream(overviewFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             Template template = this.cfg.getTemplate(Templates.index.fileName());
             SimpleHash root = new SimpleHash();
-            root.put("files", this.fFiles);
-            root.put("fileSuffix", ".html");
+            this.putFilesGlobalVars(root);
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
         }

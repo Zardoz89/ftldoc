@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,28 +19,27 @@
 <body>
 
 <nav>
-    <h3>Macro Libraries</h3>
+    <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="index-all-cat.html">Index (categorical)</a></li>
+        <li><a href="index-all-alpha.html">Index (alphabetical)</a></li>
+    </ul>
+    
+    <h6>Macro Libraries</h6>
     <ul>
     
         <li><a href="simple_test.ftl.html">simple_test.ftl</a></li>
     
     </ul>
+
 </nav>
 
 <main>
 
 
-<div style="padding: 3px; font-weight: bold; background-color: #DDDDFF;">
-    <a href="index.html">Overview</a>
-    <a href="index-all-cat.html">Index (categorical)</a>
-    <a href="index-all-alpha.html">Index (alphabetical)</a>
-</div>
+<h1>simple_test.ftl</h1>
 
-
-
-<h3>simple_test.ftl</h3>
-
-     File header<br>
+     File header<br/>
 
 <dl>
     
@@ -300,7 +298,8 @@
 </table>
 
     <dl>
-        <dt><code>macro <b><a name="carry_atribs">carry_atribs</a></b>
+        <dt>
+            <code>macro <b><a name="carry_atribs">carry_atribs</a></b>
                 
     
         
@@ -310,12 +309,12 @@
         
     
 
-        </code></dt>
+            </code>
+        </dt>
         <dd>
-            <br>
-        
             
-                 Macro to generate HTML attributes from a hash cintaint &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;<br><br>
+            
+                <p> Macro to generate HTML attributes from a hash cintaint &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;</p>
             
             <dl>
                 
@@ -349,9 +348,9 @@
                     </td>
                     <td class="description">
                         
-                        Map with pairs of attribute name - value<br/>
+                        Map with pairs of attribute name - value
+                        
                     </td>
-                
                 </tr>
             
                 <tr>
@@ -362,9 +361,9 @@
                     <td class="description">
                         <em>(Optional)</em> 
                         A list of attributes to be ignored 
-<br/>
+
+                        
                     </td>
-                
                 </tr>
             
             </tbody>
@@ -388,7 +387,7 @@
 
 
 
-<span class="directive">&lt;#macro&nbsp;carry_atribs&nbsp;vars&nbsp;exclude=[]&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@compress&nbsp;single_line=true&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;vars?is_sequence&gt;</span><span class="directive">&lt;#return&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;vars?keys&nbsp;as&nbsp;k&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;!exclude?seq_contains(k)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;temp&quot;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;data&quot;)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;attrs&quot;)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;dynattrs&quot;)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;aria&quot;)&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;vars[k]?is_sequence&gt;</span><span class="textblock"><br></span><span class="directive">&lt;#if&nbsp;vars[k]?size&nbsp;&amp;gt;&nbsp;0&gt;&lt;#t&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="interpolation">${k?replace(&#39;_&#39;,&nbsp;&#39;-&#39;)}</span><span class="textblock">=&quot;</span><span class="directive">&lt;#list&nbsp;vars[k]&nbsp;as&nbsp;temp&gt;&lt;#t&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;temp&nbsp;!=&nbsp;&quot;&quot;&gt;&lt;#t&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;temp?is_number&nbsp;||&nbsp;temp?is_boolean&nbsp;&gt;</span><span class="directive">&lt;#local&nbsp;temp=temp?c&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="interpolation">${temp}</span><span class="textblock">&nbsp;</span><span class="directive">&lt;#t&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/#if&gt;</span><span class="directive">&lt;#t&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/#list&gt;</span><span class="textblock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;</span><span class="textblock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br></span><span class="directive"></span><span class="directive">&lt;#if&nbsp;vars[k]?is_number&nbsp;||&nbsp;vars[k]?is_boolean&nbsp;&gt;</span><span class="directive">&lt;#local&nbsp;temp=vars[k]?c&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;#t&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#else&gt;</span><span class="directive">&lt;#local&nbsp;temp&nbsp;=&nbsp;vars[k]?string&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;#t&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;temp&nbsp;!=&nbsp;&quot;&quot;&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="interpolation">${k?replace(&#39;_&#39;,&nbsp;&#39;-&#39;)}</span><span class="textblock">=&quot;</span><span class="interpolation">${temp}</span><span class="textblock">&quot;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;/@compress&gt;</span><span class="textblock"><br></span><span class="directive">&lt;/#macro&gt;</span>
+<span class="directive">&lt;#macro&nbsp;carry_atribs&nbsp;vars&nbsp;exclude=[]&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@compress&nbsp;single_line=true&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;vars?is_sequence&gt;</span><span class="directive">&lt;#return&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;vars?keys&nbsp;as&nbsp;k&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;!exclude?seq_contains(k)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;temp&quot;)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;data&quot;)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;attrs&quot;)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;dynattrs&quot;)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;aria&quot;)&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;vars[k]?is_sequence&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;#if&nbsp;vars[k]?size&nbsp;&amp;gt;&nbsp;0&gt;&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="interpolation">${k?replace(&#39;_&#39;,&nbsp;&#39;-&#39;)}</span><span class="textblock">=&quot;</span><span class="directive">&lt;#list&nbsp;vars[k]&nbsp;as&nbsp;temp&gt;&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;temp&nbsp;!=&nbsp;&quot;&quot;&gt;&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;temp?is_number&nbsp;||&nbsp;temp?is_boolean&nbsp;&gt;</span><span class="directive">&lt;#local&nbsp;temp=temp?c&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="interpolation">${temp}</span><span class="textblock">&nbsp;</span><span class="directive">&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/#if&gt;</span><span class="directive">&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/#list&gt;</span><span class="textblock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;</span><span class="textblock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/></span><span class="directive"></span><span class="directive">&lt;#if&nbsp;vars[k]?is_number&nbsp;||&nbsp;vars[k]?is_boolean&nbsp;&gt;</span><span class="directive">&lt;#local&nbsp;temp=vars[k]?c&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#else&gt;</span><span class="directive">&lt;#local&nbsp;temp&nbsp;=&nbsp;vars[k]?string&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;temp&nbsp;!=&nbsp;&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="interpolation">${k?replace(&#39;_&#39;,&nbsp;&#39;-&#39;)}</span><span class="textblock">=&quot;</span><span class="interpolation">${temp}</span><span class="textblock">&quot;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;/@compress&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
 
 
 
@@ -401,7 +400,8 @@
     <hr>
 
     <dl>
-        <dt><code>macro <b><a name="data_atribs">data_atribs</a></b>
+        <dt>
+            <code>macro <b><a name="data_atribs">data_atribs</a></b>
                 
     
         
@@ -409,12 +409,12 @@
         
     
 
-        </code></dt>
+            </code>
+        </dt>
         <dd>
-            <br>
-        
             
-                 Macro to generate data-XXX HTML attributes<br><br>
+            
+                <p> Macro to generate data-XXX HTML attributes</p>
             
             <dl>
                 
@@ -449,9 +449,9 @@
                     <td class="description">
                         
                         Map with pairs of XXX field - value 
-<br/>
+
+                        
                     </td>
-                
                 </tr>
             
             </tbody>
@@ -475,7 +475,7 @@
 
 
 
-<span class="directive">&lt;#macro&nbsp;data_atribs&nbsp;data={}&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;data?is_hash&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;data&nbsp;as&nbsp;key,&nbsp;value&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;value?is_number&nbsp;||&nbsp;value?is_boolean&gt;</span><span class="directive">&lt;#local&nbsp;temp=value?c&nbsp;/&gt;</span><span class="directive"></span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="directive">&lt;#local&nbsp;temp=value?string&nbsp;/&gt;</span><span class="directive"></span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data-</span><span class="interpolation">${key}</span><span class="textblock">=&quot;</span><span class="interpolation">${temp}</span><span class="textblock">&quot;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br></span><span class="directive">&lt;/#macro&gt;</span>
+<span class="directive">&lt;#macro&nbsp;data_atribs&nbsp;data={}&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;data?is_hash&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;data&nbsp;as&nbsp;key,&nbsp;value&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;value?is_number&nbsp;||&nbsp;value?is_boolean&gt;</span><span class="directive">&lt;#local&nbsp;temp=value?c&nbsp;/&gt;</span><span class="directive"></span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="directive">&lt;#local&nbsp;temp=value?string&nbsp;/&gt;</span><span class="directive"></span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data-</span><span class="interpolation">${key}</span><span class="textblock">=&quot;</span><span class="interpolation">${temp}</span><span class="textblock">&quot;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
 
 
 
@@ -488,7 +488,8 @@
     <hr>
 
     <dl>
-        <dt><code>function <b><a name="iif">iif</a></b>
+        <dt>
+            <code>function <b><a name="iif">iif</a></b>
                 
     
         (
@@ -505,12 +506,12 @@
         )
     
 
-        </code></dt>
+            </code>
+        </dt>
         <dd>
-            <br>
-        
             
-                 Function that emulates C/Java &#39;?&#39; operator<br><br>
+            
+                <p> Function that emulates C/Java &#39;?&#39; operator</p>
             
             <dl>
                 
@@ -536,7 +537,7 @@
 
 
 
-<span class="directive">&lt;#function&nbsp;iif&nbsp;condicion&nbsp;valor1&nbsp;valor2&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;condicion&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;valor1&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;valor2&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br></span><span class="directive">&lt;/#function&gt;</span>
+<span class="directive">&lt;#function&nbsp;iif&nbsp;condicion&nbsp;valor1&nbsp;valor2&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;condicion&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;valor1&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;valor2&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
 
 
 
@@ -549,7 +550,8 @@
     <hr>
 
     <dl>
-        <dt><code>function <b><a name="isStringNumber">isStringNumber</a></b>
+        <dt>
+            <code>function <b><a name="isStringNumber">isStringNumber</a></b>
                 
     
         (
@@ -560,12 +562,12 @@
         )
     
 
-        </code></dt>
+            </code>
+        </dt>
         <dd>
-            <br>
-        
             
-                 Checks if a String value it&#39;s a number<br><br>
+            
+                <p> Checks if a String value it&#39;s a number</p>
             
             <dl>
                 
@@ -591,7 +593,7 @@
 
 
 
-<span class="directive">&lt;#function&nbsp;isStringNumber&nbsp;variable&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#attempt&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#assign&nbsp;numberVariable&nbsp;=&nbsp;variable?number&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;numberVariable?is_number&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#recover&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#attempt&gt;</span><span class="textblock"><br></span><span class="directive">&lt;/#function&gt;</span>
+<span class="directive">&lt;#function&nbsp;isStringNumber&nbsp;variable&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#attempt&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#assign&nbsp;numberVariable&nbsp;=&nbsp;variable?number&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;numberVariable?is_number&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#recover&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#attempt&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
 
 
 
@@ -604,7 +606,8 @@
     <hr>
 
     <dl>
-        <dt><code>function <b><a name="join">join</a></b>
+        <dt>
+            <code>function <b><a name="join">join</a></b>
                 
     
         (
@@ -618,12 +621,12 @@
         )
     
 
-        </code></dt>
+            </code>
+        </dt>
         <dd>
-            <br>
-        
             
-                 Function that generates a string from a sequence, putting a separator bettwen elements<br><br>
+            
+                <p> Function that generates a string from a sequence, putting a separator bettwen elements</p>
             
             <dl>
                 
@@ -654,9 +657,9 @@
                     </td>
                     <td class="description">
                         
-                        {Sequence} Sequecen to be converted to String<br/>
+                        {Sequence} Sequecen to be converted to String
+                        
                     </td>
-                
                 </tr>
             
                 <tr>
@@ -666,9 +669,9 @@
                     </td>
                     <td class="description">
                         
-                        (Optional) Seperator element. By default it&#39;s a space (&quot; &quot;)<br/>
+                        (Optional) Seperator element. By default it&#39;s a space (&quot; &quot;)
+                        
                     </td>
-                
                 </tr>
             
             </tbody>
@@ -692,7 +695,7 @@
 
 
 
-<span class="directive">&lt;#function&nbsp;join&nbsp;seq&nbsp;separator&nbsp;=&nbsp;&quot;&nbsp;&quot;&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;res&nbsp;=&nbsp;&quot;&quot;&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;seq&nbsp;as&nbsp;e&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;e_index&nbsp;==&nbsp;0&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;res&nbsp;=&nbsp;res&nbsp;+&nbsp;e&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;res&nbsp;=&nbsp;res&nbsp;+&nbsp;separator&nbsp;+&nbsp;e&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;res&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br></span><span class="directive">&lt;/#function&gt;</span>
+<span class="directive">&lt;#function&nbsp;join&nbsp;seq&nbsp;separator&nbsp;=&nbsp;&quot;&nbsp;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;res&nbsp;=&nbsp;&quot;&quot;&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;seq&nbsp;as&nbsp;e&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;e_index&nbsp;==&nbsp;0&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;res&nbsp;=&nbsp;res&nbsp;+&nbsp;e&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;res&nbsp;=&nbsp;res&nbsp;+&nbsp;separator&nbsp;+&nbsp;e&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;res&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
 
 
 
@@ -705,7 +708,8 @@
     <hr>
 
     <dl>
-        <dt><code>macro <b><a name="putOnArray">putOnArray</a></b>
+        <dt>
+            <code>macro <b><a name="putOnArray">putOnArray</a></b>
                 
     
         
@@ -715,12 +719,14 @@
         
     
 
-        </code></dt>
+            </code>
+        </dt>
         <dd>
-            <br>
-        
             
-                 Macro that put a value on a array<br><br>
+<span class="deprecated">&#9888; Deprecated</span><span class="deprecated__reason">Becasue yes</span>
+
+            
+                <p> Macro that put a value on a array</p>
             
             <dl>
                 
@@ -754,9 +760,9 @@
                     </td>
                     <td class="description">
                         
-                        Variable name that must be a sequence<br/>
+                        Variable name that must be a sequence
+                        
                     </td>
-                
                 </tr>
             
                 <tr>
@@ -766,11 +772,12 @@
                     </td>
                     <td class="description">
                         <em>(Optional)</em> 
-                        Content to be appened to the array pointer by arrayVar<br/>
+                        Content to be appened to the array pointer by arrayVar
+                        
+                        <br/>
+                        Default value : &quot;
+                        
                     </td>
-                
-                Default value : &quot;<br/>
-                
                 </tr>
             
             </tbody>
@@ -794,7 +801,7 @@
 
 
 
-<span class="directive">&lt;#macro&nbsp;putOnArray&nbsp;arrayVar&nbsp;content=&quot;&quot;&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;content?is_string&nbsp;&amp;&amp;&nbsp;content&nbsp;==&nbsp;&quot;&quot;&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;content&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#nested&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#local&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;freemarker&nbsp;parseando&nbsp;una&nbsp;cadena&nbsp;para&nbsp;generar&nbsp;codigo&nbsp;freemarker&nbsp;que&nbsp;va&nbsp;a&nbsp;ejecutar&nbsp;(metaprograming)&nbsp;--&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;content?is_string&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@&quot;&lt;#assign&nbsp;${arrayVar}&nbsp;=&nbsp;(${arrayVar}![])&nbsp;+&nbsp;[content]&gt;&quot;?interpret&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#elseif&nbsp;content?is_enumerable&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@&quot;&lt;#assign&nbsp;${arrayVar}&nbsp;=&nbsp;(${arrayVar}![])&nbsp;+&nbsp;content&gt;&quot;?interpret&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br></span><span class="directive">&lt;/#macro&gt;</span>
+<span class="directive">&lt;#macro&nbsp;putOnArray&nbsp;arrayVar&nbsp;content=&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;content?is_string&nbsp;&amp;&amp;&nbsp;content&nbsp;==&nbsp;&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;content&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#nested&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#local&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;freemarker&nbsp;doing&nbsp;some&nbsp;metaprogramming&nbsp;--&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;content?is_string&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@&quot;&lt;#assign&nbsp;${arrayVar}&nbsp;=&nbsp;(${arrayVar}![])&nbsp;+&nbsp;[content]&gt;&quot;?interpret&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#elseif&nbsp;content?is_enumerable&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@&quot;&lt;#assign&nbsp;${arrayVar}&nbsp;=&nbsp;(${arrayVar}![])&nbsp;+&nbsp;content&gt;&quot;?interpret&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
 
 
 
@@ -807,7 +814,8 @@
     <hr>
 
     <dl>
-        <dt><code>function <b><a name="toBool">toBool</a></b>
+        <dt>
+            <code>function <b><a name="toBool">toBool</a></b>
                 
     
         (
@@ -818,12 +826,12 @@
         )
     
 
-        </code></dt>
+            </code>
+        </dt>
         <dd>
-            <br>
-        
             
-                 Function that converts a value to a Boolean<br><br>
+            
+                <p> Function that converts a value to a Boolean</p>
             
             <dl>
                 
@@ -866,9 +874,9 @@
                     </td>
                     <td class="description">
                         
-                        String or Number to be converted to Boolean<br/>
+                        String or Number to be converted to Boolean
+                        
                     </td>
-                
                 </tr>
             
             </tbody>
@@ -895,7 +903,7 @@
 
 
 
-<span class="directive">&lt;#function&nbsp;toBool&nbsp;input&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;input?is_boolean&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;input&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;Number&nbsp;--&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;input?is_number&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;input&nbsp;!=&nbsp;0&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;true&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;String&nbsp;--&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;input?is_string&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;input&nbsp;==&nbsp;&quot;&quot;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;false&quot;||&nbsp;input&nbsp;==&nbsp;&quot;not&quot;&nbsp;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;no&quot;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;n&quot;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;f&quot;&nbsp;&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;true&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;!=&nbsp;Null&nbsp;or&nbsp;not&nbsp;has&nbsp;content&nbsp;--&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;input??&nbsp;&amp;&amp;&nbsp;input?has_content&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;true&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br></span><span class="directive">&lt;/#function&gt;</span>
+<span class="directive">&lt;#function&nbsp;toBool&nbsp;input&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;input?is_boolean&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;input&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;Number&nbsp;--&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;input?is_number&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;input&nbsp;!=&nbsp;0&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;true&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;String&nbsp;--&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;input?is_string&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;input&nbsp;==&nbsp;&quot;&quot;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;false&quot;||&nbsp;input&nbsp;==&nbsp;&quot;not&quot;&nbsp;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;no&quot;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;n&quot;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;f&quot;&nbsp;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;true&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;!=&nbsp;Null&nbsp;or&nbsp;not&nbsp;has&nbsp;content&nbsp;--&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;input??&nbsp;&amp;&amp;&nbsp;input?has_content&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;true&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
 
 
 
@@ -912,13 +920,3 @@
 </main>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

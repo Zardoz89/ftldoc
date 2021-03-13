@@ -1,5 +1,5 @@
 <#ftl encoding="UTF-8" output_format="HTML" />
-<#import "lib.ftl" as lib>
+<#import "lib.ftl" as ftl>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +8,8 @@
     <title>ftldoc - Alphabethic Index</title>
 </head>
 <body>
-<@lib.fileList files fileSuffix/>
+<@ftl.navigationBar files fileSuffix/>
 <main>
-<#include "nav.ftl">
-<br/>
 <#assign lastLetter = "" />
 <#list macros as macro>
     <#if macro.name[0]?cap_first != lastLetter>

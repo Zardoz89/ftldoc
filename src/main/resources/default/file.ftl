@@ -1,6 +1,5 @@
 <#ftl encoding="UTF-8" output_format="HTML" />
-<#import "ftl_highlight.ftl" as ftl>
-<#import "lib.ftl" as lib>
+<#import "lib.ftl" as ftl>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,18 +18,17 @@
     </script>
 </head>
 <body>
-<@lib.fileList files fileSuffix/>
+<@ftl.navigationBar files fileSuffix/>
 <main>
-<#include "nav.ftl">
 
 <#-- start prolog -->
-<h3>${filename}</h3>
+<h1>${filename}</h1>
 <#if comment.comment?has_content>
-    ${comment.comment}<br>
+    ${comment.comment}<br/>
 </#if>
 <dl>
-    <@printOptional comment.@author?if_exists, "Author" />
-    <@printOptional comment.@version?if_exists, "Version" />
+    <@ftl.printOptional comment.@author?if_exists, "Author" />
+    <@ftl.printOptional comment.@version?if_exists, "Version" />
 </dl>
 <#-- end prolog -->
 
@@ -58,7 +56,7 @@
                                         <b><a href="#${macro.name}">
                                             ${macro.name}</a>
                                         </b>
-                                        <@signature macro />
+                                        <@ftl.signature macro />
                                     </code>
                                 </dt>
                                 <dd>
@@ -81,23 +79,22 @@
 </table>
 <#list macros as macro>
     <dl>
-        <dt><code>${macro.type} <b><a name="${macro.name}">${macro.name}</a></b>
-                <@signature macro />
-        </code></dt>
+        <dt>
+            <code>${macro.type} <b><a name="${macro.name}">${macro.name}</a></b>
+                <@ftl.signature macro />
+            </code>
+        </dt>
         <dd>
-            <br>
-        <#if macro.@deprecated??>
-                <@printDeprecated macro.@deprecated/>
-            </#if>
+            <#if macro.@deprecated??><@ftl.printDeprecated macro.@deprecated/></#if>
             <#if macro.comment?has_content>
-                ${macro.comment}<br><br>
+                <p>${macro.comment!}</p>
             </#if>
             <dl>
-                <@printOptional macro.category?if_exists, "Category" />
-                <@printParameters macro />
-                <@printOptional macro.@nested?if_exists, "Nested" />
-                <@printOptional macro.@return?if_exists, "Return value" />
-                <@printSourceCode macro />
+                <@ftl.printOptional macro.category?if_exists, "Category" />
+                <@ftl.printParameters macro />
+                <@ftl.printOptional macro.@nested?if_exists, "Nested" />
+                <@ftl.printOptional macro.@return?if_exists, "Return value" />
+                <@ftl.printSourceCode macro />
             </dl>
         </dd>
     </dl>
@@ -108,79 +105,3 @@
 </main>
 </body>
 </html>
-
-<#macro printParameters macro>
-    <#if macro.@param?has_content>
-        <dt><b>Parameters</b></dt>
-        <dd>
-        <#if macro.@param?has_content>
-        <table class="params">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-            <#list macro.@param as param>
-                <tr>
-                    <td class="name"><code>${param.name!}</code></td>
-                    <td class="type">
-                        <#list param.type as type>
-                            <span class="param-type">${type!}</span>
-                            <#sep>|</#sep>
-                        </#list>
-                    </td>
-                    <td class="description">
-                        <#if param.optional!false><em>(Optional)</em> </#if>
-                        ${param.description!}<br/>
-                    </td>
-                <#if param.def_val?has_content>
-                Default value : ${param.def_val!}<br/>
-                </#if>
-                </tr>
-            </#list>
-            </tbody>
-        </table>
-            
-        </#if>
-        </dd>
-    </#if>
-</#macro>
-
-<#macro printSourceCode macro>
-    <dt><a href="#" onClick="toggle('sc_${macro.name}'); return false;">Source Code</a></dt>
-    <dd>
-        <code class="sourcecode" id="sc_${macro.name}">
-            <@ftl.print root=macro.node/>
-        </code>
-    </dd>
-</#macro>
-
-<#macro printOptional value label>
-    <#if value?has_content>
-        <dt><b>${label}</b></dt>
-        <dd>${value}</dd>
-    </#if>
-</#macro>
-
-<#macro printDeprecated reason>
-    <dt>&#9888; Deprecated<#if reason?? && reason?trim?length != 0>: ${reason}</#if>
-    </dt><br />
-</#macro>
-
-<#macro signature macro>
-    <#if macro.isfunction>
-        (
-        <#list macro.arguments as argument>
-            ${argument}
-            <#if argument_has_next>,</#if>
-        </#list>
-        )
-    <#else>
-        <#list macro.arguments as argument>
-            ${argument}
-        </#list>
-    </#if>
-</#macro>

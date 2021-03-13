@@ -1,5 +1,40 @@
 @charset "UTF-8";
 
+/* CSS Reset (take from https://github.com/vladocar/CSS-Mini-Reset )*/
+
+html,body,div,form,fieldset,
+legend,caption,label,
+h1,h2,h3,h4,h5,h6,
+p,blockquote,pre {
+  font-size: 100%;
+  font-weight: normal;
+
+  margin: 0;
+  padding: 0;
+
+  vertical-align: baseline;
+
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  vertical-align: top;
+}
+
+img {
+  border: 0;
+}
+
+/* End of CSS reset */
+
 * {
   box-sizing: border-box;
 }
@@ -11,6 +46,65 @@ body {
   padding: 0;
   font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Scalfolding */
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+h5 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+h6 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+p, dt, dd {
+  margin: 0 0 0.5rem 0;
+}
+
+dd:last-child {
+  margin-bottom: 0;
+}
+
+dl {
+  margin: 0;
+}
+
+tt,
+code,
+kbd,
+samp {
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  background: #f4f4f4;
+  padding: 1px 5px;
+}
+
+.deprecated {
+  font-weight: bolder;
+  color: #a00;
+}
+
+.deprecated__reason {
+  font-weight: bold;
+}
+.deprecated__reason::before {
+    content: ": ";
 }
 
 /* Basic layout */
@@ -32,20 +126,20 @@ nav, main {
   padding: 1rem;
 }
 
-tt,
-code,
-kbd,
-samp {
-  font-family: Consolas, Monaco, 'Andale Mono', monospace;
-  background: #f4f4f4;
-  padding: 1px 5px;
+/* Navigation bar */
+nav ul {
+  padding: 0;
+}
+nav li {
+  list-style-type: none;
 }
 
-dd {
-  margin: 0.5em 0 1em 0;
+nav a {
+  text-decoration: none;
 }
-dt {
-  margin: 0;
+
+nav a:hover {
+  text-decoration: underline;
 }
 
 /* Highlighting code */
@@ -53,7 +147,6 @@ dt {
   display: none;
   padding: 15px;
   margin-top: 8px;
-  font-size: 12px;
 }
 
 span.directive {
@@ -87,7 +180,6 @@ table {
   border-radius: 3px;
   box-shadow: 0 1px 3px #0000001a;
   width: 100%;
-  font-size: 14px;
   margin: 0;
 }
 
@@ -102,7 +194,7 @@ td, th {
   margin: 0px;
   text-align: left;
   vertical-align: top;
-  padding: 10px;
+  padding: 0.5rem 0;
   display: table-cell;
 }
 
@@ -137,3 +229,4 @@ td.category {
   font-size: 14px;
   background-color: #DDDDFF;
 }
+

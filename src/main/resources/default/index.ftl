@@ -1,5 +1,5 @@
 <#ftl encoding="UTF-8" output_format="HTML" />
-<#import "lib.ftl" as lib>
+<#import "lib.ftl" as ftl>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +8,9 @@
     <title>ftldoc - Overview</title>
 </head>
 <body>
-<@lib.fileList files fileSuffix/>
+<@ftl.navigationBar files fileSuffix/>
 <main>
-<#include "nav.ftl">
-<h3>Overview</h3>
+<h1>Overview</h1>
 
 </main>
 </body>
