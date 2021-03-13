@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="${.output_encoding}" />
-    <title>${filename}</title>
+    <title><#if title?has_content>${title} - </#if>${filename}</title>
     <link rel="stylesheet" type="text/css" href="ftldoc.css" />
     <script language="javascript">
         function toggle(id) {

@@ -5,7 +5,7 @@
 <head>
     <meta charset="${.output_encoding}" />
     <link rel="stylesheet" type="text/css" href="ftldoc.css" />
-    <title>ftldoc - Index by category</title>
+    <title><#if title?has_content>${title} - </#if>Index by category</title>
 </head>
 <body>
 <@ftl.navigationBar files fileSuffix/>

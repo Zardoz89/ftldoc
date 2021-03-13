@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -68,12 +69,14 @@ public class FtlDoc
     private List<SimpleHash> fParsedFiles;
     private Set<File> fAllDirectories;
     private File fAltTemplatesFolder;
+    private File readmeFile;
+    private String title;
 
     List<CategoryRegion> regions = new LinkedList<>();
 
     private Configuration cfg = null;
 
-    public FtlDoc(List<File> files, File outputDir, File altTemplatesFolder)
+    public FtlDoc(List<File> files, File outputDir, File altTemplatesFolder, File readmeFile, String title)
     {
         this.cfg = new Configuration(Configuration.VERSION_2_3_26); // TODO parametrice version compatibility
         this.cfg.setWhitespaceStripping(false);
@@ -82,6 +85,8 @@ public class FtlDoc
         this.fOutDir = outputDir;
         this.fFiles = files;
         this.fAltTemplatesFolder = altTemplatesFolder;
+        this.readmeFile = readmeFile;
+        this.title = title;
 
         // extracting parent directories of all files
         this.fAllDirectories = new HashSet<>();
@@ -259,7 +264,7 @@ public class FtlDoc
             }
             root.put("filename", t.getName());
             root.put("categories", this.categories);
-            this.putFilesGlobalVars(root);
+            this.putGlobalVars(root);
 
             try (OutputStreamWriter outputStream = new OutputStreamWriter(
                 new FileOutputStream(htmlFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
@@ -271,8 +276,9 @@ public class FtlDoc
         }
     }
 
-    private void putFilesGlobalVars(SimpleHash root)
+    private void putGlobalVars(SimpleHash root)
     {
+        root.put("title", this.title);
         root.put("files", this.fFiles);
         root.put("fileSuffix", ".html");
     }
@@ -346,7 +352,7 @@ public class FtlDoc
             new FileOutputStream(categoryFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             SimpleHash root = new SimpleHash();
             root.put("categories", this.allCategories);
-            this.putFilesGlobalVars(root);
+            this.putGlobalVars(root);
             Template template = this.cfg.getTemplate(Templates.indexAllCat.fileName());
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
@@ -361,7 +367,7 @@ public class FtlDoc
             SimpleHash root = new SimpleHash();
             Collections.sort(this.allMacros, MACRO_COMPARATOR);
             root.put("macros", this.allMacros);
-            this.putFilesGlobalVars(root);
+            this.putGlobalVars(root);
             Template template = this.cfg.getTemplate(Templates.indexAllAlpha.fileName());
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
@@ -375,7 +381,17 @@ public class FtlDoc
             new FileOutputStream(overviewFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             Template template = this.cfg.getTemplate(Templates.index.fileName());
             SimpleHash root = new SimpleHash();
-            this.putFilesGlobalVars(root);
+            this.putGlobalVars(root);
+            
+            if (this.readmeFile != null && this.readmeFile.exists() && this.readmeFile.canRead()) {
+                try {
+                    String readme = "";
+                    readme = new String(Files.readAllBytes(this.readmeFile.toPath()));
+                    root.put("readme", readme);
+                } catch (java.io.IOException ex) {
+                }
+            }
+            
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
         }

@@ -26,7 +26,7 @@ class FtlDocSpec extends Specification {
         List<File> files = [
             this.getFileResource("test/simple_test.ftl")
         ]
-        def ftlDoc = new FtlDoc(files, outputFolder, null)
+        def ftlDoc = new FtlDoc(files, outputFolder, null, this.getFileResource("test/readme.html"), "FtlDoc test")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -38,6 +38,7 @@ class FtlDocSpec extends Specification {
         outputFiles.contains("index-all-alpha.html")
         outputFiles.contains("index-all-cat.html")
 
+        (new File(outputFolder, "index.html")).text == getFileResource("expected/index.html").text
         (new File(outputFolder, "simple_test.ftl.html")).text == getFileResource("expected/simple_test.ftl.html").text
     }
 

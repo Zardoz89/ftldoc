@@ -5,13 +5,13 @@
 <head>
     <meta charset="${.output_encoding}" />
     <link rel="stylesheet" type="text/css" href="ftldoc.css" />
-    <title>ftldoc - Overview</title>
+    <title><#if title?has_content>${title} - </#if>Overview</title>
 </head>
 <body>
 <@ftl.navigationBar files fileSuffix/>
 <main>
-<h1>Overview</h1>
-
+<h1><#if title?has_content>${title} - </#if>Overview</h1>
+${readme!}
 </main>
 </body>
 </html>
