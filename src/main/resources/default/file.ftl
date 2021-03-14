@@ -23,64 +23,61 @@
 
 <#-- start prolog -->
 <h1>${filename}</h1>
-<#if comment.comment?has_content>
+<#if comment.comment?has_content && comment.comment?trim?length gt 0>
     ${comment.comment}<br/>
 </#if>
-<dl>
-    <@ftl.printOptional comment.@author?if_exists, "Author" />
-    <@ftl.printOptional comment.@version?if_exists, "Version" />
-</dl>
-<#-- end prolog -->
-
-<#-- start summary -->
-<table>
-    <tr><td colspan="2" class="heading">Macro and Function Summary</td></tr>
-        <#list categories?keys as category>
-            <#if categories[category]?has_content>
-                <tr><td colspan="2" class="category">
-                <#if category?has_content>
-                    Category ${category}
-                <#else>
-                    no category
-                </#if>
-                </td></tr>
-                <#list categories[category] as macro>
-                    <tr>
-                        <td width="100px" valign="top">
-                            <code>${macro.type}</code>
-                        </td>
-                        <td>
-                            <dl>
-                                <dt>
-                                    <code>
-                                        <b><a href="#${macro.name}">
-                                            ${macro.name}</a>
-                                        </b>
-                                        <@ftl.signature macro />
-                                    </code>
-                                </dt>
-                                <dd>
-                                    ${macro.short_comment?if_exists}
-                                </dd>
-                            </dl>
-                        </td>
-                    </tr>
-                </#list>
-            </#if>
-        </#list>
-</table>
-
-<#-- end summary -->
-<br>
-<#-- start details -->
-
-<table>
-    <tr><td colspan="2" class="heading">Macro and Function Detail</td></tr>
-</table>
-<#list macros as macro>
+<#if comment.@author?if_exists || comment.@version?if_exists >
     <dl>
+        <@ftl.printOptional comment.@author?if_exists, "Author" />
+        <@ftl.printOptional comment.@version?if_exists, "Version" />
+    </dl>
+</#if>
+<#-- end prolog -->
+<#-- start summary -->
+<h3>Macro and Function Summary</h3>
+<#list categories?keys as category>
+    <#if categories[category]?has_content>
+        <#if category?has_content>
+            <h5>Category ${category}</h5>
+        <#else>
+            <h5>no category</h5>
+        </#if>
+        <table class="summary">
+            <tbody>
+                <#list categories[category] as macro>
+                <tr>
+                    <td class="summary__type">
+                        <code>${macro.type}</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#${macro.name}">
+                                        ${macro.name}
+                                    </a>
+                                    <@ftl.signature macro />
+                                </code>
+                            </dt>
+                            <dd>
+                                ${macro.short_comment?if_exists}
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                </#list>
+            </body>
+        </table>
+    </#if>
+</#list>
+<#-- end summary -->
+
+<#-- start details -->
+<h3>Macro and Function Detail</h3>
+<#list macros as macro>
+    <dl class="macro">
         <dt>
-            <code>${macro.type} <b><a name="${macro.name}">${macro.name}</a></b>
+            <code class="macro__signature">${macro.type} <a name="${macro.name}">${macro.name}</a>
                 <@ftl.signature macro />
             </code>
         </dt>
@@ -98,7 +95,7 @@
             </dl>
         </dd>
     </dl>
-    <#if macro_has_next><hr></#if>
+    <#sep><hr/></#sep>
 </#list>
 
 <#-- end details -->

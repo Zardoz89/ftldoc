@@ -102,13 +102,12 @@
     <#if macro.isfunction>
         (
         <#list macro.arguments as argument>
-            ${argument}
-            <#if argument_has_next>,</#if>
+            <span class="macro__signature-argument">${argument!}</span><#sep> , </#sep>
         </#list>
         )
     <#else>
         <#list macro.arguments as argument>
-            ${argument}
+            <span class="macro__signature-argument">${argument!}</span>
         </#list>
     </#if>
 </#macro>
