@@ -25,30 +25,41 @@ public class FtlDocMojo extends AbstractMojo {
     @Parameter( property = "freemarkerFileExtesion", defaultValue ="ftl")
     private String freemarkerFileExtension;
 
+    @Parameter(property = "readmeFile", defaultValue = "readme.html")
+    private File readmeFile;
+
+    @Parameter(property = "title", defaultValue = "FtlDoc")
+    private String title;
+
+    @Parameter(property = "freemarkerVersion", defaultValue = "2.3.31")
+    private String freemarkerVersion;
+
+    @Override
     public void execute() throws MojoExecutionException {
         if (this.freemarkerFiles.length == 0) {
-            getLog().error("Required parameter 'freemarkerFiles' is empty. Please fill it.");
+            this.getLog().error("Required parameter 'freemarkerFiles' is empty. Please fill it.");
             return;
         }
-        List<File> ftlFiles = this.expandFiles(Arrays.asList(freemarkerFiles));
+        List<File> ftlFiles = this.expandFiles(Arrays.asList(this.freemarkerFiles));
         
-        getLog().info( "Will generate doc into " + outputDirectory);
+        this.getLog().info( "Will generate doc into " + this.outputDirectory);
         if (this.templateDirectory != null) {
-            getLog().info("With templates from " + templateDirectory );
+            this.getLog().info("With templates from " + this.templateDirectory );
         }
-        getLog().info( "Files to process in: " + Arrays.asList(freemarkerFiles));
+        this.getLog().info("Readme files to process : " + this.readmeFile);
+        this.getLog().info( "Files to process in: " + Arrays.asList(this.freemarkerFiles));
         if (this.freemarkerFileExtension != null) {
-            getLog().info("Files filtered by extesion : " + this.freemarkerFileExtension);
+            this.getLog().info("Files filtered by extesion : " + this.freemarkerFileExtension);
         }
-        outputDirectory.mkdirs();
-        FtlDoc ftl = new FtlDoc(ftlFiles, outputDirectory, templateDirectory);
+        this.outputDirectory.mkdirs();
+        FtlDoc ftl = new FtlDoc(ftlFiles, this.outputDirectory, this.templateDirectory, this.readmeFile, this.title,
+            this.freemarkerVersion);
         ftl.run();
-        getLog().info( "Finished generating doc" );
+        this.getLog().info( "Finished generating doc" );
     }
-
     
     private List<File>  expandFiles (List<File> paramFiles) {
-        List<File> realFreemarkerFiles = new ArrayList<File>();
+        List<File> realFreemarkerFiles = new ArrayList<>();
         for (File f : paramFiles) {
             if (f.isFile()) {
                 if (this.freemarkerFileExtension == null 

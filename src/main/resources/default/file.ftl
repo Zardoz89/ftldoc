@@ -1,45 +1,11 @@
-<#import "ftl_highlight.ftl" as ftl>
-
+<#ftl encoding="UTF-8" output_format="HTML" />
+<#import "lib.ftl" as ftl>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="${.output_encoding}" />
-    <title>ftldoc</title>
-    <link rel="stylesheet" type="text/css" href="eclipse.css" />
-    <style>
-        table {
-            width: 100%;
-        }
-        td {
-            background-color: White;
-        }
-        td.heading {
-            padding: 3px;
-            font-weight: bold;
-            font-size: 18px;
-            background-color: #CCCCFF;
-        }
-        td.category {
-            padding: 3px;
-            font-weight: bold;
-            font-size: 14px;
-            background-color: #DDDDFF;
-        }
-        div.sourcecode {
-            display: none;
-            border : 1px solid Black;
-            background-color : #DDDDDD; /* #E8E8E8; */
-            padding : 3px;
-            margin-top : 8px;
-        }
-
-
-        span {font-family:Courier; font-size:12px}
-        span.directive {color:blue}
-        span.userdirective {color:red}
-        span.interpolation {color:green}
-        span.textblock {color:black}
-        span.comment {color:brown}
-    </style>
+    <title><#if title?has_content>${title} - </#if>${filename}</title>
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
     <script language="javascript">
         function toggle(id) {
             elem = document.getElementById(id);
@@ -49,144 +15,90 @@
                 elem.style.display="block";
             }
         }
-
-        function setTitle() {
-            parent.document.title="${filename}";
-        }
     </script>
 </head>
-<body onLoad="setTitle();">
-<#include "nav.ftl">
+<body>
+<@ftl.navigationBar files fileSuffix/>
+<main>
 
 <#-- start prolog -->
-<h3>${filename}</h3>
-<#if comment.comment?has_content>
-    ${comment.comment}<br>
+<h1>${filename}</h1>
+<#if comment.comment?has_content && comment.comment?trim?length gt 0>
+    ${comment.comment}<br/>
 </#if>
-<dl>
-    <@printOptional comment.@author?if_exists, "Author" />
-    <@printOptional comment.@version?if_exists, "Version" />
-</dl>
-<#-- end prolog -->
-
-<#-- start summary -->
-<table border="1" cellpadding="4">
-    <tr><td colspan="2" class="heading">Macro and Function Summary</td></tr>
-        <#list categories?keys as category>
-            <#if categories[category]?has_content>
-                <tr><td colspan="2" class="category">
-                <#if category?has_content>
-                    Category ${category}
-                <#else>
-                    no category
-                </#if>
-                </td></tr>
-                <#list categories[category] as macro>
-                    <tr>
-                        <td width="100px" valign="top">
-                            <code>${macro.type}</code>
-                        </td>
-                        <td>
-                            <dl>
-                                <dt>
-                                    <code>
-                                        <b><a href="#${macro.name}">
-                                            ${macro.name}</a>
-                                        </b>
-                                        <@signature macro />
-                                    </code>
-                                </dt>
-                                <dd>
-                                    ${macro.short_comment?if_exists}
-                                </dd>
-                            </dl>
-                        </td>
-                    </tr>
-                </#list>
-            </#if>
-        </#list>
-</table>
-
-<#-- end summary -->
-<br>
-<#-- start details -->
-
-<table border="1" cellpadding="4">
-    <tr><td colspan="2" class="heading">Macro and Function Detail</td></tr>
-</table>
-<#list macros as macro>
+<#if comment.@author?if_exists || comment.@version?if_exists >
     <dl>
-        <dt><code>${macro.type} <b><a name="${macro.name}">${macro.name}</a></b>
-                <@signature macro />
-        </code></dt>
+        <@ftl.printOptional comment.@author?if_exists, "Author" />
+        <@ftl.printOptional comment.@version?if_exists, "Version" />
+    </dl>
+</#if>
+<#-- end prolog -->
+<#-- start summary -->
+<h3>Macro and Function Summary</h3>
+<#list categories?keys as category>
+    <#if categories[category]?has_content>
+        <#if category?has_content>
+            <h5>Category ${category}</h5>
+        <#else>
+            <h5>no category</h5>
+        </#if>
+        <table class="summary">
+            <tbody>
+                <#list categories[category] as macro>
+                <tr>
+                    <td class="summary__type">
+                        <code>${macro.type}</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#${macro.name}">
+                                        ${macro.name}
+                                    </a>
+                                    <@ftl.signature macro />
+                                </code>
+                            </dt>
+                            <dd>
+                                ${macro.short_comment?if_exists}
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                </#list>
+            </body>
+        </table>
+    </#if>
+</#list>
+<#-- end summary -->
+
+<#-- start details -->
+<h3>Macro and Function Detail</h3>
+<#list macros as macro>
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">${macro.type} <a name="${macro.name}">${macro.name}</a>
+                <@ftl.signature macro />
+            </code>
+        </dt>
         <dd>
-            <br>
-        <#if macro.@deprecated??>
-                <@printDeprecated macro.@deprecated/>
-            </#if>
+            <#if macro.@deprecated??><@ftl.printDeprecated macro.@deprecated/></#if>
             <#if macro.comment?has_content>
-                ${macro.comment}<br><br>
+                <p>${macro.comment!}</p>
             </#if>
             <dl>
-                <@printOptional macro.category?if_exists, "Category" />
-                <@printParameters macro />
-                <@printOptional macro.@nested?if_exists, "Nested" />
-                <@printOptional macro.@return?if_exists, "Return value" />
-                <@printSourceCode macro />
+                <@ftl.printOptional macro.category?if_exists, "Category" />
+                <@ftl.printParameters macro />
+                <@ftl.printOptional macro.@nested?if_exists, "Nested" />
+                <@ftl.printOptional macro.@return?if_exists, "Return value" />
+                <@ftl.printSourceCode macro />
             </dl>
         </dd>
     </dl>
-    <#if macro_has_next><hr></#if>
+    <#sep><hr/></#sep>
 </#list>
 
 <#-- end details -->
-
+</main>
 </body>
 </html>
-
-<#macro printParameters macro>
-    <#if macro.@param?has_content>
-        <dt><b>Parameters</b></dt>
-        <dd>
-            <#list macro.@param as param>
-                <code>${param.name}</code> - ${param.description}<br>
-            </#list>
-        </dd>
-    </#if>
-</#macro>
-
-<#macro printSourceCode macro>
-    <dt><a href="javascript:toggle('sc_${macro.name}');">Source Code</a></dt>
-    <dd>
-        <div class="sourcecode" id="sc_${macro.name}">
-            <@ftl.print root=macro.node/>
-        </div>
-    </dd>
-</#macro>
-
-<#macro printOptional value label>
-    <#if value?has_content>
-        <dt><b>${label}</b></dt>
-        <dd>${value}</dd>
-    </#if>
-</#macro>
-
-<#macro printDeprecated reason>
-    <dt>&#9888; Deprecated<#if reason?? && reason?trim?length != 0>: ${reason}</#if>
-    </dt><br />
-</#macro>
-
-<#macro signature macro>
-    <#if macro.isfunction>
-        (
-        <#list macro.arguments as argument>
-            ${argument}
-            <#if argument_has_next>,</#if>
-        </#list>
-        )
-    <#else>
-        <#list macro.arguments as argument>
-            ${argument}
-        </#list>
-    </#if>
-</#macro>

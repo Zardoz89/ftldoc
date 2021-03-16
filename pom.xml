@@ -13,11 +13,22 @@
         <maven>3.3.0</maven>
     </prerequisites>
 
+    <properties>
+        <java-release.version>8</java-release.version>
+        <java.version>1.${java-release.version}</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <freemarker.version>2.3.31</freemarker.version>
+        <junit5.version>5.7.1</junit5.version>
+        <junit-platform-runner.version>1.7.1</junit-platform-runner.version>
+        <groovy.version>2.5.14</groovy.version>
+        <spock.version>2.0-M4-groovy-2.5</spock.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.26-incubating</version>
+            <version>${freemarker.version}</version>
             <type>jar</type>
         </dependency>
 
@@ -25,6 +36,12 @@
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
             <version>3.3.9</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.7</version>
         </dependency>
 
         <!-- dependencies to annotations -->
@@ -35,6 +52,40 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <version>${spock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${groovy.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-engine</artifactId>
+            <version>${junit-platform-runner.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -53,11 +104,46 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <compilerId>groovy-eclipse-compiler</compilerId>
+                    <compilerArguments>
+                        <indy />
+                    </compilerArguments>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-compiler</artifactId>
+                        <version>3.4.0-01</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-batch</artifactId>
+                        <version>2.5.9-01</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/test/groovy</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -79,6 +165,17 @@
                             </goals>
                         </execution>
                     </executions>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M4</version>
+                    <configuration>
+                        <useFile>false</useFile>
+                        <includes>
+                            <include>**/*Test.java</include>
+                            <include>**/*Spec.java</include>
+                        </includes>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -105,8 +202,8 @@
         <connection>scm:git:git://github.com/mattsheppard/ftldoc.git</connection>
         <developerConnection>scm:git:ssh://github.com:mattsheppard/ftldoc.git</developerConnection>
         <url>http://github.com/mattsheppard/ftldoc/tree/master</url>
-      <tag>ftldoc-maven-plugin-0.0.2</tag>
-  </scm>
+        <tag>ftldoc-maven-plugin-0.0.2</tag>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
@@ -119,11 +216,25 @@
         </repository>
     </distributionManagement>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <profiles>
+        <profile>
+            <id>modern-jdk</id>
+            <activation><jdk>[1.9,]</jdk></activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration combine.self="override">
+                            <release>${java-release.version}</release>
+                            <compilerId>groovy-eclipse-compiler</compilerId>
+                            <compilerArguments>
+                                <indy />
+                            </compilerArguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>release</id>
             <build>
@@ -131,7 +242,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>2.2.1</version>
+                        <version>3.0.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -144,7 +255,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.9.1</version>
+                        <version>3.1.1</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
