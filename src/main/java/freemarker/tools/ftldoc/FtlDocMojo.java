@@ -31,7 +31,7 @@ public class FtlDocMojo extends AbstractMojo {
     @Parameter(property = "title", defaultValue = "FtlDoc")
     private String title;
 
-    @Parameter(property = "freemarkerVersion", defaultValue = "2.3.26")
+    @Parameter(property = "freemarkerVersion", defaultValue = "2.3.31")
     private String freemarkerVersion;
 
     @Override
