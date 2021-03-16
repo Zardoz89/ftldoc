@@ -40,6 +40,7 @@ import freemarker.core.TextBlock;
 import freemarker.template.Configuration;
 import freemarker.template.SimpleHash;
 import freemarker.template.Template;
+import freemarker.template.Version;
 
 /**
  * Main ftldoc class (includes command line tool).
@@ -71,29 +72,189 @@ public class FtlDoc
     private File fAltTemplatesFolder;
     private File readmeFile;
     private String title;
+    private Version freemarkerVersion;
 
     List<CategoryRegion> regions = new LinkedList<>();
 
     private Configuration cfg = null;
 
-    public FtlDoc(List<File> files, File outputDir, File altTemplatesFolder, File readmeFile, String title)
+    public FtlDoc(List<File> files, File outputDir, File altTemplatesFolder, File readmeFile, String title, String freemarkerVersionString)
     {
-        this.cfg = new Configuration(Configuration.VERSION_2_3_26); // TODO parametrice version compatibility
-        this.cfg.setWhitespaceStripping(false);
-        this.cfg.setOutputEncoding(OUTPUT_ENCODING);
-
         this.fOutDir = outputDir;
         this.fFiles = files;
         this.fAltTemplatesFolder = altTemplatesFolder;
         this.readmeFile = readmeFile;
         this.title = title;
+        this.freemarkerVersion = new Version(freemarkerVersionString);
+
+        this.cfg = new Configuration(this.freemarkerVersion);
+        this.cfg.setWhitespaceStripping(false);
+        this.cfg.setOutputEncoding(OUTPUT_ENCODING);
 
         // extracting parent directories of all files
         this.fAllDirectories = new HashSet<>();
         for (File f : files) {
             this.fAllDirectories.add(f.getParentFile());
         }
+    }
 
+    /**
+     * Starts the ftldoc generation.
+     */
+    public void run()
+    {
+        try {
+            // init global collections
+            this.allCategories = new TreeMap<>();
+            this.allMacros = new ArrayList<>();
+            this.fParsedFiles = new ArrayList<>();
+
+            List<TemplateLoader> loaders = new ArrayList<>(this.fAllDirectories.size() + 1);
+            // Loads documantation generation templates
+            loaders.add(this.loadDocumentationTemplates());
+
+            // add loader for every directory
+            loaders.addAll(this.loadSourceTemplates());
+
+            TemplateLoader[] loadersArray = loaders.toArray(new TemplateLoader[0]);
+            TemplateLoader loader = new MultiTemplateLoader(loadersArray);
+            this.cfg.setTemplateLoader(loader);
+
+            // = create template for file page
+            // Sort files
+            Collections.sort(this.fFiles, new Comparator<File>() {
+                @Override
+                public int compare(File lhs, File rhs)
+                {
+                    return lhs.getName().compareTo(rhs.getName());
+                }
+            });
+
+            // create file pages
+            for (File element : this.fFiles) {
+                this.createFilePage(element);
+            }
+
+            // sort categories
+            for (List<Map<String, Object>> l : this.allCategories.values()) {
+                Collections.sort(l, MACRO_COMPARATOR);
+            }
+
+            // create the rest
+            this.createIndexPage();
+            this.createAllCatPage();
+            this.createAllAlphaPage();
+            this.copyCssFiles();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private TemplateLoader loadDocumentationTemplates()
+        throws IOException
+    {
+        if (this.fAltTemplatesFolder != null) {
+            return new FileTemplateLoader(this.fAltTemplatesFolder);
+        }
+        return new ClassTemplateLoader(this.getClass(), "/default");
+    }
+
+    private List<TemplateLoader> loadSourceTemplates()
+        throws IOException
+    {
+        List<TemplateLoader> loaders = new ArrayList<>();
+        for (File file : this.fAllDirectories) {
+            loaders.add(new FileTemplateLoader(file));
+        }
+        return loaders;
+    }
+
+    private void createFilePage(File file)
+    {
+        try {
+            File htmlFile = new File(this.fOutDir, file.getName() + ".html");
+            System.out.println("Generating " + htmlFile.getCanonicalFile() + "...");
+
+            Template t_out = this.cfg.getTemplate(Templates.file.fileName());
+            this.categories = new TreeMap<>();
+            TemplateElement te = null;
+            Comment globalComment = null;
+            Template t = this.cfg.getTemplate(file.getName());
+            this.macros = new ArrayList<>();
+            Set<Comment> comments = new HashSet<>();
+            Map ms = t.getMacros();
+
+            this.createCategoryRegions(t);
+
+            Iterator macroIter = ms.values().iterator();
+            while (macroIter.hasNext()) {
+                Macro macro = (Macro)macroIter.next();
+                int k = macro.getParent().getIndex(macro);
+                for (int j = k - 1; j >= 0; j--) {
+                    te = (TemplateElement)macro.getParent().getChildAt(j);
+                    if (te instanceof TextBlock) {
+                        if (((TextBlock)te).getSource().trim().length() == 0) {
+                            continue;
+                        } else {
+                            this.addMacro(this.createCommentedMacro(macro, null, file));
+                            break;
+                        }
+                    } else if (te instanceof Comment) {
+                        Comment c = (Comment)te;
+                        comments.add(c);
+                        if (c.getText().startsWith("-")) {
+                            this.addMacro(this.createCommentedMacro(macro, c, file));
+                            break;
+                        }
+                    } else {
+                        this.addMacro(this.createCommentedMacro(macro, null, file));
+                        break;
+                    }
+                }
+            }
+
+            te = t.getRootTreeNode();
+            if (te.getClass().getName().endsWith("MixedContent")) {
+                Enumeration children = te.children();
+                while (children.hasMoreElements()) {
+                    Object element = children.nextElement();
+                    if (element instanceof Comment) {
+                        Comment candidate = (Comment)element;
+                        if (candidate.getText().startsWith("-")) {
+                            if (!comments.contains(candidate)) {
+                                globalComment = candidate;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            Collections.sort(this.macros, MACRO_COMPARATOR);
+            for (List<Map<String, Object>> l : this.categories.values()) {
+                Collections.sort(l, MACRO_COMPARATOR);
+            }
+
+            SimpleHash root = new SimpleHash();
+            root.put("macros", this.macros);
+            if (null != globalComment) {
+                root.put("comment", this.parse(globalComment));
+            } else {
+                root.put("comment", new SimpleHash());
+            }
+            root.put("filename", t.getName());
+            root.put("categories", this.categories);
+            this.putGlobalVars(root);
+
+            try (OutputStreamWriter outputStream = new OutputStreamWriter(
+                new FileOutputStream(htmlFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
+                t_out.process(root, outputStream);
+            }
+            this.fParsedFiles.add(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void addCategory(String name)
@@ -189,160 +350,11 @@ public class FtlDoc
         allCat.add(macro);
     }
 
-    private void createFilePage(File file)
-    {
-        try {
-            File htmlFile = new File(this.fOutDir, file.getName() + ".html");
-            System.out.println("Generating " + htmlFile.getCanonicalFile() + "...");
-
-            Template t_out = this.cfg.getTemplate(Templates.file.fileName());
-            this.categories = new TreeMap<>();
-            TemplateElement te = null;
-            Comment globalComment = null;
-            Template t = this.cfg.getTemplate(file.getName());
-            this.macros = new ArrayList<>();
-            Set<Comment> comments = new HashSet<>();
-            Map ms = t.getMacros();
-
-            this.createCategoryRegions(t);
-
-            Iterator macroIter = ms.values().iterator();
-            while (macroIter.hasNext()) {
-                Macro macro = (Macro)macroIter.next();
-                int k = macro.getParent().getIndex(macro);
-                for (int j = k - 1; j >= 0; j--) {
-                    te = (TemplateElement)macro.getParent().getChildAt(j);
-                    if (te instanceof TextBlock) {
-                        if (((TextBlock)te).getSource().trim().length() == 0) {
-                            continue;
-                        } else {
-                            this.addMacro(this.createCommentedMacro(macro, null, file));
-                            break;
-                        }
-                    } else if (te instanceof Comment) {
-                        Comment c = (Comment)te;
-                        comments.add(c);
-                        if (c.getText().startsWith("-")) {
-                            this.addMacro(this.createCommentedMacro(macro, c, file));
-                            break;
-                        }
-                    } else {
-                        this.addMacro(this.createCommentedMacro(macro, null, file));
-                        break;
-                    }
-                }
-            }
-
-            te = t.getRootTreeNode();
-            if (te.getClass().getName().endsWith("MixedContent")) {
-                Enumeration children = te.children();
-                while (children.hasMoreElements()) {
-                    Object element = children.nextElement();
-                    if (element instanceof Comment) {
-                        Comment candidate = (Comment)element;
-                        if (candidate.getText().startsWith("-")) {
-                            if (!comments.contains(candidate)) {
-                                globalComment = candidate;
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-
-            Collections.sort(this.macros, MACRO_COMPARATOR);
-            for (List<Map<String, Object>> l : this.categories.values()) {
-                Collections.sort(l, MACRO_COMPARATOR);
-            }
-
-            SimpleHash root = new SimpleHash();
-            root.put("macros", this.macros);
-            if (null != globalComment) {
-                root.put("comment", this.parse(globalComment));
-            } else {
-                root.put("comment", new SimpleHash());
-            }
-            root.put("filename", t.getName());
-            root.put("categories", this.categories);
-            this.putGlobalVars(root);
-
-            try (OutputStreamWriter outputStream = new OutputStreamWriter(
-                new FileOutputStream(htmlFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
-                t_out.process(root, outputStream);
-            }
-            this.fParsedFiles.add(root);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void putGlobalVars(SimpleHash root)
     {
         root.put("title", this.title);
         root.put("files", this.fFiles);
         root.put("fileSuffix", ".html");
-    }
-
-    /**
-     * Starts the ftldoc generation.
-     *
-     */
-    public void run()
-    {
-
-        try {
-            // init global collections
-            this.allCategories = new TreeMap<>();
-            this.allMacros = new ArrayList<>();
-            this.fParsedFiles = new ArrayList<>();
-
-            TemplateLoader[] loaders = new TemplateLoader[this.fAllDirectories.size() + 1];
-
-            // loader for ftldoc templates
-            if (this.fAltTemplatesFolder != null) {
-                loaders[0] = new FileTemplateLoader(this.fAltTemplatesFolder);
-            } else {
-                loaders[0] = new ClassTemplateLoader(this.getClass(), "/default");
-            }
-
-            // add loader for every directory
-            int i = 1;
-            for (Iterator<File> it = this.fAllDirectories.iterator(); it.hasNext(); i++) {
-                loaders[i] = new FileTemplateLoader(it.next());
-            }
-
-            TemplateLoader loader = new MultiTemplateLoader(loaders);
-            this.cfg.setTemplateLoader(loader);
-
-            // = create template for file page
-            // Sort files
-            Collections.sort(this.fFiles, new Comparator<File>() {
-                @Override
-                public int compare(File lhs, File rhs)
-                {
-                    return lhs.getName().compareTo(rhs.getName());
-                }
-            });
-
-            // create file pages
-            for (File element : this.fFiles) {
-                this.createFilePage(element);
-            }
-
-            // sort categories
-            for (List<Map<String, Object>> l : this.allCategories.values()) {
-                Collections.sort(l, MACRO_COMPARATOR);
-            }
-
-            // create the rest
-            this.createIndexPage();
-            this.createAllCatPage();
-            this.createAllAlphaPage();
-            this.copyCssFiles();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     private void createAllCatPage()

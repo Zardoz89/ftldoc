@@ -31,6 +31,9 @@ public class FtlDocMojo extends AbstractMojo {
     @Parameter(property = "title", defaultValue = "FtlDoc")
     private String title;
 
+    @Parameter(property = "freemarkerVersion", defaultValue = "2.3.26")
+    private String freemarkerVersion;
+
     @Override
     public void execute() throws MojoExecutionException {
         if (this.freemarkerFiles.length == 0) {
@@ -49,7 +52,8 @@ public class FtlDocMojo extends AbstractMojo {
             this.getLog().info("Files filtered by extesion : " + this.freemarkerFileExtension);
         }
         this.outputDirectory.mkdirs();
-        FtlDoc ftl = new FtlDoc(ftlFiles, this.outputDirectory, this.templateDirectory, this.readmeFile, this.title);
+        FtlDoc ftl = new FtlDoc(ftlFiles, this.outputDirectory, this.templateDirectory, this.readmeFile, this.title,
+            this.freemarkerVersion);
         ftl.run();
         this.getLog().info( "Finished generating doc" );
     }

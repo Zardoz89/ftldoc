@@ -26,7 +26,7 @@ class FtlDocSpec extends Specification {
         List<File> files = [
             this.getFileResource("test/simple_test.ftl")
         ]
-        def ftlDoc = new FtlDoc(files, outputFolder, null, this.getFileResource("test/readme.html"), "FtlDoc test")
+        def ftlDoc = new FtlDoc(files, outputFolder, null, this.getFileResource("test/readme.html"), "FtlDoc test", "2.3.26")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
