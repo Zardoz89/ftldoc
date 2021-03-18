@@ -5,6 +5,7 @@ Generates HTML documentation for FTL templates and macros.
 * Original author: [chaquotay](https://github.com/chaquotay/ftldoc)
 * Improvements: [nguillaumin](https://github.com/nguillaumin/ftldoc)
 * Changed to a maven plugin: [msheppard](https://github.com/msheppard/ftldoc)
+* Improvements, redo templates, add some test code and support for types and default values: [zardoz](https://github.com/Zardoz89)
 
 ## Usage
 
@@ -30,8 +31,12 @@ You'll need to run `mvn install` on this project to install the plugin locally (
                                 <freemarkerFile>${project.build.directory}/src/main/resources/example1.ftl</freemarkerFile>
                                 <freemarkerFile>${project.build.directory}/src/main/resources/example2.ftl</freemarkerFile>
                             </freemarkerFiles>
-                            <templateDirectory>${project.basedir}/src/main/resources/templates</templateDirectory>
                             <outputDirectory>${project.build.directory}/documentation</outputDirectory>
+                            <title>FtlDoc</title>
+                            <readmeFile>${project.build.directory}/src/main/resources/readme.html</readmeFile>
+                            <freemarkerVersion>2.3.31</freemarkerVersion>
+                            <templateDirectory>${project.basedir}/src/main/resources/templates</templateDirectory>
+                            <freemarkerFileExtesion>ftl</freemarkerFileExtesion>
                          </configuration>
                      </execution>
                  </executions>
@@ -43,17 +48,22 @@ You'll need to run `mvn install` on this project to install the plugin locally (
 
 ```
 
-### Usage as CLI
+Where :
 
-(WIP)
+* freemarkerFiles : A list of paths to FTL files or directories containing FTL files that will be parsed to generate the documentation.
+* outputDirectory : Output directoty. By default it's : ${project.build.directory}/ftldocs
+* title : Title of the documentation generated. By default it's FtlDoc
+* readmeFile : A path to a HTML file to be embed inside of the output index.html
+* freemarkerVersion : Version of [freemarker compatibility](https://freemarker.apache.org/docs/pgui_config_incompatible_improvements.html). By default it's 2.3.31
+* templateDirectory : A path where to use custom freemarker templates to generate the documentation.
+* freemarkerFileExtesion : Freemarker files extensión. By default it's "ftl"
+
+### Usage as CLI
 
 Example:
 ```
-mvn freemarker:ftldoc-maven-plugin:0.0.2-SNAPSHOT:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
+mvn freemarker:ftldoc-maven-plugin:0.0.3:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
 ```
-
-templateDirectory not should be necesary, but on my small test, I need to add it and point to a folder with a valid template files
-
 
 ## Comment syntax
 
@@ -63,7 +73,16 @@ The comments to process must start with a `<#---` tag (3 dashes). This is to mim
 
 The first sentence of the comment (until the first dot) will be used a short description in the summary table.
 
-Macro parameters should be indicated using `@param <name> <description>`.
+Macro parameters should be indicated using : 
+
+Old style :
+ * `@param <name> <description>`.
+ * `@param <name> {Type} <description>`.
+ 
+JsDoc style :
+ * `@param {Type} <name> <description>`.
+ * `@param {Type} [<name>] <description>`.
+ * `@param {Type} [<name>=DefaultValue] <description>`.
 
 HTML is permitted within comments.
 
@@ -112,11 +131,9 @@ Macro can be put in categories. To embed a group of macros in a category, use th
 ## Custom templates
 
 The generated doco is based on FreeMarker templates. There is a default set of templates provided but you can use your own.
-To do so, use the `-tpl </path/to/tpl/folder` option. The folder must contains the following files:
+To do so, use the `-DtemplateDirectory </path/to/tpl/folder` option. The folder must contains the following files:
 
 * `file.ftl` : Used for a single `.ftl` file documentation.
-* `index.ftl` : Index page (frameset).
+* `index.ftl` : Index/Welcome page
 * `index-all-cat.ftl` : Index of categories.
 * `index-all-alpha.ftl` : Alphabetical index.
-* `overview.ftl` : Overview (list of documented `.ftl` libraries).
-* `filelist.ftl` : List of documented `.ftl` files (Left side of the frameset). 

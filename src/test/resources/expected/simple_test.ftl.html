@@ -116,7 +116,7 @@
                                 </code>
                             </dt>
                             <dd>
-                                 Macro to generate HTML attributes from a hash cintaint &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;
+                                 Macro to generate HTML attributes from a hash containing &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;
                             </dd>
                         </dl>
                     </td>
@@ -164,11 +164,11 @@
     
         (
         
-            <span class="macro__signature-argument">condicion</span> , 
+            <span class="macro__signature-argument">condition</span> , 
         
-            <span class="macro__signature-argument">valor1</span> , 
+            <span class="macro__signature-argument">value1</span> , 
         
-            <span class="macro__signature-argument">valor2</span>
+            <span class="macro__signature-argument">value2</span>
         
         )
     
@@ -297,7 +297,7 @@
         <dd>
             
             
-                <p> Macro to generate HTML attributes from a hash cintaint &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;</p>
+                <p> Macro to generate HTML attributes from a hash containing &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;</p>
             
             <dl>
                 
@@ -477,11 +477,11 @@
     
         (
         
-            <span class="macro__signature-argument">condicion</span> , 
+            <span class="macro__signature-argument">condition</span> , 
         
-            <span class="macro__signature-argument">valor1</span> , 
+            <span class="macro__signature-argument">value1</span> , 
         
-            <span class="macro__signature-argument">valor2</span>
+            <span class="macro__signature-argument">value2</span>
         
         )
     
@@ -502,6 +502,40 @@
 
                 
     
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>condition</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">Boolean</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Expression that evaluates on a <code>boolean</code> value
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
 
                 
     
@@ -517,7 +551,7 @@
 
 
 
-<span class="directive">&lt;#function&nbsp;iif&nbsp;condicion&nbsp;valor1&nbsp;valor2&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;condicion&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;valor1&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;valor2&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
+<span class="directive">&lt;#function&nbsp;iif&nbsp;condition&nbsp;value1&nbsp;value2&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;condition&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;value1&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;value2&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
 
 
 
@@ -631,10 +665,13 @@
                     <td class="name"><code>seq</code></td>
                     <td class="type">
                         
+                            <span class="param-type">Sequence</span>
+                            
+                        
                     </td>
                     <td class="description">
                         
-                        {Sequence} Sequecen to be converted to String
+                        Sequence to be converted to String
                         
                     </td>
                 </tr>
@@ -646,7 +683,7 @@
                     </td>
                     <td class="description">
                         
-                        (Optional) Seperator element. By default it&#39;s a space (&quot; &quot;)
+                        (Optional) Seperator element. By default it's a space (" ")
                         
                     </td>
                 </tr>

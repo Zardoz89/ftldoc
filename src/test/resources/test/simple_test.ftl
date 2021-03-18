@@ -34,7 +34,7 @@
 <#-- @begin Opening another section -->
 <#--*********************************************************************** -->
 <#---
-    Macro to generate HTML attributes from a hash cintaint <AttributeName : Value>
+    Macro to generate HTML attributes from a hash containing <AttributeName : Value>
     Attribute names are normalized, replacing '_' by '-'
     @param {Hash} vars  Map with pairs of attribute name - value
     @param [exclude] A list of attributes to be ignored
@@ -84,18 +84,19 @@
 
 <#---
     Function that emulates C/Java '?' operator
+    @param condition {Boolean} Expression that evaluates on a <code>boolean</code> value
 -->
-<#function iif condicion valor1 valor2>
-    <#if condicion>
-        <#return valor1 />
+<#function iif condition value1 value2>
+    <#if condition>
+        <#return value1 />
     <#else>
-        <#return valor2 />
+        <#return value2 />
     </#if>
 </#function>
 
 <#---
     Function that generates a string from a sequence, putting a separator bettwen elements
-    @param seq {Sequence} Sequecen to be converted to String
+    @param seq {Sequence} Sequence to be converted to String
     @param separador (Optional) Seperator element. By default it's a space (" ")
 -->
 <#function join seq separator = " ">

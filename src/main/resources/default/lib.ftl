@@ -59,7 +59,7 @@
                     </td>
                     <td class="description">
                         <#if param.optional!false><em>(Optional)</em> </#if>
-                        ${param.description!}
+                        ${(param.description!)?no_esc}
                         <#if param.def_val?has_content>
                         <br/>
                         Default value : ${param.def_val!}
@@ -87,14 +87,14 @@
 <#macro printOptional value label>
     <#if value?has_content>
         <dt><b>${label}</b></dt>
-        <dd>${value}</dd>
+        <dd>${value?no_esc}</dd>
     </#if>
 </#macro>
 
 <#macro printDeprecated reason>
 <#compress>
     <span class="deprecated">&#9888; Deprecated</span><#t/>
-    <#if reason?has_content><span class="deprecated__reason">${reason}</span></#if><#t/>
+    <#if reason?has_content><span class="deprecated__reason">${reason?no_esc}</span></#if><#t/>
 </#compress>
 </#macro>
 

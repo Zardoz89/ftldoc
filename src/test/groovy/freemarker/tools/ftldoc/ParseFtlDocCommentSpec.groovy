@@ -40,18 +40,17 @@ class ParseFtlDocCommentSpec extends Specification {
         def params = output.get("@param") as SimpleSequence
         def param = params.get(0) as SimpleHash
         param.get("name").toString() == name
+        param.get("type").toList() == type
         param.get("description").toString() == description
 
         where:
-        comment                                                             || name             | description
-        "@param arg Description"                                            || "arg"            | "Description"
-        "          @param arg Description"                                  || "arg"            | "Description"
-        "@param    arg Description"                                         || "arg"            | "Description"
-        "@param arg        Description"                                     || "arg"            | "Description"
-        "@param arg2 Ludo ergo sum"                                         || "arg2"           | "Ludo ergo sum"
-        "@param {TypeExp} arg3 - Bla bla bla"                               || "arg3"           | "Bla bla bla"
-        "@param {String|Number} arg3 Bla bla bla"                           || "arg3"           | "Bla bla bla"
-        "@param {Number} [arg=1] Bla bla bla"                               || "arg"            | "Bla bla bla"
+        comment                                                             || name             | type          | description
+        "@param arg Description"                                            || "arg"            | []            | "Description"
+        "          @param arg Description"                                  || "arg"            | []            | "Description"
+        "@param    arg Description"                                         || "arg"            | []            | "Description"
+        "@param arg        Description"                                     || "arg"            | []            | "Description"
+        "@param arg2 Ludo ergo sum"                                         || "arg2"           | []            | "Ludo ergo sum"
+        "@param arg2 {String} Ludo ergo sum"                                || "arg2"           | ["String"]    | "Ludo ergo sum"
     }
 
     @Unroll
