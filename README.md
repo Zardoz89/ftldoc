@@ -11,7 +11,7 @@ Generates HTML documentation for FTL templates and macros.
 
 You'll need to run `mvn install` on this project to install the plugin locally (or deploy it to your local nexus), and then add something like the following to the pom.xml for the project in which you want it to generate documentation.
 
-```
+```xml
 ...
     <build>
         <plugins>
@@ -61,7 +61,7 @@ Where :
 ### Usage as CLI
 
 Example:
-```
+```bash
 mvn freemarker:ftldoc-maven-plugin:0.0.3:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
 ```
 
@@ -88,14 +88,14 @@ HTML is permitted within comments.
 
 Example:
 
-```
+```xml
 <#---
 	Does fancy stuff.
 	
 	<p>And does it well !</p>
 	
 	@param fist The first parameter.
-	@param second The second parameter, a <code>boolean</code>.
+	@param {Boolean} [second=false] The second parameter, a <code>boolean</code>.
 -->
 <#macro MyMacro first="" second=false>
     ...
@@ -130,7 +130,7 @@ Macro can be put in categories. To embed a group of macros in a category, use th
 
 ## Custom templates
 
-The generated doco is based on FreeMarker templates. There is a default set of templates provided but you can use your own.
+The generated documentation is based on FreeMarker templates. There is a default set of templates provided but you can use your own.
 To do so, use the `-DtemplateDirectory </path/to/tpl/folder` option. The folder must contains the following files:
 
 * `file.ftl` : Used for a single `.ftl` file documentation.
