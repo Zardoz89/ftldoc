@@ -1,3 +1,6 @@
+*.swp
+~*
+
 out
 build
 .classpath

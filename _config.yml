@@ -1,1 +1,3 @@
 theme: jekyll-theme-midnight
+title: FtlDoc 
+description: A documentation generator for Freemarker templates

@@ -7,6 +7,12 @@ Generates HTML documentation for FTL templates and macros.
 * Changed to a maven plugin: [msheppard](https://github.com/msheppard/ftldoc)
 * Improvements, redo templates, add some test code and support for types and default values: [zardoz](https://github.com/Zardoz89)
 
+License : [MIT](LICENSE)
+
+[Changelog](CHANGES)
+
+Example : [Simple test](examples/simple_test/index.html)
+
 ## Usage
 
 You'll need to run `mvn install` on this project to install the plugin locally (or deploy it to your local nexus), and then add something like the following to the pom.xml for the project in which you want it to generate documentation.
@@ -73,12 +79,12 @@ The comments to process must start with a `<#---` tag (3 dashes). This is to mim
 
 The first sentence of the comment (until the first dot) will be used a short description in the summary table.
 
-Macro parameters should be indicated using : 
+Macro parameters should be indicated using :
 
 Old style :
  * `@param <name> <description>`.
  * `@param <name> {Type} <description>`.
- 
+
 JsDoc style :
  * `@param {Type} <name> <description>`.
  * `@param {Type} [<name>] <description>`.
@@ -90,12 +96,12 @@ Example:
 
 ```xml
 <#---
-	Does fancy stuff.
-	
-	<p>And does it well !</p>
-	
-	@param fist The first parameter.
-	@param {Boolean} [second=false] The second parameter, a <code>boolean</code>.
+    Does fancy stuff.
+
+    <p>And does it well !</p>
+
+    @param fist The first parameter.
+    @param {Boolean} [second=false] The second parameter, a <code>boolean</code>.
 -->
 <#macro MyMacro first="" second=false>
     ...

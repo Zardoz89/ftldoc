@@ -1,0 +1,265 @@
+@charset "UTF-8";
+
+/* CSS Reset (take from https://github.com/vladocar/CSS-Mini-Reset )*/
+
+html,body,div,form,fieldset,
+legend,caption,label,
+h1,h2,h3,h4,h5,h6,
+p,blockquote,pre {
+  font-size: 100%;
+  font-weight: normal;
+
+  margin: 0;
+  padding: 0;
+
+  vertical-align: baseline;
+
+  border: 0;
+  outline: 0;
+  background: transparent;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  vertical-align: top;
+}
+
+img {
+  border: 0;
+}
+
+/* End of CSS reset */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: #4d4e53;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Scalfolding */
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+h5 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+h6 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+p, dt, dd {
+  margin: 0 0 0.5rem 0;
+}
+
+dd:last-child {
+  margin-bottom: 0;
+}
+
+dl {
+  margin: 0;
+}
+
+tt,
+code,
+kbd,
+samp {
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  background: #f4f4f4;
+  padding: 1px 5px;
+}
+
+.deprecated {
+  font-weight: bolder;
+  color: #a00;
+}
+
+.deprecated__reason {
+  font-weight: bold;
+}
+.deprecated__reason::before {
+    content: ": ";
+}
+
+/* Basic layout */
+nav {
+  width: 250px;
+  background: #fff;
+  overflow: auto;
+  border-right: 1px solid #eee;
+  position: fixed;
+  height: 100vh;
+}
+
+main {
+  width: calc(100vw - 250px);
+  float: right;
+}
+
+nav, main {
+  padding: 1rem;
+}
+
+/* Navigation bar */
+nav ul {
+  padding: 0;
+}
+nav li {
+  list-style-type: none;
+}
+
+nav a,
+nav a:visited {
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Highlighting code */
+.sourcecode {
+  display: none;
+  padding: 15px;
+  margin-top: 8px;
+}
+
+span.directive {
+  color: blue
+}
+
+span.userdirective {
+  color: red
+}
+
+span.interpolation {
+  color: green
+}
+
+span.textblock {
+  color: black
+}
+
+span.comment {
+  color: brown
+}
+
+
+/* Tables */
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px #0000001a;
+  width: 100%;
+  margin: 0;
+}
+
+thead tr,
+thead tr {
+  background-color: #6d426d;
+  color: #fff;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+td, th {
+  margin: 0px;
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5rem;
+  display: table-cell;
+}
+
+tr {
+  border-top: 1px solid #eee;
+}
+
+.summary {
+  margin-bottom: 1rem;
+}
+
+.summary .summary__type {
+  width: 8em;
+}
+
+/* Parameters table */
+.params td,
+.params .name,
+.name code {
+  color: #4D4E53;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  font-size: 100%;
+}
+
+span.param-type,
+.params td .param-type {
+  color: #606;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+}
+
+/* Macro and macro signature */
+.macro__signature {
+  color: #999;
+}
+
+.macro__signature-argument {
+  color: #000;
+}
+
+.macro__signature a,
+.macro__signature a:visited {
+  text-decoration: none;
+  font-weight: bold;
+}
+.macro__signature a:hover {
+  text-decoration: underline;
+}
+
+.macro .macro__signature {
+  width: 100%;
+  display: block;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: #6d426d;
+  color: #ffbcff;
+}
+
+.macro .macro__signature-argument {
+  color: #fff;
+}
+
+.macro .macro__signature a {
+  color: #fc83ff;
+}
+
