@@ -68,7 +68,7 @@ Where :
 
 Example:
 ```bash
-mvn freemarker:ftldoc-maven-plugin:0.0.3:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
+mvn com.kstruct:ftldoc-maven-plugin:0.0.2:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
 ```
 
 ## Comment syntax
