@@ -97,7 +97,7 @@
 <#---
     Function that generates a string from a sequence, putting a separator bettwen elements
     @param seq {Sequence} Sequence to be converted to String
-    @param separador (Optional) Seperator element. By default it's a space (" ")
+    @param {String} [separator=" "]  Seperator element.
 -->
 <#function join seq separator = " ">
     <#local res = "" />

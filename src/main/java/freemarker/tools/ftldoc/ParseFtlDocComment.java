@@ -25,22 +25,28 @@ class ParseFtlDocComment
 {
     private static final Pattern LINESPLIT_PATTERN = Pattern.compile("(\\r\\n)|(\\r)|(\\n)");
 
-    // Regex that detects a JsDoc like @para, where group 1 it's TypeExpression , group 2 it's argument and group 3 is
-    // description. Examples :
+    private static final String SIMPLE_ARGNAME_REGEX = "(?:[a-zA-Z0-9_\\-]*)";
+    private static final String OPTINAL_REGEX = "(?:\\[" + SIMPLE_ARGNAME_REGEX + "(?:=(.*))?\\])";
+    private static final String JSDOC_PARAM_REGEX =
+        "^\\s*(?:--)?\\s*@param\\s*(\\{[a-zA-Z0-9_,|<>]*\\})?\\s*(" + OPTINAL_REGEX + "|" + SIMPLE_ARGNAME_REGEX
+            + ")(?:\\s|-)*(.*)$";
+
+    // Regex that detects a JsDoc like @para, where group 1 it's Type , group 2 it's argument, group 3 is default value
+    // and group 4 it's description. Examples :
     // @param {TypeExpresion} arg Description
     // @param {TypeExpresion} [arg=defVal] Description
     // @param [arg] Description
-    private static final Pattern JSDOC_PARAM_PATTERN = Pattern.compile(
-        "^\\s*(?:--)?\\s*@param\\s*(\\{[a-zA-Z0-9_,|<>]*\\})?\\s*([a-zA-Z0-9_=\\[\\]\\-\"\"]+)(?:\\s|-)*(.*)$");
+    private static final Pattern JSDOC_PARAM_PATTERN = Pattern.compile(JSDOC_PARAM_REGEX);
     // Regex that detects a "@param XXXX {YYYY} ZZZZ", where group 1 is XXXX , group 2 it's YYYY and group 3 its ZZZZ
     private static final Pattern PARAM_PATTERN =
-        Pattern.compile("^\\s*(?:--)?\\s*@param\\s*(\\w+)\\s*(\\{[a-zA-Z0-9_,|<>]*\\})?\\s*(.*)$");
+        Pattern
+            .compile("^\\s*(?:--)?\\s*@param\\s*(" + SIMPLE_ARGNAME_REGEX + ")\\s*(\\{[a-zA-Z0-9_,|<>]*\\})?\\s*(.*)$");
     // Regex that detects a "@XXXX YYYY", where group 1 is XXXX and group 2 it's YYYY
     private static final Pattern AT_PATTERN = Pattern.compile("^\\s*(?:--)?\\s*(@\\w+)\\s*(.*)$");
     // Regex that detects a text line
     private static final Pattern TEXT_PATTERN = Pattern.compile("^\\s*(?:--)?(.*)$");
     // Regex that extracts data from a optional argument
-    private static final Pattern OPTIONAL_PATTERN = Pattern.compile("\\[[a-zA-Z0-9_\\-]*(?:=([a-zA-Z0-9_\"\"])*)?\\]");
+    private static final Pattern OPTIONAL_PATTERN = Pattern.compile(OPTINAL_REGEX);
 
     private static final String PARAM_KEYWORD = "@param";
     private static final String NAME = "name";
@@ -79,37 +85,36 @@ class ParseFtlDocComment
         String lastParamName = "";
         for (String line2 : lines) {
             line = line2;
-            if ((m = PARAM_PATTERN.matcher(line)).matches()) {
-                ParamInformation param = new ParamInformation();
-                param.name = m.group(1);
-                lastParamName = param.name;
-
-                param.typeExpressions = Arrays.asList(
-                    StringUtils.split(
-                        StringUtils.removeEnd(StringUtils.removeStart(StringUtils.defaultString(m.group(2)), "{"), "}"),
-                        '|'));
-
-                param.description = m.group(3);
-
-                paramsCache.put(lastParamName, param);
-
-            } else if ((m = JSDOC_PARAM_PATTERN.matcher(line)).matches()) {
+            if ((m = JSDOC_PARAM_PATTERN.matcher(line)).matches()) {
                 ParamInformation param = new ParamInformation();
                 param.name = m.group(2);
                 param.name = StringUtils.removeStart(param.name, "[");
                 param.name = StringUtils.removeEnd(param.name, "]");
                 param.name = (StringUtils.split(param.name, '='))[0];
                 lastParamName = param.name;
-                param.typeExpressions = Arrays.asList(
-                    StringUtils.split(
-                        StringUtils.removeEnd(StringUtils.removeStart(StringUtils.defaultString(m.group(1)), "{"), "}"),
-                        '|'));
-                param.description = m.group(3);
-
-                if ((m = OPTIONAL_PATTERN.matcher(m.group(2))).matches()) {
-                    param.optional = true;
-                    param.defaultValue = m.group(1);
+                param.typeExpressions = getTypeExpressions(m.group(1));
+                param.description = m.group(4);
+                if (param.typeExpressions.isEmpty() && param.description.startsWith("{")) {
+                    int closingIndex = param.description.indexOf("}");
+                    if (closingIndex != -1) {
+                        param.typeExpressions = getTypeExpressions(param.description.substring(0, closingIndex));
+                        param.description = StringUtils.stripStart(param.description.substring(closingIndex), " }");
+                    }
                 }
+
+                param.optional = StringUtils.startsWith(m.group(2), "[") && StringUtils.endsWith(m.group(2), "]");
+                if (StringUtils.isNotEmpty(m.group(3))) {
+                    param.defaultValue = m.group(3);
+                }
+
+                paramsCache.put(lastParamName, param);
+            } else if ((m = PARAM_PATTERN.matcher(line)).matches()) {
+                ParamInformation param = new ParamInformation();
+                param.name = m.group(1);
+                lastParamName = param.name;
+
+                param.typeExpressions = getTypeExpressions(m.group(2));
+                param.description = m.group(3);
 
                 paramsCache.put(lastParamName, param);
 
@@ -161,6 +166,14 @@ class ParseFtlDocComment
         }
 
         return result;
+    }
+
+    private static List<String> getTypeExpressions(String exp)
+    {
+        return Arrays.asList(
+            StringUtils.split(
+                StringUtils.removeEnd(StringUtils.removeStart(StringUtils.defaultString(exp), "{"), "}"),
+                '|'));
     }
 
     private static class ParamInformation

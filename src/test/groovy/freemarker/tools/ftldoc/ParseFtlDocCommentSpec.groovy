@@ -79,6 +79,8 @@ class ParseFtlDocCommentSpec extends Specification {
         "@param {String|Number} arg3 Bla bla bla"       || "arg3"   | ["String", "Number"]      | false     | null      | "Bla bla bla"
         "@param {Number} [arg] Bla bla bla"             || "arg"    | ["Number"]                | true      | null      | "Bla bla bla"
         "@param {Number} [arg=1] Bla bla bla"           || "arg"    | ["Number"]                | true      | "1"       | "Bla bla bla"
+        '@param {String} [arg=""] Bla bla bla'          || "arg"    | ["String"]                | true      | '""'      | "Bla bla bla"
+        '@param {String} [arg=" "] Bla bla bla'         || "arg"    | ["String"]                | true      | '" "'     | "Bla bla bla"
         "@param [arg] Bla bla bla"                      || "arg"    | []                        | true      | null      | "Bla bla bla"
         "@param [arg=1] Bla bla bla"                    || "arg"    | []                        | true      | "1"       | "Bla bla bla"
         "@param {Hash<String,String>} map - Bla"        || "map"    | ["Hash<String,String>"]   | false     | null      | "Bla"
