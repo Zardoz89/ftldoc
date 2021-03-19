@@ -7,7 +7,7 @@ Generates HTML documentation for FTL templates and macros.
 * Changed to a maven plugin: [msheppard](https://github.com/msheppard/ftldoc)
 * Improvements, redo templates, add some test code and support for types and default values: [zardoz](https://github.com/Zardoz89)
 
-License : [MIT](LICENSE)
+License : [MIT](LICENSE.md)
 
 [Changelog](CHANGES)
 
