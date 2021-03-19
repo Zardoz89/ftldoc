@@ -1,3 +1,16 @@
+0.0.3
+
+- Updated Freemaker to 2.3.31
+- Added to @param an optional entry for type.
+- Added support of JsDoc @param style annotations
+- Added some basic tests using JUnit 5 + Spock 2
+- Added maven configuration parameters to change :
+    - Freemarker compatibility version
+    - Title
+    - Embed readme/welcome text
+- Strong refactor of templates to adopt a modern style, without using
+    framesets.
+
 0.0.2
 
 - Updated Freemarker from 2.3.17 to 2.3.26-incubating
