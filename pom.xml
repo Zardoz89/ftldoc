@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.zardoz89</groupId>
     <artifactId>ftldoc-maven-plugin</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.3</version>
     <packaging>maven-plugin</packaging>
 
     <name>ftldoc - Maven Plugin</name>
@@ -211,13 +211,10 @@
     </scm>
   
     <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Zardoz89/ftldoc</url>
         </repository>
     </distributionManagement>
 
