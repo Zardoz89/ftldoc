@@ -7,7 +7,7 @@
 
     <name>ftldoc - Maven Plugin</name>
     <description>Maven plugin to extract documentation from FreeMarker macro libraries</description>
-    <url>https://github.com/mattsheppard/ftldoc</url>
+    <url>https://zardoz89.github.io/ftldoc/</url>
 
     <prerequisites>
         <maven>3.3.0</maven>
@@ -196,15 +196,20 @@
             <organization>kstruct.com</organization>
             <organizationUrl>https://github.com/mattsheppard</organizationUrl>
         </developer>
+        <developer>
+            <id>Zardoz89</id>
+            <name>Luis Panadero Guardeño</name>
+            <email>luis.panadero(at)gmail.com</email>
+        </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/mattsheppard/ftldoc.git</connection>
-        <developerConnection>scm:git:ssh://github.com:mattsheppard/ftldoc.git</developerConnection>
-        <url>http://github.com/mattsheppard/ftldoc/tree/master</url>
-        <tag>ftldoc-maven-plugin-0.0.2</tag>
+        <url>https://zardoz89.github.io/ftldoc/</url>
+        <connection>scm:git:https://github.com/Zardoz89/ftldoc.git</connection>
+        <developerConnection>scm:git:git@github.com:Zardoz89/ftldoc.git</developerConnection>
+        <tag>HEAD</tag>
     </scm>
-
+  
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
