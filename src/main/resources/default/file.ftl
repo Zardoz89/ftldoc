@@ -24,12 +24,19 @@
 <#-- start prolog -->
 <h1>${filename}</h1>
 <#if comment.comment?has_content && comment.comment?trim?length gt 0>
-    ${comment.comment}<br/>
+    ${comment.comment?no_esc}<br/>
 </#if>
-<#if comment.@author?if_exists || comment.@version?if_exists >
+<#if comment.@author?? || comment.@version?? || comment.@copyright?? >
     <dl>
-        <@ftl.printOptional comment.@author?if_exists, "Author" />
-        <@ftl.printOptional comment.@version?if_exists, "Version" />
+        <#if comment.@author?? >
+            <@ftl.printOptional comment.@author "Author" />
+        </#if>
+        <#if comment.@version?? >
+            <@ftl.printOptional comment.@version "Version" />
+        </#if>
+        <#if comment.@copyright?? >
+            <@ftl.printOptional comment.@copyright "Copyright" />
+        </#if>
     </dl>
 </#if>
 <#-- end prolog -->
