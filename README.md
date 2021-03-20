@@ -11,7 +11,9 @@ License : [MIT](LICENSE.md)
 
 [Changelog](CHANGES)
 
-Example : [Simple test](examples/simple_test/index.html)
+Examples :
+* [Simple test](examples/simple_test/index.html)
+* [Own default templates](examples/default_templates/index.html)
 
 ## Usage
 

@@ -1,0 +1,853 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>FtlDoc - ftl_highlight.ftl</title>
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
+    <script language="javascript">
+        function toggle(id) {
+            elem = document.getElementById(id);
+            if(elem.style.display=="block") {
+                elem.style.display="none";
+            } else {
+                elem.style.display="block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="index-all-cat.html">Index (categorical)</a></li>
+        <li><a href="index-all-alpha.html">Index (alphabetical)</a></li>
+    </ul>
+    
+    <h6>Macro Libraries</h6>
+    <ul>
+    
+        <li><a href="file.ftl.html">file.ftl</a></li>
+    
+        <li><a href="ftl_highlight.ftl.html">ftl_highlight.ftl</a></li>
+    
+        <li><a href="index-all-alpha.ftl.html">index-all-alpha.ftl</a></li>
+    
+        <li><a href="index-all-cat.ftl.html">index-all-cat.ftl</a></li>
+    
+        <li><a href="index.ftl.html">index.ftl</a></li>
+    
+        <li><a href="lib.ftl.html">lib.ftl</a></li>
+    
+    </ul>
+
+</nav>
+
+<main>
+
+
+<h1>ftl_highlight.ftl</h1>
+
+      This ftl macro library provides macros used to display nodes  of the AST (=Abstract Syntax Tree) of a FreeMarker template. The  data displayed by the macro <tt>print</tt> has to be of type  <code>TemplateNodeModel</code>. In most cases one should use  <tt>freemarker.tools.ftldoc.TemplateElementNode</tt>,  which is part of the <tt>ftldoc</tt> distro.  <br/>
+
+
+    <dl>
+        
+            
+    
+        <dt><b>Author</b></dt>
+        <dd>Stephan Mueller</dd>
+    
+
+        
+        
+            
+    
+        <dt><b>Version</b></dt>
+        <dd>0.1</dd>
+    
+
+        
+        
+    </dl>
+
+
+
+<h3>Macro and Function Summary</h3>
+
+    
+        
+            <h5>Category fm4xml-style macros for TemplateElements-s</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#comment">
+                                        comment
+                                    </a>
+                                    
+    
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                  handler macro for ftl comments.
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#directive">
+                                        directive
+                                    </a>
+                                    
+    
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                  handler macro for ftl directives.
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#interpolation">
+                                        interpolation
+                                    </a>
+                                    
+    
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                  handler macro for ftl interpolations.
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#textblock">
+                                        textblock
+                                    </a>
+                                    
+    
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                  handler macro for ftl text blocks.
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#userdirective">
+                                        userdirective
+                                    </a>
+                                    
+    
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                  handler macro for ftl user-defined directives.
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+    
+        
+            <h5>Category helper macros</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>function</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#format">
+                                        format
+                                    </a>
+                                    
+    
+        (
+        
+            <span class="macro__signature-argument">text</span>
+        
+        )
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#nobr">
+                                        nobr
+                                    </a>
+                                    
+    
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                  Removes disturbing newlines which produces a (unwanted) blank when  rendered by a browser  
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>function</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#removeEOL">
+                                        removeEOL
+                                    </a>
+                                    
+    
+        (
+        
+            <span class="macro__signature-argument">text</span>
+        
+        )
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+    
+        
+            <h5>Category main macro</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#print">
+                                        print
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">root</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                  The macro &lt;code&gt;print(root)&lt;/code&gt; is the entry point for highlighted  syntax output in html.
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+
+
+
+<h3>Macro and Function Detail</h3>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="comment">comment</a>
+                
+    
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p>  handler macro for ftl comments. This macro doesn&#39;t require any arguments  since the FM4XML mechanism provides the current directive as &lt;code&gt;.node&lt;/code&gt;  variable.  </p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>fm4xml-style macros for TemplateElements-s</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_comment'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_comment">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;comment&gt;</span><span class="textblock"><br/></span><span class="userdirective">&lt;@nobr&gt;</span><span class="textblock"><br/>&lt;span&nbsp;class=&quot;comment&quot;&gt;<br/></span><span class="interpolation">${format(.node.start?html)}</span><span class="textblock"><br/>&lt;/span&gt;<br/></span><span class="userdirective">&lt;/@nobr&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="directive">directive</a>
+                
+    
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p>  handler macro for ftl directives. This macro doesn&#39;t require any arguments  since the FM4XML mechanism provides the current directive as &lt;code&gt;.node&lt;/code&gt;  variable.  </p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>fm4xml-style macros for TemplateElements-s</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_directive'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_directive">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;directive&gt;</span><span class="textblock"><br/></span><span class="userdirective">&lt;@nobr&gt;</span><span class="textblock"><br/>&lt;span&nbsp;class=&quot;directive&quot;&gt;<br/></span><span class="interpolation">${format(.node.start?html)}</span><span class="textblock"><br/>&lt;/span&gt;<br/></span><span class="directive">&lt;#recurse&gt;</span><span class="directive"></span><span class="textblock"><br/>&lt;span&nbsp;class=&quot;directive&quot;&gt;<br/></span><span class="interpolation">${format(.node.end?html)}</span><span class="textblock"><br/>&lt;/span&gt;<br/></span><span class="userdirective">&lt;/@nobr&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">function <a name="format">format</a>
+                
+    
+        (
+        
+            <span class="macro__signature-argument">text</span>
+        
+        )
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>helper macros</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_format'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_format">
+            
+
+
+
+<span class="directive">&lt;#function&nbsp;format&nbsp;text&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;#return&nbsp;text?replace(&quot;&nbsp;&quot;,&quot;&amp;nbsp;&quot;)?replace(&quot;\n&quot;,&quot;&lt;br/&gt;&quot;)&gt;</span><span class="directive"></span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="interpolation">interpolation</a>
+                
+    
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p>  handler macro for ftl interpolations. This macro doesn&#39;t require any arguments  since the FM4XML mechanism provides the current directive as &lt;code&gt;.node&lt;/code&gt;  variable.  </p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>fm4xml-style macros for TemplateElements-s</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_interpolation'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_interpolation">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;interpolation&gt;</span><span class="textblock"><br/></span><span class="userdirective">&lt;@nobr&gt;</span><span class="textblock"><br/>&lt;span&nbsp;class=&quot;interpolation&quot;&gt;<br/></span><span class="interpolation">${format(.node.start?html)}</span><span class="textblock"><br/>&lt;/span&gt;<br/></span><span class="userdirective">&lt;/@nobr&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="nobr">nobr</a>
+                
+    
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p>  Removes disturbing newlines which produces a (unwanted) blank when  rendered by a browser  </p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>helper macros</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_nobr'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_nobr">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;nobr&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;#assign&nbsp;text&gt;</span><span class="directive">&lt;#nested&gt;</span><span class="directive"></span><span class="directive">&lt;/#assign&gt;</span><span class="textblock"><br/></span><span class="interpolation">${removeEOL(text)}</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="print">print</a>
+                
+    
+        
+            <span class="macro__signature-argument">root</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p>  The macro &lt;code&gt;print(root)&lt;/code&gt; is the entry point for highlighted  syntax output in html. Any wrapped descendant of  &lt;code&gt;freemarker.core.TemplateElement&lt;/code&gt; can be root of the display  process. A suitable model that could wrap &lt;code&gt;TemplateElement&lt;/code&gt;-s  is &lt;code&gt;org.visigoths.freemarker.tools.ftldoc.TemplateElementNode&lt;/code&gt;. </p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>main macro</dd>
+    
+
+                
+    
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>root</code></td>
+                    <td class="type">
+                        
+                    </td>
+                    <td class="description">
+                        
+                        the root (of type node) of the template (fragment) to be displayed 
+
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_print'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_print">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;print&nbsp;root&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;#visit&nbsp;root&gt;</span><span class="directive"></span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">function <a name="removeEOL">removeEOL</a>
+                
+    
+        (
+        
+            <span class="macro__signature-argument">text</span>
+        
+        )
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>helper macros</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_removeEOL'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_removeEOL">
+            
+
+
+
+<span class="directive">&lt;#function&nbsp;removeEOL&nbsp;text&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;#return&nbsp;text?replace(&quot;\r\n&quot;,&quot;&quot;)?replace(&quot;\n&quot;,&quot;&quot;)&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="textblock">textblock</a>
+                
+    
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p>  handler macro for ftl text blocks. This macro doesn&#39;t require any arguments  since the FM4XML mechanism provides the current directive as &lt;code&gt;.node&lt;/code&gt;  variable.  </p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>fm4xml-style macros for TemplateElements-s</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_textblock'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_textblock">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;textblock&gt;</span><span class="textblock"><br/></span><span class="userdirective">&lt;@nobr&gt;</span><span class="textblock"><br/>&lt;span&nbsp;class=&quot;textblock&quot;&gt;<br/></span><span class="interpolation">${format(.node.start?html)}</span><span class="textblock"><br/>&lt;/span&gt;<br/></span><span class="userdirective">&lt;/@nobr&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="userdirective">userdirective</a>
+                
+    
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p>  handler macro for ftl user-defined directives. This macro doesn&#39;t require any arguments  since the FM4XML mechanism provides the current directive as &lt;code&gt;.node&lt;/code&gt;  variable.  </p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>fm4xml-style macros for TemplateElements-s</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_userdirective'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_userdirective">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;userdirective&gt;</span><span class="textblock"><br/></span><span class="userdirective">&lt;@nobr&gt;</span><span class="textblock"><br/>&lt;span&nbsp;class=&quot;userdirective&quot;&gt;<br/></span><span class="interpolation">${format(.node.start?html)}</span><span class="textblock"><br/>&lt;/span&gt;<br/></span><span class="directive">&lt;#recurse&gt;</span><span class="directive"></span><span class="textblock"><br/>&lt;span&nbsp;class=&quot;userdirective&quot;&gt;<br/></span><span class="interpolation">${format(.node.end?html)}</span><span class="textblock"><br/>&lt;/span&gt;<br/></span><span class="userdirective">&lt;/@nobr&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    
+
+
+
+</main>
+</body>
+</html>

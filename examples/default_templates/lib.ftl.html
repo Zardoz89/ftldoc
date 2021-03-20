@@ -1,0 +1,750 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>FtlDoc - lib.ftl</title>
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
+    <script language="javascript">
+        function toggle(id) {
+            elem = document.getElementById(id);
+            if(elem.style.display=="block") {
+                elem.style.display="none";
+            } else {
+                elem.style.display="block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="index-all-cat.html">Index (categorical)</a></li>
+        <li><a href="index-all-alpha.html">Index (alphabetical)</a></li>
+    </ul>
+    
+    <h6>Macro Libraries</h6>
+    <ul>
+    
+        <li><a href="file.ftl.html">file.ftl</a></li>
+    
+        <li><a href="ftl_highlight.ftl.html">ftl_highlight.ftl</a></li>
+    
+        <li><a href="index-all-alpha.ftl.html">index-all-alpha.ftl</a></li>
+    
+        <li><a href="index-all-cat.ftl.html">index-all-cat.ftl</a></li>
+    
+        <li><a href="index.ftl.html">index.ftl</a></li>
+    
+        <li><a href="lib.ftl.html">lib.ftl</a></li>
+    
+    </ul>
+
+</nav>
+
+<main>
+
+
+<h1>lib.ftl</h1>
+
+
+
+
+<h3>Macro and Function Summary</h3>
+
+    
+        
+            <h5>Category Navigation related macros</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#_fileList">
+                                        _fileList
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">files</span>
+        
+            <span class="macro__signature-argument">fileSuffix</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                 Internal macro that generates the file list
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#navigationBar">
+                                        navigationBar
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">files</span>
+        
+            <span class="macro__signature-argument">fileSuffix</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                 Generates the navigation bar
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+    
+        
+            <h5>Category Printing macro information</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#printDeprecated">
+                                        printDeprecated
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">reason</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#printOptional">
+                                        printOptional
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">value</span>
+        
+            <span class="macro__signature-argument">label</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#printParameters">
+                                        printParameters
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">macro</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#printSourceCode">
+                                        printSourceCode
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">macro</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#signature">
+                                        signature
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">macro</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+
+
+
+<h3>Macro and Function Detail</h3>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="_fileList">_fileList</a>
+                
+    
+        
+            <span class="macro__signature-argument">files</span>
+        
+            <span class="macro__signature-argument">fileSuffix</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Internal macro that generates the file list</p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>Navigation related macros</dd>
+    
+
+                
+    
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>files</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">Sequence&lt;File&gt;</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        List of files
+                        
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td class="name"><code>fileSuffix</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Suffix of file name (ie. extension) 
+
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc__fileList'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc__fileList">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;_fileList&nbsp;files&nbsp;fileSuffix&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h6&gt;Macro&nbsp;Libraries&lt;/h6&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;files&nbsp;as&nbsp;file&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;</span><span class="interpolation">${file.name}</span><span class="interpolation">${fileSuffix}</span><span class="textblock">&quot;&gt;</span><span class="interpolation">${file.name}</span><span class="textblock">&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="navigationBar">navigationBar</a>
+                
+    
+        
+            <span class="macro__signature-argument">files</span>
+        
+            <span class="macro__signature-argument">fileSuffix</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Generates the navigation bar</p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>Navigation related macros</dd>
+    
+
+                
+    
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>files</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">Sequence&lt;File&gt;</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        List of files
+                        
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td class="name"><code>fileSuffix</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Suffix of file name (ie. extension) 
+
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_navigationBar'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_navigationBar">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;navigationBar&nbsp;files&nbsp;fileSuffix&gt;</span><span class="textblock"><br/>&lt;nav&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index.html&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-cat.html&quot;&gt;Index&nbsp;(categorical)&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-alpha.html&quot;&gt;Index&nbsp;(alphabetical)&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@_fileList&nbsp;files&nbsp;fileSuffix&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&lt;/nav&gt;<br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="printDeprecated">printDeprecated</a>
+                
+    
+        
+            <span class="macro__signature-argument">reason</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>Printing macro information</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_printDeprecated'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_printDeprecated">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;printDeprecated&nbsp;reason&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;#compress&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;span&nbsp;class=&quot;deprecated&quot;&gt;&amp;#9888;&nbsp;Deprecated&lt;/span&gt;</span><span class="directive">&lt;#if&nbsp;reason?has_content&gt;</span><span class="textblock">&lt;span&nbsp;class=&quot;deprecated__reason&quot;&gt;</span><span class="interpolation">${reason?no_esc}</span><span class="textblock">&lt;/span&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="directive">&lt;#t/&gt;<br/>&lt;/#compress&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="printOptional">printOptional</a>
+                
+    
+        
+            <span class="macro__signature-argument">value</span>
+        
+            <span class="macro__signature-argument">label</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>Printing macro information</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_printOptional'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_printOptional">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;printOptional&nbsp;value&nbsp;label&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;value?has_content&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dt&gt;&lt;b&gt;</span><span class="interpolation">${label}</span><span class="textblock">&lt;/b&gt;&lt;/dt&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dd&gt;</span><span class="interpolation">${value?no_esc}</span><span class="textblock">&lt;/dd&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="printParameters">printParameters</a>
+                
+    
+        
+            <span class="macro__signature-argument">macro</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>Printing macro information</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_printParameters'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_printParameters">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;printParameters&nbsp;macro&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;macro.@param?has_content&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dt&gt;&lt;b&gt;Parameters&lt;/b&gt;&lt;/dt&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dd&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;macro.@param?has_content&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;table&nbsp;class=&quot;params&quot;&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;thead&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Name&lt;/th&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Type&lt;/th&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;th&gt;Description&lt;/th&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/thead&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tbody&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;macro.@param&nbsp;as&nbsp;param&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;tr&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;class=&quot;name&quot;&gt;&lt;code&gt;</span><span class="interpolation">${param.name!}</span><span class="textblock">&lt;/code&gt;&lt;/td&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;class=&quot;type&quot;&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;param.type&nbsp;as&nbsp;type&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span&nbsp;class=&quot;param-type&quot;&gt;</span><span class="interpolation">${type!}</span><span class="textblock">&lt;/span&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#sep&gt;</span><span class="textblock">|</span><span class="directive">&lt;/#sep&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;td&nbsp;class=&quot;description&quot;&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;param.optional!false&gt;</span><span class="textblock">&lt;em&gt;(Optional)&lt;/em&gt;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="interpolation">${(param.description!)?no_esc}</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;param.def_val?has_content&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;br/&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Default&nbsp;value&nbsp;:&nbsp;</span><span class="interpolation">${param.def_val!}</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/td&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tr&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/tbody&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/table&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/dd&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="printSourceCode">printSourceCode</a>
+                
+    
+        
+            <span class="macro__signature-argument">macro</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>Printing macro information</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_printSourceCode'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_printSourceCode">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;printSourceCode&nbsp;macro&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;dt&gt;&lt;a&nbsp;href=&quot;#&quot;&nbsp;onClick=&quot;toggle(&#39;sc_</span><span class="interpolation">${macro.name}</span><span class="textblock">&#39;);&nbsp;return&nbsp;false;&quot;&gt;Source&nbsp;Code&lt;/a&gt;&lt;/dt&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;dd&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&nbsp;class=&quot;sourcecode&quot;&nbsp;id=&quot;sc_</span><span class="interpolation">${macro.name}</span><span class="textblock">&quot;&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@print&nbsp;root=macro.node/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/dd&gt;<br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="signature">signature</a>
+                
+    
+        
+            <span class="macro__signature-argument">macro</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>Printing macro information</dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_signature'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_signature">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;signature&nbsp;macro&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;macro.isfunction&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;macro.arguments&nbsp;as&nbsp;argument&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span&nbsp;class=&quot;macro__signature-argument&quot;&gt;</span><span class="interpolation">${argument!}</span><span class="textblock">&lt;/span&gt;</span><span class="directive">&lt;#sep&gt;</span><span class="textblock">&nbsp;,&nbsp;</span><span class="directive">&lt;/#sep&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;macro.arguments&nbsp;as&nbsp;argument&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span&nbsp;class=&quot;macro__signature-argument&quot;&gt;</span><span class="interpolation">${argument!}</span><span class="textblock">&lt;/span&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    
+
+
+
+</main>
+</body>
+</html>
