@@ -70,7 +70,7 @@ Where :
 
 Example:
 ```bash
-mvn io.github.zardoz89:ftldoc-maven-plugin:0.0.3:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
+mvn io.github.zardoz89:ftldoc-maven-plugin:0.0.4-SNAPSHOT:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
 ```
 
 ## Comment syntax

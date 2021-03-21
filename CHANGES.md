@@ -1,3 +1,5 @@
+0.0.4-SNAPSHOT
+
 0.0.3
 
 - Updated Freemaker to 2.3.31
