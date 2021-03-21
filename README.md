@@ -11,6 +11,8 @@ License : [MIT](LICENSE.md)
 
 [Changelog](CHANGES)
 
+Maven repository : https://raw.githubusercontent.com/Zardoz89/ftldoc/repository/
+
 Examples :
 * [Simple test](examples/simple_test/index.html)
 * [Own default templates](examples/default_templates/index.html)
