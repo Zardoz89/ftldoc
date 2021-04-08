@@ -3,10 +3,10 @@
  */
 package freemarker.tools.ftldoc;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-
-import freemarker.template.SimpleHash;
-import freemarker.template.SimpleSequence;
 
 /**
  * Helper class to parse a Comment with FTLDoc anotations
@@ -64,14 +61,14 @@ class ParseFtlDocComment
     /**
      * Parses a string containg the comment text
      */
-    static Map<String, Serializable> parse(String commentText)
+    static Map<String, Object> parse(String commentText)
     {
         // always return a hash, even if doesn't have any content
         if (StringUtils.isEmpty(commentText)) {
             return Collections.emptyMap();
         }
 
-        Map<String, Serializable> result = new LinkedHashMap<>();
+        Map<String, Object> result = new LinkedHashMap<>();
         Map<String, ParamInformation> paramsCache = new LinkedHashMap<>();
 
         Matcher m;
@@ -150,7 +147,7 @@ class ParseFtlDocComment
         }
         String text = bufText.toString().replaceAll("\n", "");
 
-        SimpleSequence params = new SimpleSequence();
+        List<Map<String, Object>> params = new ArrayList<>();
         for (ParamInformation param : paramsCache.values()) {
             params.add(param.toHash());
         }
@@ -184,15 +181,15 @@ class ParseFtlDocComment
         String defaultValue;
         String description;
 
-        SimpleHash toHash()
+        Map<String, Object> toHash()
         {
-            SimpleHash hash = new SimpleHash();
+            Map<String, Object> hash = new HashMap<>();
             hash.put(NAME, this.name);
             hash.put(DESCRIPTION, this.description);
             hash.put(OPTIONAL, this.optional);
             hash.put(DEFAULT_VALUE, this.defaultValue);
 
-            SimpleSequence typeExpressionsSequence = new SimpleSequence();
+            List<String> typeExpressionsSequence = new ArrayList<>();
             for (String typeExpression : this.typeExpressions) {
                 typeExpressionsSequence.add(typeExpression);
             }

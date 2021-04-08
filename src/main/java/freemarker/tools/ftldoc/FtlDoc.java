@@ -1,3 +1,6 @@
+/*
+ * FtlDoc.java
+ */
 package freemarker.tools.ftldoc;
 
 import java.io.File;
@@ -6,7 +9,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
-import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -38,7 +40,6 @@ import freemarker.core.Macro;
 import freemarker.core.TemplateElement;
 import freemarker.core.TextBlock;
 import freemarker.template.Configuration;
-import freemarker.template.SimpleHash;
 import freemarker.template.Template;
 import freemarker.template.Version;
 
@@ -67,7 +68,7 @@ public class FtlDoc
     private List<Map<String, Object>> macros = null;
     private File fOutDir;
     private List<File> fFiles;
-    private List<SimpleHash> fParsedFiles;
+    private List<Map<String, Object>> fParsedFiles;
     private Set<File> fAllDirectories;
     private File fAltTemplatesFolder;
     private File readmeFile;
@@ -236,12 +237,12 @@ public class FtlDoc
                 Collections.sort(l, MACRO_COMPARATOR);
             }
 
-            SimpleHash root = new SimpleHash();
+            Map<String, Object> root = new HashMap<>();
             root.put("macros", this.macros);
             if (null != globalComment) {
                 root.put("comment", this.parse(globalComment));
             } else {
-                root.put("comment", new SimpleHash());
+                root.put("comment", new HashMap<>());
             }
             root.put("filename", t.getName());
             root.put("categories", this.categories);
@@ -272,7 +273,7 @@ public class FtlDoc
         this.regions = new LinkedList<>();
 
         TemplateElement te = t.getRootTreeNode();
-        Map<String, Serializable> pc;
+        Map<String, Object> pc;
         Comment c;
         Comment regionStart = null;
 
@@ -350,7 +351,7 @@ public class FtlDoc
         allCat.add(macro);
     }
 
-    private void putGlobalVars(SimpleHash root)
+    private void putGlobalVars(Map<String, Object> root)
     {
         root.put("title", this.title);
         root.put("files", this.fFiles);
@@ -362,7 +363,7 @@ public class FtlDoc
         File categoryFile = new File(this.fOutDir, "index-all-cat.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter(
             new FileOutputStream(categoryFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
-            SimpleHash root = new SimpleHash();
+            Map<String, Object> root = new HashMap<>();
             root.put("categories", this.allCategories);
             this.putGlobalVars(root);
             Template template = this.cfg.getTemplate(Templates.indexAllCat.fileName());
@@ -376,7 +377,7 @@ public class FtlDoc
         File allAlphaFile = new File(this.fOutDir, "index-all-alpha.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter(
             new FileOutputStream(allAlphaFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
-            SimpleHash root = new SimpleHash();
+            Map<String, Object> root = new HashMap<>();
             Collections.sort(this.allMacros, MACRO_COMPARATOR);
             root.put("macros", this.allMacros);
             this.putGlobalVars(root);
@@ -392,7 +393,7 @@ public class FtlDoc
         try (OutputStreamWriter outputStream = new OutputStreamWriter(
             new FileOutputStream(overviewFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             Template template = this.cfg.getTemplate(Templates.index.fileName());
-            SimpleHash root = new SimpleHash();
+            Map<String, Object> root = new HashMap<>();
             this.putGlobalVars(root);
             
             if (this.readmeFile != null && this.readmeFile.exists() && this.readmeFile.canRead()) {
@@ -469,7 +470,7 @@ public class FtlDoc
         return null;
     }
 
-    private Map<String, Serializable> parse(Comment comment)
+    private Map<String, Object> parse(Comment comment)
     {
         String commentText = null;
         if (comment != null) {
