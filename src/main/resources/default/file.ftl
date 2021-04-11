@@ -18,7 +18,7 @@
     </script>
 </head>
 <body>
-<@ftl.navigationBar files fileSuffix/>
+<@ftl.navigationBar categorizedFiles fileSuffix/>
 <main>
 
 <#-- start prolog -->

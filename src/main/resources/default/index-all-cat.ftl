@@ -8,7 +8,7 @@
     <title><#if title?has_content>${title} - </#if>Index by category</title>
 </head>
 <body>
-<@ftl.navigationBar files fileSuffix/>
+<@ftl.navigationBar categorizedFiles fileSuffix/>
 <main>
 <#list categories?keys as category>
     <#if categories[category]?has_content>

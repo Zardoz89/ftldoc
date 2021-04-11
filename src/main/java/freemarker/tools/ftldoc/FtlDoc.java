@@ -18,6 +18,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -78,7 +79,7 @@ public class FtlDoc
     private File outputDir;
     private List<File> sourceFiles;
     private List<Map<String, Object>> parsedFiles;
-    private Set<File> allDirectorioes;
+    private Map<File, List<File>> categorizedFiles;
     private File alternartiveTemplatesFolder;
     private File readmeFile;
     private String title;
@@ -105,9 +106,14 @@ public class FtlDoc
         this.cfg.setOutputEncoding(OUTPUT_ENCODING);
 
         // extracting parent directories of all files
-        this.allDirectorioes = new HashSet<>();
+        Collections.sort(this.sourceFiles, FILE_COMPARATOR);
+
+        this.categorizedFiles = new LinkedHashMap<>();
         for (File sourceFile : this.sourceFiles) {
-            this.allDirectorioes.add(sourceFile.getParentFile());
+            File parentFile = sourceFile.getParentFile();
+            List<File> filesOnCategory = this.categorizedFiles.getOrDefault(parentFile, new ArrayList<>());
+            filesOnCategory.add(sourceFile);
+            this.categorizedFiles.put(parentFile, filesOnCategory);
         }
     }
 
@@ -122,7 +128,7 @@ public class FtlDoc
             this.allMacros = new ArrayList<>();
             this.parsedFiles = new ArrayList<>();
 
-            List<TemplateLoader> loaders = new ArrayList<>(this.allDirectorioes.size() + 1);
+            List<TemplateLoader> loaders = new ArrayList<>(this.categorizedFiles.size() + 1);
             // Loads documantation generation templates
             loaders.add(this.loadDocumentationTemplates());
 
@@ -134,8 +140,6 @@ public class FtlDoc
             this.cfg.setTemplateLoader(loader);
 
             // = create template for file page
-            // Sort files
-            Collections.sort(this.sourceFiles, FILE_COMPARATOR);
 
             // create file pages
             for (File element : this.sourceFiles) {
@@ -171,7 +175,7 @@ public class FtlDoc
         throws IOException
     {
         List<TemplateLoader> loaders = new ArrayList<>();
-        for (File file : this.allDirectorioes) {
+        for (File file : this.categorizedFiles.keySet()) {
             loaders.add(new FileTemplateLoader(file));
         }
         return loaders;
@@ -361,6 +365,7 @@ public class FtlDoc
     {
         root.put("title", this.title);
         root.put("files", this.sourceFiles);
+        root.put("categorizedFiles", this.categorizedFiles);
         root.put("fileSuffix", ".html");
     }
 
