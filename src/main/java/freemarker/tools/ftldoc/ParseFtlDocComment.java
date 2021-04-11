@@ -87,7 +87,9 @@ class ParseFtlDocComment
                 param.name = m.group(2);
                 param.name = StringUtils.removeStart(param.name, "[");
                 param.name = StringUtils.removeEnd(param.name, "]");
-                param.name = (StringUtils.split(param.name, '='))[0];
+                if (StringUtils.isNotEmpty(param.name)) {
+                    param.name = (StringUtils.split(param.name, '='))[0];
+                }
                 lastParamName = param.name;
                 param.typeExpressions = getTypeExpressions(m.group(1));
                 param.description = m.group(4);
