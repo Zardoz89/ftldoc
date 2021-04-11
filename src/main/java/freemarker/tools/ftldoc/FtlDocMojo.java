@@ -36,6 +36,7 @@ public class FtlDocMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+
         if (this.freemarkerFiles.length == 0) {
             this.getLog().error("Required parameter 'freemarkerFiles' is empty. Please fill it.");
             return;
@@ -54,6 +55,7 @@ public class FtlDocMojo extends AbstractMojo {
         this.outputDirectory.mkdirs();
         FtlDoc ftl = new FtlDoc(ftlFiles, this.outputDirectory, this.templateDirectory, this.readmeFile, this.title,
             this.freemarkerVersion);
+        ftl.setLog(this.getLog());
         ftl.run();
         this.getLog().info( "Finished generating doc" );
     }

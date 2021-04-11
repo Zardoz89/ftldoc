@@ -30,6 +30,7 @@ import javax.swing.tree.TreeNode;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.plugin.logging.Log;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -62,15 +63,23 @@ public class FtlDoc
         }
     };
 
+    private static final Comparator<File> FILE_COMPARATOR = new Comparator<File>() {
+        @Override
+        public int compare(File lhs, File rhs)
+        {
+            return lhs.getName().compareTo(rhs.getName());
+        }
+    };
+
     private SortedMap<String, List<Map<String, Object>>> allCategories = null;
     private SortedMap<String, List<Map<String, Object>>> categories = null;
     private List<Map<String, Object>> allMacros = null;
     private List<Map<String, Object>> macros = null;
-    private File fOutDir;
-    private List<File> fFiles;
-    private List<Map<String, Object>> fParsedFiles;
-    private Set<File> fAllDirectories;
-    private File fAltTemplatesFolder;
+    private File outputDir;
+    private List<File> sourceFiles;
+    private List<Map<String, Object>> parsedFiles;
+    private Set<File> allDirectorioes;
+    private File alternartiveTemplatesFolder;
     private File readmeFile;
     private String title;
     private Version freemarkerVersion;
@@ -79,11 +88,14 @@ public class FtlDoc
 
     private Configuration cfg = null;
 
-    public FtlDoc(List<File> files, File outputDir, File altTemplatesFolder, File readmeFile, String title, String freemarkerVersionString)
+    private Logger log = new Logger();
+
+    public FtlDoc(List<File> sourceFiles, File outputDir, File altTemplatesFolder, File readmeFile, String title,
+        String freemarkerVersionString)
     {
-        this.fOutDir = outputDir;
-        this.fFiles = files;
-        this.fAltTemplatesFolder = altTemplatesFolder;
+        this.outputDir = outputDir;
+        this.sourceFiles = sourceFiles;
+        this.alternartiveTemplatesFolder = altTemplatesFolder;
         this.readmeFile = readmeFile;
         this.title = title;
         this.freemarkerVersion = new Version(freemarkerVersionString);
@@ -93,9 +105,9 @@ public class FtlDoc
         this.cfg.setOutputEncoding(OUTPUT_ENCODING);
 
         // extracting parent directories of all files
-        this.fAllDirectories = new HashSet<>();
-        for (File f : files) {
-            this.fAllDirectories.add(f.getParentFile());
+        this.allDirectorioes = new HashSet<>();
+        for (File sourceFile : this.sourceFiles) {
+            this.allDirectorioes.add(sourceFile.getParentFile());
         }
     }
 
@@ -108,9 +120,9 @@ public class FtlDoc
             // init global collections
             this.allCategories = new TreeMap<>();
             this.allMacros = new ArrayList<>();
-            this.fParsedFiles = new ArrayList<>();
+            this.parsedFiles = new ArrayList<>();
 
-            List<TemplateLoader> loaders = new ArrayList<>(this.fAllDirectories.size() + 1);
+            List<TemplateLoader> loaders = new ArrayList<>(this.allDirectorioes.size() + 1);
             // Loads documantation generation templates
             loaders.add(this.loadDocumentationTemplates());
 
@@ -123,16 +135,10 @@ public class FtlDoc
 
             // = create template for file page
             // Sort files
-            Collections.sort(this.fFiles, new Comparator<File>() {
-                @Override
-                public int compare(File lhs, File rhs)
-                {
-                    return lhs.getName().compareTo(rhs.getName());
-                }
-            });
+            Collections.sort(this.sourceFiles, FILE_COMPARATOR);
 
             // create file pages
-            for (File element : this.fFiles) {
+            for (File element : this.sourceFiles) {
                 this.createFilePage(element);
             }
 
@@ -148,15 +154,15 @@ public class FtlDoc
             this.copyCssFiles();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            this.log.error(ex);
         }
     }
 
     private TemplateLoader loadDocumentationTemplates()
         throws IOException
     {
-        if (this.fAltTemplatesFolder != null) {
-            return new FileTemplateLoader(this.fAltTemplatesFolder);
+        if (this.alternartiveTemplatesFolder != null) {
+            return new FileTemplateLoader(this.alternartiveTemplatesFolder);
         }
         return new ClassTemplateLoader(this.getClass(), "/default");
     }
@@ -165,7 +171,7 @@ public class FtlDoc
         throws IOException
     {
         List<TemplateLoader> loaders = new ArrayList<>();
-        for (File file : this.fAllDirectories) {
+        for (File file : this.allDirectorioes) {
             loaders.add(new FileTemplateLoader(file));
         }
         return loaders;
@@ -174,8 +180,8 @@ public class FtlDoc
     private void createFilePage(File file)
     {
         try {
-            File htmlFile = new File(this.fOutDir, file.getName() + ".html");
-            System.out.println("Generating " + htmlFile.getCanonicalFile() + "...");
+            File htmlFile = new File(this.outputDir, file.getName() + ".html");
+            this.log.info("Generating " + htmlFile.getCanonicalFile() + "...");
 
             Template t_out = this.cfg.getTemplate(Templates.file.fileName());
             this.categories = new TreeMap<>();
@@ -252,9 +258,9 @@ public class FtlDoc
                 new FileOutputStream(htmlFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
                 t_out.process(root, outputStream);
             }
-            this.fParsedFiles.add(root);
-        } catch (Exception e) {
-            e.printStackTrace();
+            this.parsedFiles.add(root);
+        } catch (Exception ex) {
+            this.log.error(ex);
         }
     }
 
@@ -295,7 +301,7 @@ public class FtlDoc
 
                 if (pc.get("@begin") != null) {
                     if (regionStart != null) {
-                        System.err.println("WARNING: nested @begin-s");
+                        this.log.warn("WARNING: nested @begin-s");
                         CategoryRegion cc =
                             new CategoryRegion(name, begincol, beginline, c.getBeginColumn(), c.getBeginLine());
                         this.regions.add(cc);
@@ -309,7 +315,7 @@ public class FtlDoc
                 }
                 if (pc.get("@end") != null) {
                     if (regionStart == null) {
-                        System.err.println("WARNING: @end without @begin!");
+                        this.log.warn("WARNING: @end without @begin!");
                     } else {
                         CategoryRegion cc =
                             new CategoryRegion(name, begincol, beginline, c.getEndColumn(), c.getEndLine());
@@ -322,7 +328,7 @@ public class FtlDoc
             }
         }
         if (regionStart != null) {
-            System.err.println("WARNING: missing @end (EOF)");
+            this.log.warn("WARNING: missing @end (EOF)");
             CategoryRegion cc = new CategoryRegion(name, begincol, beginline, Integer.MAX_VALUE, Integer.MAX_VALUE);
             this.addCategory(name);
             this.regions.add(cc);
@@ -354,13 +360,13 @@ public class FtlDoc
     private void putGlobalVars(Map<String, Object> root)
     {
         root.put("title", this.title);
-        root.put("files", this.fFiles);
+        root.put("files", this.sourceFiles);
         root.put("fileSuffix", ".html");
     }
 
     private void createAllCatPage()
     {
-        File categoryFile = new File(this.fOutDir, "index-all-cat.html");
+        File categoryFile = new File(this.outputDir, "index-all-cat.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter(
             new FileOutputStream(categoryFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             Map<String, Object> root = new HashMap<>();
@@ -374,7 +380,7 @@ public class FtlDoc
 
     private void createAllAlphaPage()
     {
-        File allAlphaFile = new File(this.fOutDir, "index-all-alpha.html");
+        File allAlphaFile = new File(this.outputDir, "index-all-alpha.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter(
             new FileOutputStream(allAlphaFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             Map<String, Object> root = new HashMap<>();
@@ -389,7 +395,7 @@ public class FtlDoc
 
     private void createIndexPage()
     {
-        File overviewFile = new File(this.fOutDir, "index.html");
+        File overviewFile = new File(this.outputDir, "index.html");
         try (OutputStreamWriter outputStream = new OutputStreamWriter(
             new FileOutputStream(overviewFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             Template template = this.cfg.getTemplate(Templates.index.fileName());
@@ -413,8 +419,8 @@ public class FtlDoc
     private void copyCssFiles()
         throws IOException
     {
-        if (this.fAltTemplatesFolder != null) {
-            File[] cssfiles = this.fAltTemplatesFolder.listFiles(new FilenameFilter() {
+        if (this.alternartiveTemplatesFolder != null) {
+            File[] cssfiles = this.alternartiveTemplatesFolder.listFiles(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name)
                 {
@@ -422,12 +428,12 @@ public class FtlDoc
                 }
             });
             for (File cssFile : cssfiles) {
-                FileUtils.copyFileToDirectory(cssFile, this.fOutDir);
+                FileUtils.copyFileToDirectory(cssFile, this.outputDir);
             }
 
         } else {
             InputStream in = this.getClass().getResourceAsStream("/default/ftldoc.css");
-            File outputFile = new File(this.fOutDir, "ftldoc.css");
+            File outputFile = new File(this.outputDir, "ftldoc.css");
             FileUtils.copyInputStreamToFile(in, outputFile);
         }
     }
@@ -513,5 +519,10 @@ public class FtlDoc
         {
             return this.name;
         }
+    }
+
+    public void setLog(Log log)
+    {
+        this.log = new Logger(log);
     }
 }
