@@ -25,7 +25,7 @@ You'll need to run `mvn install` on this project to install the plugin locally (
         <plugins>
 ...
             <plugin>
-                <groupId>com.github.zardoz89</groupId>
+                <groupId>io.github.zardoz89</groupId>
                 <artifactId>ftldoc-maven-plugin</artifactId>
                 <executions>
                     <execution>
@@ -70,7 +70,7 @@ Where :
 
 Example:
 ```bash
-mvn com.github.zardoz89:ftldoc-maven-plugin:0.0.2:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
+mvn io.github.zardoz89:ftldoc-maven-plugin:0.0.3:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
 ```
 
 ## Comment syntax
