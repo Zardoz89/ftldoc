@@ -9,6 +9,16 @@
     <description>Maven plugin to extract documentation from FreeMarker macro libraries</description>
     <url>https://zardoz89.github.io/ftldoc/</url>
 
+    <organization>
+        <name>io.github.zardoz89</name>
+        <url>https://github.com/zardoz89</url>
+    </organization>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/Zardoz89/ftldoc/issues</url>
+    </issueManagement>
+
     <prerequisites>
         <maven>3.3.0</maven>
     </prerequisites>
@@ -37,7 +47,7 @@
             <artifactId>maven-plugin-api</artifactId>
             <version>3.3.9</version>
         </dependency>
-        
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -97,7 +107,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
@@ -144,6 +154,35 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
@@ -204,17 +243,19 @@
     </developers>
 
     <scm>
-        <url>https://zardoz89.github.io/ftldoc/</url>
-        <connection>scm:git:https://github.com/Zardoz89/ftldoc.git</connection>
-        <developerConnection>scm:git:git@github.com:Zardoz89/ftldoc.git</developerConnection>
-        <tag>HEAD</tag>
+        <url>https://github.com/Zardoz89/ftldoc/tree/master</url>
+        <connection>scm:git:git://github.com:Zardoz89/ftldoc.git</connection>
+        <developerConnection>scm:git:ssh://github.com:Zardoz89/ftldoc.git</developerConnection>
     </scm>
-  
+
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/Zardoz89/ftldoc</url>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -243,34 +284,8 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.0.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.1.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>1.6</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
