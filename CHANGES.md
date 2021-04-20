@@ -1,4 +1,5 @@
-0.0.4-SNAPSHOT
+0.1.0-SNAPSHOT
+- Adopting semantic versioning
 
 0.0.3
 
