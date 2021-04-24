@@ -3,6 +3,7 @@
 - Using Maven logger
 - Maven profile to launch tests using Groovy 3
 - Minor changes to make more clean the code
+- Simple categorizing of files, on the file list
 
 0.0.3
 
