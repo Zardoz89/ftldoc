@@ -4,31 +4,36 @@
 <#---@begin Navigation related macros -->
 
 <#--- Generates the navigation bar
-    @param {Sequence<File>} files List of files
+    @param {Hash<File, Sequence<File>>} files List of files
     @param {String} fileSuffix Suffix of file name (ie. extension)
     -->
-<#macro navigationBar files fileSuffix>
+<#macro navigationBar categorizedFiles fileSuffix>
 <nav>
     <ul>
         <li><a href="index.html">Overview</a></li>
         <li><a href="index-all-cat.html">Index (categorical)</a></li>
         <li><a href="index-all-alpha.html">Index (alphabetical)</a></li>
     </ul>
-    <@_fileList files fileSuffix />
+    <@_fileList categorizedFiles fileSuffix />
 </nav>
 </#macro>
 
 <#--- Internal macro that generates the file list
-    @param {Sequence<File>} files List of files
+    @param {Hash<File, Sequence<File>>} files List of files
     @param {String} fileSuffix Suffix of file name (ie. extension)
     -->
-<#macro _fileList files fileSuffix>
+<#macro _fileList categorizedFiles fileSuffix>
     <h6>Macro Libraries</h6>
-    <ul>
-    <#list files as file>
-        <li><a href="${file.name}${fileSuffix}">${file.name}</a></li>
+    <#list categorizedFiles as category, files>
+        <#if categorizedFiles?keys?size gt 1>
+            <h7>${category.getName()}</h7>
+        </#if>
+        <ul>
+        <#list files as file>
+            <li><a href="${file.name}${fileSuffix}">${file.name}</a></li>
+        </#list>
+        </ul>
     </#list>
-    </ul>
 </#macro>
 
 <#---@end -->
