@@ -98,7 +98,27 @@ class ParseFtlDocCommentSpec extends Specification {
         !(output.isEmpty())
         output.get("short_comment") != null
         output.get("comment") != null
-        output.get("@" + keyword).toString()== text
+        output.get("@" + keyword) == text
+
+        where:
+        keywordComment                                                      || keyword          | text
+        "@deprecated Because yes"                                           || "deprecated"     | "Because yes"
+        "   @return     Fulano"                                             || "return"         | "Fulano"
+    }
+
+    @Unroll
+    def "Parsing repeating #keywordComment"() {
+        given:
+        def fullComment = "-" + keywordComment
+
+        when:
+        def output = ParseFtlDocComment.parse(fullComment)
+
+        then:
+        !(output.isEmpty())
+        output.get("short_comment") != null
+        output.get("comment") != null
+        output.get("@" + keyword) == [text]
 
         where:
         keywordComment                                                      || keyword          | text
@@ -136,6 +156,7 @@ class ParseFtlDocCommentSpec extends Specification {
 -- aliqua.
 --
 -- @author Someone
+-- @author Other guy
 --
 -- @param arg Long description
 --      that continues on another line
@@ -149,7 +170,7 @@ class ParseFtlDocCommentSpec extends Specification {
         !(output.isEmpty())
         output.get("short_comment").toString() == " This is a function."
         output.get("comment").toString() == " This is a function. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        output.get("@author").toString()== "Someone"
+        output.get("@author") == ["Someone", "Other guy"]
         def params = output.get("@param") as SimpleSequence
         def param = params.get(0) as SimpleHash
         param.get("name").toString() == "arg"

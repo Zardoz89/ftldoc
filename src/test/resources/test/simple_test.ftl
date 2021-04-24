@@ -2,6 +2,9 @@
 <#---
     File header
     @copyright bla bla bla 2021
+    
+    @author Luis Panadero
+    @author Other guy
 -->
 
 <#import "lib/test_lib.ftl" as lib />

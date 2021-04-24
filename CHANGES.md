@@ -4,6 +4,7 @@
 - Maven profile to launch tests using Groovy 3
 - Minor changes to make more clean the code
 - Simple categorizing of files, on the file list
+- Support of repeated @ annotations like @author or @copyright
 
 0.0.3
 
