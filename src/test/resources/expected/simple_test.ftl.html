@@ -28,9 +28,20 @@
     <h6>Macro Libraries</h6>
     
         
+            <h7>test</h7>
+        
         <ul>
         
             <li><a href="simple_test.ftl.html">simple_test.ftl</a></li>
+        
+        </ul>
+    
+        
+            <h7>lib</h7>
+        
+        <ul>
+        
+            <li><a href="test_lib.ftl.html">test_lib.ftl</a></li>
         
         </ul>
     
@@ -61,6 +72,46 @@
 
 
 <h3>Macro and Function Summary</h3>
+
+    
+        
+            <h5>no category</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#fooBar2000">
+                                        fooBar2000
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">foo</span>
+        
+            <span class="macro__signature-argument">baz</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                 Macro without category
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
 
     
         
@@ -160,128 +211,6 @@
                             </dt>
                             <dd>
                                  Macro to generate data-XXX HTML attributes
-                            </dd>
-                        </dl>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td class="summary__type">
-                        <code>function</code>
-                    </td>
-                    <td class="summary__description">
-                        <dl>
-                            <dt>
-                                <code class="macro__signature">
-                                    <a href="#iif">
-                                        iif
-                                    </a>
-                                    
-    
-        (
-        
-            <span class="macro__signature-argument">condition</span> , 
-        
-            <span class="macro__signature-argument">value1</span> , 
-        
-            <span class="macro__signature-argument">value2</span>
-        
-        )
-    
-
-                                </code>
-                            </dt>
-                            <dd>
-                                 Function that emulates C/Java &#39;?&#39; operator
-                            </dd>
-                        </dl>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td class="summary__type">
-                        <code>function</code>
-                    </td>
-                    <td class="summary__description">
-                        <dl>
-                            <dt>
-                                <code class="macro__signature">
-                                    <a href="#isStringNumber">
-                                        isStringNumber
-                                    </a>
-                                    
-    
-        (
-        
-            <span class="macro__signature-argument">variable</span>
-        
-        )
-    
-
-                                </code>
-                            </dt>
-                            <dd>
-                                 Checks if a String value it&#39;s a number
-                            </dd>
-                        </dl>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td class="summary__type">
-                        <code>function</code>
-                    </td>
-                    <td class="summary__description">
-                        <dl>
-                            <dt>
-                                <code class="macro__signature">
-                                    <a href="#join">
-                                        join
-                                    </a>
-                                    
-    
-        (
-        
-            <span class="macro__signature-argument">seq</span> , 
-        
-            <span class="macro__signature-argument">separator</span>
-        
-        )
-    
-
-                                </code>
-                            </dt>
-                            <dd>
-                                 Function that generates a string from a sequence, putting a separator bettwen elements
-                            </dd>
-                        </dl>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td class="summary__type">
-                        <code>function</code>
-                    </td>
-                    <td class="summary__description">
-                        <dl>
-                            <dt>
-                                <code class="macro__signature">
-                                    <a href="#toBool">
-                                        toBool
-                                    </a>
-                                    
-    
-        (
-        
-            <span class="macro__signature-argument">input</span>
-        
-        )
-    
-
-                                </code>
-                            </dt>
-                            <dd>
-                                 Function that converts a value to a Boolean
                             </dd>
                         </dl>
                     </td>
@@ -488,18 +417,14 @@
 
     <dl class="macro">
         <dt>
-            <code class="macro__signature">function <a name="iif">iif</a>
+            <code class="macro__signature">macro <a name="fooBar2000">fooBar2000</a>
                 
     
-        (
         
-            <span class="macro__signature-argument">condition</span> , 
+            <span class="macro__signature-argument">foo</span>
         
-            <span class="macro__signature-argument">value1</span> , 
+            <span class="macro__signature-argument">baz</span>
         
-            <span class="macro__signature-argument">value2</span>
-        
-        )
     
 
             </code>
@@ -507,13 +432,10 @@
         <dd>
             
             
-                <p> Function that emulates C/Java &#39;?&#39; operator</p>
+                <p> Macro without category</p>
             
             <dl>
                 
-    
-        <dt><b>Category</b></dt>
-        <dd>Opening another section</dd>
     
 
                 
@@ -532,168 +454,7 @@
             <tbody>
             
                 <tr>
-                    <td class="name"><code>condition</code></td>
-                    <td class="type">
-                        
-                            <span class="param-type">Boolean</span>
-                            
-                        
-                    </td>
-                    <td class="description">
-                        
-                        Expression that evaluates on a <code>boolean</code> value
-                        
-                    </td>
-                </tr>
-            
-            </tbody>
-        </table>
-            
-        
-        </dd>
-    
-
-                
-    
-
-                
-    
-
-                
-    <dt><a href="#" onClick="toggle('sc_iif'); return false;">Source Code</a></dt>
-    <dd>
-        <code class="sourcecode" id="sc_iif">
-            
-
-
-
-<span class="directive">&lt;#function&nbsp;iif&nbsp;condition&nbsp;value1&nbsp;value2&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;condition&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;value1&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;value2&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
-
-
-
-        </code>
-    </dd>
-
-            </dl>
-        </dd>
-    </dl>
-    <hr/>
-
-    <dl class="macro">
-        <dt>
-            <code class="macro__signature">function <a name="isStringNumber">isStringNumber</a>
-                
-    
-        (
-        
-            <span class="macro__signature-argument">variable</span>
-        
-        )
-    
-
-            </code>
-        </dt>
-        <dd>
-            
-            
-                <p> Checks if a String value it&#39;s a number</p>
-            
-            <dl>
-                
-    
-        <dt><b>Category</b></dt>
-        <dd>Opening another section</dd>
-    
-
-                
-    
-
-                
-    
-
-                
-    
-
-                
-    <dt><a href="#" onClick="toggle('sc_isStringNumber'); return false;">Source Code</a></dt>
-    <dd>
-        <code class="sourcecode" id="sc_isStringNumber">
-            
-
-
-
-<span class="directive">&lt;#function&nbsp;isStringNumber&nbsp;variable&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#attempt&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#assign&nbsp;numberVariable&nbsp;=&nbsp;variable?number&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;numberVariable?is_number&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#recover&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#attempt&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
-
-
-
-        </code>
-    </dd>
-
-            </dl>
-        </dd>
-    </dl>
-    <hr/>
-
-    <dl class="macro">
-        <dt>
-            <code class="macro__signature">function <a name="join">join</a>
-                
-    
-        (
-        
-            <span class="macro__signature-argument">seq</span> , 
-        
-            <span class="macro__signature-argument">separator</span>
-        
-        )
-    
-
-            </code>
-        </dt>
-        <dd>
-            
-            
-                <p> Function that generates a string from a sequence, putting a separator bettwen elements</p>
-            
-            <dl>
-                
-    
-        <dt><b>Category</b></dt>
-        <dd>Opening another section</dd>
-    
-
-                
-    
-        <dt><b>Parameters</b></dt>
-        <dd>
-        
-        <table class="params">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-            
-                <tr>
-                    <td class="name"><code>seq</code></td>
-                    <td class="type">
-                        
-                            <span class="param-type">Sequence</span>
-                            
-                        
-                    </td>
-                    <td class="description">
-                        
-                        Sequence to be converted to String
-                        
-                    </td>
-                </tr>
-            
-                <tr>
-                    <td class="name"><code>separator</code></td>
+                    <td class="name"><code>foo</code></td>
                     <td class="type">
                         
                             <span class="param-type">String</span>
@@ -701,11 +462,23 @@
                         
                     </td>
                     <td class="description">
-                        <em>(Optional)</em> 
-                        Seperator element.
                         
-                        <br/>
-                        Default value : &quot; &quot;
+                        A foo string
+                        
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td class="name"><code>baz</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">Sequence</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        <em>(Optional)</em> 
+                        A list of baz things
                         
                     </td>
                 </tr>
@@ -724,14 +497,14 @@
     
 
                 
-    <dt><a href="#" onClick="toggle('sc_join'); return false;">Source Code</a></dt>
+    <dt><a href="#" onClick="toggle('sc_fooBar2000'); return false;">Source Code</a></dt>
     <dd>
-        <code class="sourcecode" id="sc_join">
+        <code class="sourcecode" id="sc_fooBar2000">
             
 
 
 
-<span class="directive">&lt;#function&nbsp;join&nbsp;seq&nbsp;separator&nbsp;=&nbsp;&quot;&nbsp;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;res&nbsp;=&nbsp;&quot;&quot;&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;seq&nbsp;as&nbsp;e&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;e_index&nbsp;==&nbsp;0&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;res&nbsp;=&nbsp;res&nbsp;+&nbsp;e&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;res&nbsp;=&nbsp;res&nbsp;+&nbsp;separator&nbsp;+&nbsp;e&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;res&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
+<span class="directive">&lt;#macro&nbsp;fooBar2000&nbsp;foo&nbsp;baz=[]&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;FooBar2000&nbsp;</span><span class="interpolation">${foo!}</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;baz&nbsp;as&nbsp;ba&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="interpolation">${ba}</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
 
 
 
@@ -838,107 +611,6 @@
 
 
 <span class="directive">&lt;#macro&nbsp;putOnArray&nbsp;arrayVar&nbsp;content=&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;content?is_string&nbsp;&amp;&amp;&nbsp;content&nbsp;==&nbsp;&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;content&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#nested&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#local&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;freemarker&nbsp;doing&nbsp;some&nbsp;metaprogramming&nbsp;--&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;content?is_string&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@&quot;&lt;#assign&nbsp;${arrayVar}&nbsp;=&nbsp;(${arrayVar}![])&nbsp;+&nbsp;[content]&gt;&quot;?interpret&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#elseif&nbsp;content?is_enumerable&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@&quot;&lt;#assign&nbsp;${arrayVar}&nbsp;=&nbsp;(${arrayVar}![])&nbsp;+&nbsp;content&gt;&quot;?interpret&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
-
-
-
-        </code>
-    </dd>
-
-            </dl>
-        </dd>
-    </dl>
-    <hr/>
-
-    <dl class="macro">
-        <dt>
-            <code class="macro__signature">function <a name="toBool">toBool</a>
-                
-    
-        (
-        
-            <span class="macro__signature-argument">input</span>
-        
-        )
-    
-
-            </code>
-        </dt>
-        <dd>
-            
-            
-                <p> Function that converts a value to a Boolean</p>
-            
-            <dl>
-                
-    
-        <dt><b>Category</b></dt>
-        <dd>Opening another section</dd>
-    
-
-                
-    
-        <dt><b>Parameters</b></dt>
-        <dd>
-        
-        <table class="params">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-            
-                <tr>
-                    <td class="name"><code>input</code></td>
-                    <td class="type">
-                        
-                            <span class="param-type">String</span>
-                            |
-                        
-                            <span class="param-type">Number</span>
-                            |
-                        
-                            <span class="param-type">Boolean</span>
-                            |
-                        
-                            <span class="param-type">Object</span>
-                            
-                        
-                    </td>
-                    <td class="description">
-                        
-                        String or Number to be converted to Boolean
-                        
-                    </td>
-                </tr>
-            
-            </tbody>
-        </table>
-            
-        
-        </dd>
-    
-
-                
-    
-
-                
-    
-        <dt><b>Return value</b></dt>
-        <dd>Boolean value being true or false</dd>
-    
-
-                
-    <dt><a href="#" onClick="toggle('sc_toBool'); return false;">Source Code</a></dt>
-    <dd>
-        <code class="sourcecode" id="sc_toBool">
-            
-
-
-
-<span class="directive">&lt;#function&nbsp;toBool&nbsp;input&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;input?is_boolean&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;input&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;Number&nbsp;--&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;input?is_number&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;input&nbsp;!=&nbsp;0&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;true&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;String&nbsp;--&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;input?is_string&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;input&nbsp;==&nbsp;&quot;&quot;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;false&quot;||&nbsp;input&nbsp;==&nbsp;&quot;not&quot;&nbsp;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;no&quot;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;n&quot;&nbsp;||&nbsp;input&nbsp;==&nbsp;&quot;f&quot;&nbsp;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;true&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;!=&nbsp;Null&nbsp;or&nbsp;not&nbsp;has&nbsp;content&nbsp;--&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;input??&nbsp;&amp;&amp;&nbsp;input?has_content&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;true&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#return&nbsp;false&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#function&gt;</span>
 
 
 
