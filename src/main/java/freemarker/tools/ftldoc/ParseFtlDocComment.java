@@ -3,10 +3,10 @@
  */
 package freemarker.tools.ftldoc;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-
-import freemarker.template.SimpleHash;
-import freemarker.template.SimpleSequence;
 
 /**
  * Helper class to parse a Comment with FTLDoc anotations
@@ -41,12 +38,14 @@ class ParseFtlDocComment
     private static final Pattern PARAM_PATTERN =
         Pattern
             .compile("^\\s*(?:--)?\\s*@param\\s*(" + SIMPLE_ARGNAME_REGEX + ")\\s*(\\{[a-zA-Z0-9_,|<>]*\\})?\\s*(.*)$");
+    // Regex that detects a "@return YYYY", where group 1 is @return and group 2 it's YYYY
+    private static final Pattern RETURN = Pattern.compile("^\\s*(?:--)?\\s*(@return)\\s*(.*)$");
+    // Regex that detects a "@deprecated YYYY", where group 1 is @deprecated and group 2 it's YYYY
+    private static final Pattern DEPRECATED = Pattern.compile("^\\s*(?:--)?\\s*(@deprecated)\\s*(.*)$");
     // Regex that detects a "@XXXX YYYY", where group 1 is XXXX and group 2 it's YYYY
     private static final Pattern AT_PATTERN = Pattern.compile("^\\s*(?:--)?\\s*(@\\w+)\\s*(.*)$");
     // Regex that detects a text line
     private static final Pattern TEXT_PATTERN = Pattern.compile("^\\s*(?:--)?(.*)$");
-    // Regex that extracts data from a optional argument
-    private static final Pattern OPTIONAL_PATTERN = Pattern.compile(OPTINAL_REGEX);
 
     private static final String PARAM_KEYWORD = "@param";
     private static final String NAME = "name";
@@ -64,14 +63,14 @@ class ParseFtlDocComment
     /**
      * Parses a string containg the comment text
      */
-    static Map<String, Serializable> parse(String commentText)
+    static Map<String, Object> parse(String commentText)
     {
         // always return a hash, even if doesn't have any content
         if (StringUtils.isEmpty(commentText)) {
             return Collections.emptyMap();
         }
 
-        Map<String, Serializable> result = new LinkedHashMap<>();
+        Map<String, Object> result = new LinkedHashMap<>();
         Map<String, ParamInformation> paramsCache = new LinkedHashMap<>();
 
         Matcher m;
@@ -90,7 +89,9 @@ class ParseFtlDocComment
                 param.name = m.group(2);
                 param.name = StringUtils.removeStart(param.name, "[");
                 param.name = StringUtils.removeEnd(param.name, "]");
-                param.name = (StringUtils.split(param.name, '='))[0];
+                if (StringUtils.isNotEmpty(param.name)) {
+                    param.name = (StringUtils.split(param.name, '='))[0];
+                }
                 lastParamName = param.name;
                 param.typeExpressions = getTypeExpressions(m.group(1));
                 param.description = m.group(4);
@@ -118,8 +119,21 @@ class ParseFtlDocComment
 
                 paramsCache.put(lastParamName, param);
 
-            } else if ((m = AT_PATTERN.matcher(line)).matches()) {
+            } else if ((m = RETURN.matcher(line)).matches()) {
                 result.put(m.group(1), m.group(2));
+
+            } else if ((m = DEPRECATED.matcher(line)).matches()) {
+                result.put(m.group(1), m.group(2));
+
+            } else if ((m = AT_PATTERN.matcher(line)).matches()) {
+                String annotation = m.group(1);
+                String value = m.group(2);
+                List<String> previousValues = (List<String>)result.get(annotation);
+                if (previousValues == null) {
+                    previousValues = new ArrayList<>();
+                }
+                previousValues.add(value);
+                result.put(annotation, previousValues);
 
             } else if ((m = TEXT_PATTERN.matcher(line)).matches()) {
                 String text;
@@ -150,7 +164,7 @@ class ParseFtlDocComment
         }
         String text = bufText.toString().replaceAll("\n", "");
 
-        SimpleSequence params = new SimpleSequence();
+        List<Map<String, Object>> params = new ArrayList<>();
         for (ParamInformation param : paramsCache.values()) {
             params.add(param.toHash());
         }
@@ -184,15 +198,15 @@ class ParseFtlDocComment
         String defaultValue;
         String description;
 
-        SimpleHash toHash()
+        Map<String, Object> toHash()
         {
-            SimpleHash hash = new SimpleHash();
+            Map<String, Object> hash = new HashMap<>();
             hash.put(NAME, this.name);
             hash.put(DESCRIPTION, this.description);
             hash.put(OPTIONAL, this.optional);
             hash.put(DEFAULT_VALUE, this.defaultValue);
 
-            SimpleSequence typeExpressionsSequence = new SimpleSequence();
+            List<String> typeExpressionsSequence = new ArrayList<>();
             for (String typeExpression : this.typeExpressions) {
                 typeExpressionsSequence.add(typeExpression);
             }

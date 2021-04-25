@@ -18,7 +18,7 @@
     </script>
 </head>
 <body>
-<@ftl.navigationBar files fileSuffix/>
+<@ftl.navigationBar categorizedFiles fileSuffix/>
 <main>
 
 <#-- start prolog -->
@@ -28,14 +28,20 @@
 </#if>
 <#if comment.@author?? || comment.@version?? || comment.@copyright?? >
     <dl>
-        <#if comment.@author?? >
-            <@ftl.printOptional comment.@author "Author" />
+        <#if comment.@author?? ><#t/>
+            <#list comment.@author as author><#t/>
+                <@ftl.printOptional author "Author" />
+            </#list>
         </#if>
-        <#if comment.@version?? >
-            <@ftl.printOptional comment.@version "Version" />
+        <#if comment.@version?? ><#t/>
+            <#list comment.@version as version><#t/>
+                <@ftl.printOptional version "Version" />
+            </#list>
         </#if>
-        <#if comment.@copyright?? >
-            <@ftl.printOptional comment.@copyright "Copyright" />
+        <#if comment.@copyright?? ><#t/>
+            <#list comment.@copyright as copyright><#t/>
+                <@ftl.printOptional copyright "Copyright" />
+            </#list>
         </#if>
     </dl>
 </#if>

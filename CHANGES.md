@@ -1,3 +1,11 @@
+0.1.0-SNAPSHOT
+- Adopting semantic versioning
+- Using Maven logger
+- Maven profile to launch tests using Groovy 3
+- Minor changes to make more clean the code
+- Simple categorizing of files, on the file list
+- Support of repeated @ annotations like @author or @copyright
+
 0.0.3
 
 - Updated Freemaker to 2.3.31

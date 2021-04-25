@@ -8,7 +8,7 @@
     <title><#if title?has_content>${title} - </#if>Alphabethic Index</title>
 </head>
 <body>
-<@ftl.navigationBar files fileSuffix/>
+<@ftl.navigationBar categorizedFiles fileSuffix/>
 <main>
 <#assign lastLetter = "" />
 <#list macros as macro>

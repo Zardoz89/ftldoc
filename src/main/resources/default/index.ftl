@@ -8,7 +8,7 @@
     <title><#if title?has_content>${title} - </#if>Overview</title>
 </head>
 <body>
-<@ftl.navigationBar files fileSuffix/>
+<@ftl.navigationBar categorizedFiles fileSuffix/>
 <main>
 <h1><#if title?has_content>${title} - </#if>Overview</h1>
 ${readme!}

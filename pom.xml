@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.zardoz89</groupId>
     <artifactId>ftldoc-maven-plugin</artifactId>
-    <version>0.0.3</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>ftldoc - Maven Plugin</name>
@@ -31,6 +31,8 @@
         <junit5.version>5.7.1</junit5.version>
         <junit-platform-runner.version>1.7.1</junit-platform-runner.version>
         <groovy.version>2.5.14</groovy.version>
+        <groovy-eclipse-compiler>3.4.0-01</groovy-eclipse-compiler>
+        <groovy-eclipse-batch>2.5.9-01</groovy-eclipse-batch>
         <spock.version>2.0-M4-groovy-2.5</spock.version>
     </properties>
 
@@ -127,12 +129,12 @@
                     <dependency>
                         <groupId>org.codehaus.groovy</groupId>
                         <artifactId>groovy-eclipse-compiler</artifactId>
-                        <version>3.4.0-01</version>
+                        <version>${groovy-eclipse-compiler}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.codehaus.groovy</groupId>
                         <artifactId>groovy-eclipse-batch</artifactId>
-                        <version>2.5.9-01</version>
+                        <version>${groovy-eclipse-batch}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -277,6 +279,15 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>groovy3</id>
+            <properties>
+                <groovy.version>3.0.6</groovy.version>
+                <groovy-eclipse-compiler>3.7.0</groovy-eclipse-compiler>
+                <groovy-eclipse-batch>3.0.7-03</groovy-eclipse-batch>
+                <spock.version>2.0-M4-groovy-3.0</spock.version>
+            </properties>
         </profile>
         <profile>
             <id>release</id>

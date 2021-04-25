@@ -26,21 +26,24 @@
     </ul>
     
     <h6>Macro Libraries</h6>
-    <ul>
     
-        <li><a href="file.ftl.html">file.ftl</a></li>
+        
+        <ul>
+        
+            <li><a href="file.ftl.html">file.ftl</a></li>
+        
+            <li><a href="ftl_highlight.ftl.html">ftl_highlight.ftl</a></li>
+        
+            <li><a href="index-all-alpha.ftl.html">index-all-alpha.ftl</a></li>
+        
+            <li><a href="index-all-cat.ftl.html">index-all-cat.ftl</a></li>
+        
+            <li><a href="index.ftl.html">index.ftl</a></li>
+        
+            <li><a href="lib.ftl.html">lib.ftl</a></li>
+        
+        </ul>
     
-        <li><a href="ftl_highlight.ftl.html">ftl_highlight.ftl</a></li>
-    
-        <li><a href="index-all-alpha.ftl.html">index-all-alpha.ftl</a></li>
-    
-        <li><a href="index-all-cat.ftl.html">index-all-cat.ftl</a></li>
-    
-        <li><a href="index.ftl.html">index.ftl</a></li>
-    
-        <li><a href="lib.ftl.html">lib.ftl</a></li>
-    
-    </ul>
 
 </nav>
 
@@ -56,7 +59,7 @@
 
     
         
-            <h5>Category Navigation related macros</h5>
+            <h5>Category [Navigation related macros ]</h5>
         
         <table class="summary">
             <tbody>
@@ -75,7 +78,7 @@
                                     
     
         
-            <span class="macro__signature-argument">files</span>
+            <span class="macro__signature-argument">categorizedFiles</span>
         
             <span class="macro__signature-argument">fileSuffix</span>
         
@@ -104,7 +107,7 @@
                                     
     
         
-            <span class="macro__signature-argument">files</span>
+            <span class="macro__signature-argument">categorizedFiles</span>
         
             <span class="macro__signature-argument">fileSuffix</span>
         
@@ -125,7 +128,7 @@
 
     
         
-            <h5>Category Printing macro information</h5>
+            <h5>Category [Printing macro information ]</h5>
         
         <table class="summary">
             <tbody>
@@ -282,7 +285,7 @@
                 
     
         
-            <span class="macro__signature-argument">files</span>
+            <span class="macro__signature-argument">categorizedFiles</span>
         
             <span class="macro__signature-argument">fileSuffix</span>
         
@@ -299,7 +302,7 @@
                 
     
         <dt><b>Category</b></dt>
-        <dd>Navigation related macros</dd>
+        <dd>[Navigation related macros ]</dd>
     
 
                 
@@ -318,16 +321,16 @@
             <tbody>
             
                 <tr>
-                    <td class="name"><code>files</code></td>
+                    <td class="name"><code></code></td>
                     <td class="type">
                         
-                            <span class="param-type">Sequence&lt;File&gt;</span>
+                            <span class="param-type">Hash&lt;File, Sequence&lt;File&gt;&gt;</span>
                             
                         
                     </td>
                     <td class="description">
                         
-                        List of files
+                        files List of files
                         
                     </td>
                 </tr>
@@ -369,7 +372,7 @@
 
 
 
-<span class="directive">&lt;#macro&nbsp;_fileList&nbsp;files&nbsp;fileSuffix&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h6&gt;Macro&nbsp;Libraries&lt;/h6&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;files&nbsp;as&nbsp;file&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;</span><span class="interpolation">${file.name}</span><span class="interpolation">${fileSuffix}</span><span class="textblock">&quot;&gt;</span><span class="interpolation">${file.name}</span><span class="textblock">&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/></span><span class="directive">&lt;/#macro&gt;</span>
+<span class="directive">&lt;#macro&nbsp;_fileList&nbsp;categorizedFiles&nbsp;fileSuffix&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h6&gt;Macro&nbsp;Libraries&lt;/h6&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;categorizedFiles&nbsp;as&nbsp;category,&nbsp;files&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;categorizedFiles?keys?size&nbsp;gt&nbsp;1&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h7&gt;</span><span class="interpolation">${category.getName()}</span><span class="textblock">&lt;/h7&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;files&nbsp;as&nbsp;file&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;</span><span class="interpolation">${file.name}</span><span class="interpolation">${fileSuffix}</span><span class="textblock">&quot;&gt;</span><span class="interpolation">${file.name}</span><span class="textblock">&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
 
 
 
@@ -387,7 +390,7 @@
                 
     
         
-            <span class="macro__signature-argument">files</span>
+            <span class="macro__signature-argument">categorizedFiles</span>
         
             <span class="macro__signature-argument">fileSuffix</span>
         
@@ -404,7 +407,7 @@
                 
     
         <dt><b>Category</b></dt>
-        <dd>Navigation related macros</dd>
+        <dd>[Navigation related macros ]</dd>
     
 
                 
@@ -423,16 +426,16 @@
             <tbody>
             
                 <tr>
-                    <td class="name"><code>files</code></td>
+                    <td class="name"><code></code></td>
                     <td class="type">
                         
-                            <span class="param-type">Sequence&lt;File&gt;</span>
+                            <span class="param-type">Hash&lt;File, Sequence&lt;File&gt;&gt;</span>
                             
                         
                     </td>
                     <td class="description">
                         
-                        List of files
+                        files List of files
                         
                     </td>
                 </tr>
@@ -474,7 +477,7 @@
 
 
 
-<span class="directive">&lt;#macro&nbsp;navigationBar&nbsp;files&nbsp;fileSuffix&gt;</span><span class="textblock"><br/>&lt;nav&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index.html&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-cat.html&quot;&gt;Index&nbsp;(categorical)&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-alpha.html&quot;&gt;Index&nbsp;(alphabetical)&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@_fileList&nbsp;files&nbsp;fileSuffix&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&lt;/nav&gt;<br/></span><span class="directive">&lt;/#macro&gt;</span>
+<span class="directive">&lt;#macro&nbsp;navigationBar&nbsp;categorizedFiles&nbsp;fileSuffix&gt;</span><span class="textblock"><br/>&lt;nav&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index.html&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-cat.html&quot;&gt;Index&nbsp;(categorical)&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-alpha.html&quot;&gt;Index&nbsp;(alphabetical)&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@_fileList&nbsp;categorizedFiles&nbsp;fileSuffix&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&lt;/nav&gt;<br/></span><span class="directive">&lt;/#macro&gt;</span>
 
 
 
@@ -505,7 +508,7 @@
                 
     
         <dt><b>Category</b></dt>
-        <dd>Printing macro information</dd>
+        <dd>[Printing macro information ]</dd>
     
 
                 
@@ -558,7 +561,7 @@
                 
     
         <dt><b>Category</b></dt>
-        <dd>Printing macro information</dd>
+        <dd>[Printing macro information ]</dd>
     
 
                 
@@ -609,7 +612,7 @@
                 
     
         <dt><b>Category</b></dt>
-        <dd>Printing macro information</dd>
+        <dd>[Printing macro information ]</dd>
     
 
                 
@@ -660,7 +663,7 @@
                 
     
         <dt><b>Category</b></dt>
-        <dd>Printing macro information</dd>
+        <dd>[Printing macro information ]</dd>
     
 
                 
@@ -711,7 +714,7 @@
                 
     
         <dt><b>Category</b></dt>
-        <dd>Printing macro information</dd>
+        <dd>[Printing macro information ]</dd>
     
 
                 
