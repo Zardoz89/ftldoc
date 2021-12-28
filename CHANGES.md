@@ -4,6 +4,7 @@
 - Update Maven Surefire
 - Update to Spock 2.0 stable
 - Unified groovy-eclipse-compiler version and fix mismatch versions betweeen groovy and groovy-eclipse-batch
+- Marked as thread safe
 
 0.1.0
 
