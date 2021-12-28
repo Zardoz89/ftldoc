@@ -1,4 +1,13 @@
-0.1.0-SNAPSHOT
+0.1.1
+
+- Update to Apache Commons 2.8.0
+- Update Maven Surefire
+- Update to Spock 2.0 stable
+- Unified groovy-eclipse-compiler version and fix mismatch versions betweeen groovy and groovy-eclipse-batch
+- Marked as thread safe
+
+0.1.0
+
 - Adopting semantic versioning
 - Using Maven logger
 - Maven profile to launch tests using Groovy 3

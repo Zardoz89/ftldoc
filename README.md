@@ -66,11 +66,17 @@ Where :
 * templateDirectory : A path where to use custom freemarker templates to generate the documentation.
 * freemarkerFileExtesion : Freemarker files extensión. By default it's "ftl"
 
+### Parallel builds
+
+FtlDoc it's annotated as thread safe. Shouldm't be any problem using on
+parallel builds, if you aren't trying to write the generated documentation
+files on the same directory (For example /tmp/myFtlDoc/).
+
 ### Usage as CLI
 
 Example:
 ```bash
-mvn io.github.zardoz89:ftldoc-maven-plugin:0.1.0-SNAPSHOT:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
+mvn io.github.zardoz89:ftldoc-maven-plugin:0.1.1:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
 ```
 
 ## Comment syntax

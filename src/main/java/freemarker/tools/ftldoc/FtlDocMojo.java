@@ -10,7 +10,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-@Mojo(name = "generate-documentation")
+@Mojo(name = "generate-documentation", threadSafe = true)
 public class FtlDocMojo extends AbstractMojo {
 
     @Parameter( property = "outputDirectory", defaultValue ="${project.build.directory}/ftldocs")
