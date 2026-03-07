@@ -8,7 +8,7 @@ package freemarker.tools.ftldoc;
 import org.apache.maven.plugin.logging.Log;
 
 /**
- * Wrapper aroubd Maven logger, that fallbacks to stdout/stderr if tehre isn't any maven logger
+ * Wrapper around Maven logger, that fallbacks to stdout/stderr if there isn't any maven logger
  */
 public class Logger
 {

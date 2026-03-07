@@ -50,7 +50,7 @@ public class FtlDocMojo extends AbstractMojo {
         this.getLog().info("Readme files to process : " + this.readmeFile);
         this.getLog().info( "Files to process in: " + Arrays.asList(this.freemarkerFiles));
         if (this.freemarkerFileExtension != null) {
-            this.getLog().info("Files filtered by extesion : " + this.freemarkerFileExtension);
+            this.getLog().info("Files filtered by extension : " + this.freemarkerFileExtension);
         }
         this.outputDirectory.mkdirs();
         FtlDoc ftl = new FtlDoc(ftlFiles, this.outputDirectory, this.templateDirectory, this.readmeFile, this.title,

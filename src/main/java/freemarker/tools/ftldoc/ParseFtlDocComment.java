@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Helper class to parse a Comment with FTLDoc anotations
+ * Helper class to parse a Comment with FTLDoc annotations
  */
 class ParseFtlDocComment
 {
