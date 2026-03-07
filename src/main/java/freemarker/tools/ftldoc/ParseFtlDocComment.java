@@ -56,6 +56,8 @@ class ParseFtlDocComment
     private static final String SHORT_COMMENT = "short_comment";
     private static final String COMMENT = "comment";
 
+    private static final Logger LOGGER = new Logger();
+
     private ParseFtlDocComment()
     {
     }
@@ -159,7 +161,7 @@ class ParseFtlDocComment
                 // one can prove (with some automat theory) that the
                 // TEXT_PATTERN regex matches *every* string. Under normal
                 // circumstances this else block can never be reached.
-                System.err.println("WARNING: reached unreachable point: " + line);
+                LOGGER.error("Reached unreachable point: " + line);
             }
         }
         String text = bufText.toString().replaceAll("\n", "");
