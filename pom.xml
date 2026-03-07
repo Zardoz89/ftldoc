@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.zardoz89</groupId>
     <artifactId>ftldoc-maven-plugin</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.2</version>
     <packaging>maven-plugin</packaging>
 
     <name>ftldoc - Maven Plugin</name>
@@ -248,7 +248,8 @@
         <url>https://github.com/Zardoz89/ftldoc/tree/master</url>
         <connection>scm:git:git://github.com:Zardoz89/ftldoc.git</connection>
         <developerConnection>scm:git:ssh://github.com:Zardoz89/ftldoc.git</developerConnection>
-    </scm>
+      <tag>ftldoc-maven-plugin-0.1.2</tag>
+  </scm>
 
     <distributionManagement>
         <snapshotRepository>
