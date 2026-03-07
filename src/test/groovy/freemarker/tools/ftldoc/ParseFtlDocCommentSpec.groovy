@@ -127,11 +127,14 @@ class ParseFtlDocCommentSpec extends Specification {
         "@copyright 2021 Mocosoft Inc."                                     || "copyright"      | "2021 Mocosoft Inc."
     }
 
-    def "Multiline @param"() {
+    def "Multiple @author annotations are stored in a list"() {
         given:
         def fullComment = """-
-    @param arg Long description
-        that continues on another line
+-- This is a test macro.
+--
+-- @author Foo
+-- @author Bar
+-- @author Baz
 """
 
         when:
@@ -139,13 +142,12 @@ class ParseFtlDocCommentSpec extends Specification {
 
         then:
         !(output.isEmpty())
-        output.get("short_comment") != null
-        output.get("comment") != null
-        def params = output.get("@param") as SimpleSequence
-        def param = params.get(0) as SimpleHash
-        param.get("name").toString() == "arg"
-        param.get("description").toString() == "Long description that continues on another line\n"
+        output.get("@author") instanceof List
+        def authors = output.get("@author") as List
+        authors.size() == 3
+        authors == ["Foo", "Bar", "Baz"]
     }
+
 
     def "Mixed @param, @keyword and alone comments"() {
         given:
