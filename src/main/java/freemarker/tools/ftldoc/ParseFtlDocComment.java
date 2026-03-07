@@ -68,7 +68,7 @@ class ParseFtlDocComment
     static Map<String, Object> parse(String commentText)
     {
         // always return a hash, even if doesn't have any content
-        if (StringUtils.isEmpty(commentText)) {
+        if (StringUtils.isEmpty(commentText) || commentText.length() < 2) {
             return Collections.emptyMap();
         }
 
