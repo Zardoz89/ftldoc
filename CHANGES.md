@@ -1,3 +1,5 @@
+0.1.3
+
 0.1.2
 
 - Update maven-plugin dependencies to avoid vulnerability on plexus-utils@3.0.22
