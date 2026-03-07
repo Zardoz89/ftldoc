@@ -1,3 +1,11 @@
+0.1.2
+
+- Update maven-plugin dependencies to avoid vulnerability on plexus-utils@3.0.22
+- Add aditional test, fix typos, and correct a few small bugs detected by AI
+  tools.
+- Added a AGENTS.md (testing AI assisted coding)
+- Updated default layout to use details HTML tag in the navigation bar.
+
 0.1.1
 
 - Update to Apache Commons 2.8.0

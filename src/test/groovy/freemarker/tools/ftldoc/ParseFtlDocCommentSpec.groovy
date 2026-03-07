@@ -127,11 +127,14 @@ class ParseFtlDocCommentSpec extends Specification {
         "@copyright 2021 Mocosoft Inc."                                     || "copyright"      | "2021 Mocosoft Inc."
     }
 
-    def "Multiline @param"() {
+    def "Multiple @author annotations are stored in a list"() {
         given:
         def fullComment = """-
-    @param arg Long description
-        that continues on another line
+-- This is a test macro.
+--
+-- @author Foo
+-- @author Bar
+-- @author Baz
 """
 
         when:
@@ -139,13 +142,12 @@ class ParseFtlDocCommentSpec extends Specification {
 
         then:
         !(output.isEmpty())
-        output.get("short_comment") != null
-        output.get("comment") != null
-        def params = output.get("@param") as SimpleSequence
-        def param = params.get(0) as SimpleHash
-        param.get("name").toString() == "arg"
-        param.get("description").toString() == "Long description that continues on another line\n"
+        output.get("@author") instanceof List
+        def authors = output.get("@author") as List
+        authors.size() == 3
+        authors == ["Foo", "Bar", "Baz"]
     }
+
 
     def "Mixed @param, @keyword and alone comments"() {
         given:
@@ -175,5 +177,84 @@ class ParseFtlDocCommentSpec extends Specification {
         def param = params.get(0) as SimpleHash
         param.get("name").toString() == "arg"
         param.get("description").toString() == "Long description      that continues on another line\n"
+    }
+
+    def "Parsing null comment returns empty map"() {
+        when:
+        def output = ParseFtlDocComment.parse(null)
+
+        then:
+        output != null
+        output.isEmpty()
+    }
+
+    def "Parsing comment with only single dash returns empty map"() {
+        when:
+        def output = ParseFtlDocComment.parse("-")
+
+        then:
+        output != null
+        output.isEmpty()
+    }
+
+    def "Parsing comment that does not start with dash"() {
+        given:
+        def comment = "This is a comment without dash prefix"
+
+        when:
+        def output = ParseFtlDocComment.parse(comment)
+
+        then:
+        output != null
+        output.get("comment") != null
+        output.get("comment").toString().contains("comment without dash prefix")
+    }
+
+    @Unroll
+    def "Parsing complex types #typeExpression"() {
+        given:
+        def fullComment = "- @param {" + typeExpression + "} arg Description"
+
+        when:
+        def output = ParseFtlDocComment.parse(fullComment)
+
+        then:
+        !(output.isEmpty())
+        def params = output.get("@param") as SimpleSequence
+        def param = params.get(0) as SimpleHash
+        param.get("name").toString() == "arg"
+        param.get("description").toString() == "Description"
+        param.get("type").toList() == expectedTypes
+
+        where:
+        typeExpression                         || expectedTypes
+        "Hash<String,List<Object>>"             || ["Hash<String,List<Object>>"]
+        "Map<String,ArrayList<Integer>>"        || ["Map<String,ArrayList<Integer>>"]
+        "List<HashMap<String,Object>>"         || ["List<HashMap<String,Object>>"]
+    }
+
+    def "Parsing @param with empty description"() {
+        given:
+        def fullComment = "- @param {String} arg"
+
+        when:
+        def output = ParseFtlDocComment.parse(fullComment)
+
+        then:
+        !(output.isEmpty())
+        def params = output.get("@param") as SimpleSequence
+        def param = params.get(0) as SimpleHash
+        param.get("name").toString() == "arg"
+        param.get("type").toList() == ["String"]
+        param.get("description").toString() == ""
+    }
+
+    def "Parsing comment with only dash returns empty map"() {
+        when:
+        def output = ParseFtlDocComment.parse("-")
+
+        then:
+        output != null
+        output.isEmpty()
     }
 }

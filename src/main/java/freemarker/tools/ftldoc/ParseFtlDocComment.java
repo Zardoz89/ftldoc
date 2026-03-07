@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * Helper class to parse a Comment with FTLDoc anotations
+ * Helper class to parse a Comment with FTLDoc annotations
  */
 class ParseFtlDocComment
 {
@@ -56,6 +56,8 @@ class ParseFtlDocComment
     private static final String SHORT_COMMENT = "short_comment";
     private static final String COMMENT = "comment";
 
+    private static final Logger LOGGER = new Logger();
+
     private ParseFtlDocComment()
     {
     }
@@ -66,7 +68,7 @@ class ParseFtlDocComment
     static Map<String, Object> parse(String commentText)
     {
         // always return a hash, even if doesn't have any content
-        if (StringUtils.isEmpty(commentText)) {
+        if (StringUtils.isEmpty(commentText) || commentText.length() < 2) {
             return Collections.emptyMap();
         }
 
@@ -159,7 +161,7 @@ class ParseFtlDocComment
                 // one can prove (with some automat theory) that the
                 // TEXT_PATTERN regex matches *every* string. Under normal
                 // circumstances this else block can never be reached.
-                System.err.println("WARNING: reached unreachable point: " + line);
+                LOGGER.error("Reached unreachable point: " + line);
             }
         }
         String text = bufText.toString().replaceAll("\n", "");

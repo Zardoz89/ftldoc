@@ -76,7 +76,7 @@ files on the same directory (For example /tmp/myFtlDoc/).
 
 Example:
 ```bash
-mvn io.github.zardoz89:ftldoc-maven-plugin:0.1.1:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
+mvn io.github.zardoz89:ftldoc-maven-plugin:0.1.2:generate-documentation -DoutputDirectory=./outputdir/  -DfreemarkerFiles=./src/main/webapp/templates/webftl/lib/auxiliar_functions.ftl
 ```
 
 ## Comment syntax
