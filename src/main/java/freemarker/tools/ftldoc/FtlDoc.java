@@ -352,7 +352,7 @@ public class FtlDoc
         Comment globalComment = null;
         TemplateElement templateElement = template.getRootTreeNode();
         if (templateElement.getClass().getName().endsWith("MixedContent")) {
-            Enumeration children = templateElement.children();
+            Enumeration<?> children = templateElement.children();
             while (children.hasMoreElements()) {
                 Object element = children.nextElement();
                 if (element instanceof Comment) {
@@ -468,7 +468,7 @@ public class FtlDoc
         result.put("category", cat);
         result.put("name", macro.getName());
         result.put("code", macro.getSource());
-        result.put("isfunction", new Boolean(macro.isFunction()));
+        result.put("isfunction", Boolean.valueOf(macro.isFunction()));
         result.put("type", macro.isFunction() ? "function" : "macro");
         result.put("arguments", macro.getArgumentNames());
         result.put("catchall", macro.getCatchAll());
