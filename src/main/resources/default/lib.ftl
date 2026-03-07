@@ -26,13 +26,21 @@
     <h6>Macro Libraries</h6>
     <#list categorizedFiles as category, files>
         <#if categorizedFiles?keys?size gt 1>
-            <h7>${category.getName()}</h7>
+          <details open>
+            <summary><h7>${category.getName()}</h7></summary>
+            <ul>
+            <#list files as file>
+                <li><a href="${file.name}${fileSuffix}">${file.name}</a></li>
+            </#list>
+            </ul>
+          </details>
+        <#else>
+          <ul>
+          <#list files as file>
+              <li><a href="${file.name}${fileSuffix}">${file.name}</a></li>
+          </#list>
+          </ul>
         </#if>
-        <ul>
-        <#list files as file>
-            <li><a href="${file.name}${fileSuffix}">${file.name}</a></li>
-        </#list>
-        </ul>
     </#list>
 </#macro>
 
