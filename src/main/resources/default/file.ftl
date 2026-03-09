@@ -46,6 +46,67 @@
     </dl>
 </#if>
 <#-- end prolog -->
+<#if variables?has_content && variables?size gt 0>
+<#-- start global variables summary -->
+<h3>Global Variables Summary</h3>
+<table class="summary">
+    <tbody>
+        <#list variables as variable>
+        <tr>
+            <td class="summary__type">
+                <code>${variable.type}</code>
+            </td>
+            <td class="summary__description">
+                <dl>
+                    <dt>
+                        <code class="variable__signature">
+                            <a href="#${variable.name}">
+                                ${variable.name}
+                            </a>
+                            <#if variable.@type??>
+                                <#list variable.@type as typeInfo>
+                                    : ${typeInfo}
+                                </#list>
+                            </#if>
+                        </code>
+                    </dt>
+                    <dd>
+                        ${variable.short_comment?if_exists}
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+        </#list>
+    </tbody>
+</table>
+<#-- end global variables summary -->
+<#-- start global variables detail -->
+<h3>Global Variables Detail</h3>
+<#list variables as variable>
+    <dl class="variable">
+        <dt>
+            <code class="variable__signature"><a name="${variable.name}">${variable.name}</a>
+                <#if variable.@type??>
+                    <#list variable.@type as typeInfo>
+                        : ${typeInfo}
+                    </#list>
+                </#if>
+            </code>
+        </dt>
+        <dd>
+            <#if variable.@deprecated??><@ftl.printDeprecated variable.@deprecated/></#if>
+            <#if variable.comment?has_content>
+                <p>${variable.comment!}</p>
+            </#if>
+            <dl>
+                <@ftl.printOptional variable.@return?if_exists, "Return value" />
+            </dl>
+        </dd>
+    </dl>
+    <#sep><hr/></#sep>
+</#list>
+<#-- end global variables detail -->
+</#if>
 <#-- start summary -->
 <h3>Macro and Function Summary</h3>
 <#list categories?keys as category>
