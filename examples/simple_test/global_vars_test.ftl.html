@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>FtlDoc - global_vars_test.ftl</title>
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
+    <script language="javascript">
+        function toggle(id) {
+            elem = document.getElementById(id);
+            if(elem.style.display=="block") {
+                elem.style.display="none";
+            } else {
+                elem.style.display="block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="index-all-cat.html">Index (categorical)</a></li>
+        <li><a href="index-all-alpha.html">Index (alphabetical)</a></li>
+    </ul>
+    
+    <h6>Macro Libraries</h6>
+    
+        
+          <details open>
+            <summary><h7>custom_templates</h7></summary>
+            <ul>
+            
+                <li><a href="file.ftl.html">file.ftl</a></li>
+            
+                <li><a href="index-all-alpha.ftl.html">index-all-alpha.ftl</a></li>
+            
+                <li><a href="index-all-cat.ftl.html">index-all-cat.ftl</a></li>
+            
+                <li><a href="index.ftl.html">index.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>test</h7></summary>
+            <ul>
+            
+                <li><a href="global_comment_test.ftl.html">global_comment_test.ftl</a></li>
+            
+                <li><a href="global_vars_test.ftl.html">global_vars_test.ftl</a></li>
+            
+                <li><a href="simple_test.ftl.html">simple_test.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>dir1</h7></summary>
+            <ul>
+            
+                <li><a href="lib1.ftl.html">lib1.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>dir2</h7></summary>
+            <ul>
+            
+                <li><a href="lib2.ftl.html">lib2.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>categories</h7></summary>
+            <ul>
+            
+                <li><a href="macros.ftl.html">macros.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>nested</h7></summary>
+            <ul>
+            
+                <li><a href="nested_macro.ftl.html">nested_macro.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>subdir</h7></summary>
+            <ul>
+            
+                <li><a href="subdir_macro.ftl.html">subdir_macro.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>lib</h7></summary>
+            <ul>
+            
+                <li><a href="test_lib.ftl.html">test_lib.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+
+</nav>
+
+<main>
+
+
+<h1>global_vars_test.ftl</h1>
+
+     Global Variables Test File<br/>
+
+
+    <dl>
+                
+    
+        <dt><b>Author</b></dt>
+        <dd>Test Author</dd>
+    
+
+            
+        
+                
+    
+        <dt><b>Version</b></dt>
+        <dd>1.0</dd>
+    
+
+            
+        
+
+    </dl>
+
+
+
+
+<h3>Global Variables Summary</h3>
+<table class="summary">
+    <tbody>
+        
+        <tr>
+            <td class="summary__type">
+                <code>global</code>
+            </td>
+            <td class="summary__description">
+                <dl>
+                    <dt>
+                        <code class="variable__signature">
+                            <a href="#myStringVar">
+                                myStringVar
+                            </a>
+                            
+                                
+                                    : {String}
+                                
+                            
+                        </code>
+                    </dt>
+                    <dd>
+                         Global variable with type and description
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="summary__type">
+                <code>global</code>
+            </td>
+            <td class="summary__description">
+                <dl>
+                    <dt>
+                        <code class="variable__signature">
+                            <a href="#myHashVar">
+                                myHashVar
+                            </a>
+                            
+                                
+                                    : {Hash}
+                                
+                            
+                        </code>
+                    </dt>
+                    <dd>
+                         Global variable with complex type
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="summary__type">
+                <code>global</code>
+            </td>
+            <td class="summary__description">
+                <dl>
+                    <dt>
+                        <code class="variable__signature">
+                            <a href="#myUntypedVar">
+                                myUntypedVar
+                            </a>
+                            
+                        </code>
+                    </dt>
+                    <dd>
+                         Global variable without type annotation
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="summary__type">
+                <code>global</code>
+            </td>
+            <td class="summary__description">
+                <dl>
+                    <dt>
+                        <code class="variable__signature">
+                            <a href="#myNoCommentVar">
+                                myNoCommentVar
+                            </a>
+                            
+                        </code>
+                    </dt>
+                    <dd>
+                         Global variable without any comment
+                    </dd>
+                </dl>
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
+
+
+<h3>Global Variables Detail</h3>
+
+    <dl class="variable">
+        <dt>
+            <code class="variable__signature"><a name="myStringVar">myStringVar</a>
+                
+                    
+                        : {String}
+                    
+                
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Global variable with type and description</p>
+            
+            <dl>
+                
+    
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="variable">
+        <dt>
+            <code class="variable__signature"><a name="myHashVar">myHashVar</a>
+                
+                    
+                        : {Hash}
+                    
+                
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Global variable with complex type</p>
+            
+            <dl>
+                
+    
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="variable">
+        <dt>
+            <code class="variable__signature"><a name="myUntypedVar">myUntypedVar</a>
+                
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Global variable without type annotation</p>
+            
+            <dl>
+                
+    
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="variable">
+        <dt>
+            <code class="variable__signature"><a name="myNoCommentVar">myNoCommentVar</a>
+                
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Global variable without any comment</p>
+            
+            <dl>
+                
+    
+
+            </dl>
+        </dd>
+    </dl>
+    
+
+
+
+
+<h3>Macro and Function Summary</h3>
+
+    
+        
+            <h5>no category</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#greet">
+                                        greet
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">name</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                 A macro to test that #assign is not captured
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+
+
+
+<h3>Macro and Function Detail</h3>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="greet">greet</a>
+                
+    
+        
+            <span class="macro__signature-argument">name</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> A macro to test that #assign is not captured</p>
+            
+            <dl>
+                
+    
+
+                
+    
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>name</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        The name
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_greet'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_greet">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;greet&nbsp;name&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;Hello&nbsp;</span><span class="interpolation">${name}</span><span class="textblock">!<br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    
+
+
+
+</main>
+</body>
+</html>
