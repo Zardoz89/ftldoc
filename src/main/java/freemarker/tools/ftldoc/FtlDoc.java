@@ -78,6 +78,7 @@ public class FtlDoc
     private List<Map<String, Object>> macros = null;
     private List<Map<String, Object>> allVariables = null;
     private List<Map<String, Object>> variables = null;
+    private List<Map<String, Object>> externalVariables = null;
     private File outputDir;
     private List<File> sourceFiles;
     private List<Map<String, Object>> parsedFiles;
@@ -130,6 +131,7 @@ public class FtlDoc
             this.allMacros = new ArrayList<>();
             this.allVariables = new ArrayList<>();
             this.parsedFiles = new ArrayList<>();
+            this.externalVariables = new ArrayList<>();
 
             List<TemplateLoader> loaders = new ArrayList<>(this.categorizedFiles.size() + 1);
             // Loads documantation generation templates
@@ -190,6 +192,7 @@ public class FtlDoc
         this.categories = new TreeMap<>();
         this.macros = new ArrayList<>();
         this.variables = new ArrayList<>();
+        this.externalVariables = new ArrayList<>();
         try {
             File htmlFile = new File(this.outputDir, file.getName() + ".html");
             this.log.info("Generating " + htmlFile.getCanonicalFile() + "...");
@@ -207,6 +210,25 @@ public class FtlDoc
 
             Comment globalComment = this.getGlobalCommant(template, comments);
 
+            Map<String, Object> globalCommentData = new HashMap<>();
+            if (null != globalComment) {
+                globalCommentData = this.parse(globalComment);
+                Object ftlvariableObj = globalCommentData.get("@ftlvariable");
+                if (ftlvariableObj instanceof List) {
+                    @SuppressWarnings("unchecked")
+                    List<Map<String, String>> ftlvariables = (List<Map<String, String>>) ftlvariableObj;
+                    for (Map<String, String> fv : ftlvariables) {
+                        Map<String, Object> extVar = new HashMap<>();
+                        extVar.put("name", fv.get("name"));
+                        extVar.put("type", fv.get("type"));
+                        if (fv.get("file") != null) {
+                            extVar.put("file", fv.get("file"));
+                        }
+                        this.externalVariables.add(extVar);
+                    }
+                }
+            }
+
             Collections.sort(this.macros, MACRO_COMPARATOR);
             for (List<Map<String, Object>> l : this.categories.values()) {
                 Collections.sort(l, MACRO_COMPARATOR);
@@ -215,11 +237,8 @@ public class FtlDoc
             Map<String, Object> root = new HashMap<>();
             root.put("macros", this.macros);
             root.put("variables", this.variables);
-            if (null != globalComment) {
-                root.put("comment", this.parse(globalComment));
-            } else {
-                root.put("comment", new HashMap<>());
-            }
+            root.put("externalVariables", this.externalVariables);
+            root.put("comment", globalCommentData);
             root.put("filename", template.getName());
             root.put("categories", this.categories);
             this.putGlobalVars(root);

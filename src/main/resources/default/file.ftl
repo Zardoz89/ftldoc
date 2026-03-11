@@ -1,4 +1,5 @@
 <#ftl encoding="UTF-8" output_format="HTML" />
+<#--- @ftlvariable name="title" type="java.lang.String" -->
 <#import "lib.ftl" as ftl>
 <!DOCTYPE html>
 <html>
@@ -43,6 +44,12 @@
                 <@ftl.printOptional copyright "Copyright" />
             </#list>
         </#if>
+    </dl>
+</#if>
+<#if comment.@ftlroot?? >
+    <dl>
+        <dt>FTL Root:</dt>
+        <dd><code>${comment.@ftlroot}</code></dd>
     </dl>
 </#if>
 <#-- end prolog -->
@@ -106,6 +113,36 @@
     <#sep><hr/></#sep>
 </#list>
 <#-- end global variables detail -->
+</#if>
+<#if externalVariables?has_content && externalVariables?size gt 0>
+<#-- start external variables summary -->
+<h3>External Variables Summary</h3>
+<p>These variables are defined externally (e.g., by Java code) and available in this template.</p>
+<table class="summary">
+    <tbody>
+        <#list externalVariables as variable>
+        <tr>
+            <td class="summary__type">
+                <code>${variable.type}</code>
+            </td>
+            <td class="summary__description">
+                <dl>
+                    <dt>
+                        <code class="variable__signature">
+                            <#if variable.file??>
+                                <span title="File: ${variable.file}">${variable.name}</span>
+                            <#else>
+                                ${variable.name}
+                            </#if>
+                        </code>
+                    </dt>
+                </dl>
+            </td>
+        </tr>
+        </#list>
+    </tbody>
+</table>
+<#-- end external variables summary -->
 </#if>
 <#-- start summary -->
 <h3>Macro and Function Summary</h3>

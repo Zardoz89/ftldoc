@@ -46,6 +46,12 @@ class ParseFtlDocComment
     private static final Pattern AT_PATTERN = Pattern.compile("^\\s*(?:--)?\\s*(@\\w+)\\s*(.*)$");
     // Regex that detects a text line
     private static final Pattern TEXT_PATTERN = Pattern.compile("^\\s*(?:--)?(.*)$");
+    // Regex that detects @ftlvariable annotation: @ftlvariable name="..." type="..." file="..."
+    private static final Pattern FTLVARIABLE_PATTERN =
+        Pattern.compile("^\\s*(?:--)?\\s*@ftlvariable\\s+name=\"([^\"]+)\"\\s+type=\"([^\"]+)\"(?:\\s+file=\"([^\"]+)\")?\\s*$");
+    // Regex that detects @ftlroot annotation: @ftlroot "path"
+    private static final Pattern FTLROOT_PATTERN =
+        Pattern.compile("^\\s*(?:--)?\\s*@ftlroot\\s+\"([^\"]+)\"\\s*$");
 
     private static final String PARAM_KEYWORD = "@param";
     private static final String NAME = "name";
@@ -126,6 +132,23 @@ class ParseFtlDocComment
 
             } else if ((m = DEPRECATED.matcher(line)).matches()) {
                 result.put(m.group(1), m.group(2));
+
+            } else if ((m = FTLVARIABLE_PATTERN.matcher(line)).matches()) {
+                Map<String, String> ftlvariable = new HashMap<>();
+                ftlvariable.put(NAME, m.group(1));
+                ftlvariable.put(TYPE, m.group(2));
+                if (m.group(3) != null) {
+                    ftlvariable.put("file", m.group(3));
+                }
+                List<Map<String, String>> ftlvariables = (List<Map<String, String>>) result.get("@ftlvariable");
+                if (ftlvariables == null) {
+                    ftlvariables = new ArrayList<>();
+                }
+                ftlvariables.add(ftlvariable);
+                result.put("@ftlvariable", ftlvariables);
+
+            } else if ((m = FTLROOT_PATTERN.matcher(line)).matches()) {
+                result.put("@ftlroot", m.group(1));
 
             } else if ((m = AT_PATTERN.matcher(line)).matches()) {
                 String annotation = m.group(1);

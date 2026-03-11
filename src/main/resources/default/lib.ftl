@@ -1,10 +1,9 @@
 <#ftl encoding="UTF-8" output_format="HTML" strip_text="true" />
-
 <#include "/ftl_highlight.ftl" />
 <#---@begin Navigation related macros -->
 
 <#--- Generates the navigation bar
-    @param {Hash<File, Sequence<File>>} files List of files
+    @param {Hash<File, Sequence<File>>} categorizedFiles List of files
     @param {String} fileSuffix Suffix of file name (ie. extension)
     -->
 <#macro navigationBar categorizedFiles fileSuffix>
@@ -19,7 +18,7 @@
 </#macro>
 
 <#--- Internal macro that generates the file list
-    @param {Hash<File, Sequence<File>>} files List of files
+    @param {Hash<File, Sequence<File>>} categorizedFiles - List of files
     @param {String} fileSuffix Suffix of file name (ie. extension)
     -->
 <#macro _fileList categorizedFiles fileSuffix>
