@@ -19,8 +19,7 @@
 -->
 <#global myUntypedVar = 123>
 
-<#--- Global variable without any comment
--->
+<#-- This comment must be ignored -->
 <#global myNoCommentVar = true>
 
 <#--- A macro to test that #assign is not captured

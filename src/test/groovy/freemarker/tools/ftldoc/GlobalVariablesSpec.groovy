@@ -76,6 +76,7 @@ class GlobalVariablesSpec extends Specification {
         then: "Variable without comment is still included"
         def content = new File(outputFolder, "global_vars_test.ftl.html").text
         content.contains("myNoCommentVar")
+        content.contains("This comment must be ignored") == false
 
         cleanup:
         outputFolder.delete()
