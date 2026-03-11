@@ -146,3 +146,27 @@ mvn install -DskipTests  # Install plugin without running tests
 - Eclipse: Use m2e plugin, project uses Groovy-Eclipse-Compiler
 - IntelliJ IDEA: Native Maven and Groovy support
 - VS Code: Use Java and Groovy extensions
+
+## Regenerating Examples
+
+After making changes that affect output, regenerate the examples:
+
+**Install the plugin locally first:**
+```bash
+mvn install -DskipTests
+```
+
+**Regenerate default_templates example (uses default FTL templates as source):**
+```bash
+mvn io.github.zardoz89:ftldoc-maven-plugin:0.1.3-SNAPSHOT:generate-documentation \
+  -DfreemarkerFiles=src/main/resources/default/ \
+  -DoutputDirectory=examples/default_templates \
+  -DtemplateDirectory=src/main/resources/default
+```
+
+**Regenerate simple_test example (uses test FTL files as source):**
+```bash
+mvn io.github.zardoz89:ftldoc-maven-plugin:0.1.3-SNAPSHOT:generate-documentation \
+  -DfreemarkerFiles=src/test/resources/test/ \
+  -DoutputDirectory=examples/simple_test
+```

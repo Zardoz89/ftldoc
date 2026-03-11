@@ -11,7 +11,8 @@ enum Templates
     file("file"),
     index("index"),
     indexAllCat("index-all-cat"),
-    indexAllAlpha("index-all-alpha");
+    indexAllAlpha("index-all-alpha"),
+    indexGlobalVars("index-global-vars");
 
     private final String fileName;
 

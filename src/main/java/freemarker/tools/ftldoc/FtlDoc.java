@@ -76,6 +76,8 @@ public class FtlDoc
     private SortedMap<String, List<Map<String, Object>>> categories = null;
     private List<Map<String, Object>> allMacros = null;
     private List<Map<String, Object>> macros = null;
+    private List<Map<String, Object>> allVariables = null;
+    private List<Map<String, Object>> variables = null;
     private File outputDir;
     private List<File> sourceFiles;
     private List<Map<String, Object>> parsedFiles;
@@ -126,6 +128,7 @@ public class FtlDoc
             // init global collections
             this.allCategories = new TreeMap<>();
             this.allMacros = new ArrayList<>();
+            this.allVariables = new ArrayList<>();
             this.parsedFiles = new ArrayList<>();
 
             List<TemplateLoader> loaders = new ArrayList<>(this.categorizedFiles.size() + 1);
@@ -155,6 +158,7 @@ public class FtlDoc
             this.createIndexPage();
             this.createAllCatPage();
             this.createAllAlphaPage();
+            this.createGlobalVarsIndexPage();
             this.copyCssFiles();
 
         } catch (Exception ex) {
@@ -185,6 +189,7 @@ public class FtlDoc
     {
         this.categories = new TreeMap<>();
         this.macros = new ArrayList<>();
+        this.variables = new ArrayList<>();
         try {
             File htmlFile = new File(this.outputDir, file.getName() + ".html");
             this.log.info("Generating " + htmlFile.getCanonicalFile() + "...");
@@ -198,6 +203,8 @@ public class FtlDoc
 
             this.extractCommentedMacros(file, comments, templateMacros);
 
+            this.extractGlobalVariables(template, comments, file);
+
             Comment globalComment = this.getGlobalCommant(template, comments);
 
             Collections.sort(this.macros, MACRO_COMPARATOR);
@@ -207,6 +214,7 @@ public class FtlDoc
 
             Map<String, Object> root = new HashMap<>();
             root.put("macros", this.macros);
+            root.put("variables", this.variables);
             if (null != globalComment) {
                 root.put("comment", this.parse(globalComment));
             } else {
@@ -325,6 +333,133 @@ public class FtlDoc
         }
     }
 
+    private void extractGlobalVariables(Template template, Set<Comment> comments, File file)
+    {
+        TemplateElement root = template.getRootTreeNode();
+        Stack<TreeNode> nodes = new Stack<>();
+        nodes.push(root);
+
+        while (!nodes.isEmpty()) {
+            TemplateElement te = (TemplateElement)nodes.pop();
+            for (int i = te.getChildCount() - 1; i >= 0; i--) {
+                nodes.push(te.getChildAt(i));
+            }
+
+            if (te.getClass().getName().endsWith("Assignment")) {
+                boolean isGlobal = this.isGlobalAssignment(te);
+                if (isGlobal) {
+                    String varName = this.getAssignmentVariableName(te);
+                    if (varName != null) {
+                        Comment associatedComment = this.findPreviousComment(te, comments);
+                        this.addVariable(this.createCommentedVariable(te, associatedComment, file, varName));
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean isGlobalAssignment(TemplateElement te)
+    {
+        try {
+            java.lang.Class<?> assignmentClass = te.getClass();
+            java.lang.reflect.Field scopeField = assignmentClass.getDeclaredField("scope");
+            scopeField.setAccessible(true);
+            int scope = scopeField.getInt(te);
+            
+            java.lang.Class<?> freemarkerCore = java.lang.Class.forName("freemarker.core.Assignment");
+            java.lang.reflect.Field globalField = freemarkerCore.getDeclaredField("GLOBAL");
+            globalField.setAccessible(true);
+            int globalValue = globalField.getInt(null);
+            return scope == globalValue;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private String getAssignmentVariableName(TemplateElement te)
+    {
+        try {
+            java.lang.Class<?> teClass = te.getClass();
+            java.lang.reflect.Method getParameterCountMethod = null;
+            
+            for (java.lang.Class<?> c = teClass; c != null; c = c.getSuperclass()) {
+                try {
+                    getParameterCountMethod = c.getDeclaredMethod("getParameterCount");
+                    break;
+                } catch (NoSuchMethodException e) {
+                }
+            }
+            
+            if (getParameterCountMethod == null) {
+                return null;
+            }
+            
+            getParameterCountMethod.setAccessible(true);
+            Integer paramCount = (Integer) getParameterCountMethod.invoke(te);
+            
+            for (int i = 0; i < paramCount; i++) {
+                java.lang.reflect.Method getParameterValueMethod = null;
+                java.lang.reflect.Method getParameterRoleMethod = null;
+                
+                for (java.lang.Class<?> c = teClass; c != null; c = c.getSuperclass()) {
+                    try {
+                        getParameterValueMethod = c.getDeclaredMethod("getParameterValue", int.class);
+                        getParameterRoleMethod = c.getDeclaredMethod("getParameterRole", int.class);
+                        break;
+                    } catch (NoSuchMethodException e) {
+                        // Continue to parent class
+                    }
+                }
+                
+                if (getParameterValueMethod == null || getParameterRoleMethod == null) {
+                    continue;
+                }
+                
+                getParameterValueMethod.setAccessible(true);
+                getParameterRoleMethod.setAccessible(true);
+                
+                Object paramValue = getParameterValueMethod.invoke(te, i);
+                Object roleObj = getParameterRoleMethod.invoke(te, i);
+                
+                String roleName = roleObj.toString();
+                if (roleName.contains("assignment target") && paramValue != null) {
+                    return paramValue.toString();
+                }
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    private Comment findPreviousComment(TemplateElement te, Set<Comment> comments)
+    {
+        TreeNode parentNode = te.getParent();
+        if (parentNode == null) {
+            return null;
+        }
+        TemplateElement parent = (TemplateElement) parentNode;
+        int idx = parent.getIndex(te);
+        for (int j = idx - 1; j >= 0; j--) {
+            TemplateElement sibling = (TemplateElement) parent.getChildAt(j);
+            if (sibling instanceof TextBlock) {
+                if (((TextBlock)sibling).getSource().trim().length() == 0) {
+                    continue;
+                }
+                return null;
+            } else if (sibling instanceof Comment) {
+                Comment c = (Comment)sibling;
+                comments.add(c);
+                if (c.getText().startsWith("-")) {
+                    return c;
+                }
+                return null;
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
     private void addMacro(Map<String, Object> macro)
     {
         this.macros.add(macro);
@@ -375,6 +510,7 @@ public class FtlDoc
         root.put("files", this.sourceFiles);
         root.put("categorizedFiles", this.categorizedFiles);
         root.put("fileSuffix", ".html");
+        root.put("hasGlobalVariables", this.allVariables != null && !this.allVariables.isEmpty());
     }
 
     private void createAllCatPage()
@@ -401,6 +537,24 @@ public class FtlDoc
             root.put("macros", this.allMacros);
             this.putGlobalVars(root);
             Template template = this.cfg.getTemplate(Templates.indexAllAlpha.fileName());
+            template.process(root, outputStream);
+        } catch (java.io.IOException | freemarker.template.TemplateException ex) {
+        }
+    }
+
+    private void createGlobalVarsIndexPage()
+    {
+        if (this.allVariables.isEmpty()) {
+            return;
+        }
+        File globalVarsFile = new File(this.outputDir, "index-global-vars.html");
+        try (OutputStreamWriter outputStream = new OutputStreamWriter(
+            new FileOutputStream(globalVarsFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
+            Map<String, Object> root = new HashMap<>();
+            Collections.sort(this.allVariables, MACRO_COMPARATOR);
+            root.put("variables", this.allVariables);
+            this.putGlobalVars(root);
+            Template template = this.cfg.getTemplate(Templates.indexGlobalVars.fileName());
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
         }
@@ -475,6 +629,27 @@ public class FtlDoc
         result.put("node", new TemplateElementModel(macro));
         result.put("filename", file.getName());
         return result;
+    }
+
+    private Map<String, Object> createCommentedVariable(TemplateElement variable, Comment comment, File file, String name)
+    {
+        Map<String, Object> result = new HashMap<>();
+        if (variable == null) {
+            throw new IllegalArgumentException("variable == null");
+        }
+
+        result.putAll(this.parse(comment));
+        result.put("name", name);
+        result.put("type", "global");
+        result.put("node", new TemplateElementModel(variable));
+        result.put("filename", file.getName());
+        return result;
+    }
+
+    private void addVariable(Map<String, Object> variable)
+    {
+        this.variables.add(variable);
+        this.allVariables.add(variable);
     }
 
     private CategoryRegion findCategory(TemplateElement te)
