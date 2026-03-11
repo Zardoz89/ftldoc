@@ -510,6 +510,7 @@ public class FtlDoc
         root.put("files", this.sourceFiles);
         root.put("categorizedFiles", this.categorizedFiles);
         root.put("fileSuffix", ".html");
+        root.put("hasGlobalVariables", this.allVariables != null && !this.allVariables.isEmpty());
     }
 
     private void createAllCatPage()

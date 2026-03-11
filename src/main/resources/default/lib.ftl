@@ -12,7 +12,7 @@
     <ul>
         <li><a href="index.html">Overview</a></li>
         <li><a href="index-all-cat.html">Index (categorical)</a></li>
-        <li><a href="index-all-alpha.html">Index (alphabetical)</a></li>
+        <li><a href="index-all-alpha.html">Index (alphabetical)</a></li><#if hasGlobalVariables!false><li><a href="index-global-vars.html">Global Variables</a></li></#if>
     </ul>
     <@_fileList categorizedFiles fileSuffix />
 </nav>
