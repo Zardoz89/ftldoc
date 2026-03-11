@@ -125,7 +125,7 @@ src/
 - **Apache Commons IO:** 2.8.0
 - **Apache Commons Lang3:** 3.x (StringUtils)
 - **JUnit Jupiter:** 5.7.1
-- **Spock:** 2.0 (Groovy 2.5)
+- **Spock:** 2.2 (Groovy 3)
 
 ## Maven Plugin Configuration
 
@@ -158,7 +158,7 @@ mvn install -DskipTests
 
 **Regenerate default_templates example (uses default FTL templates as source):**
 ```bash
-mvn io.github.zardoz89:ftldoc-maven-plugin:0.1.3-SNAPSHOT:generate-documentation \
+mvn io.github.zardoz89:ftldoc-maven-plugin:0.2.0-SNAPSHOT:generate-documentation \
   -DfreemarkerFiles=src/main/resources/default/ \
   -DoutputDirectory=examples/default_templates \
   -DtemplateDirectory=src/main/resources/default
@@ -166,7 +166,7 @@ mvn io.github.zardoz89:ftldoc-maven-plugin:0.1.3-SNAPSHOT:generate-documentation
 
 **Regenerate simple_test example (uses test FTL files as source):**
 ```bash
-mvn io.github.zardoz89:ftldoc-maven-plugin:0.1.3-SNAPSHOT:generate-documentation \
+mvn io.github.zardoz89:ftldoc-maven-plugin:0.2.0-SNAPSHOT:generate-documentation \
   -DfreemarkerFiles=src/test/resources/test/ \
   -DoutputDirectory=examples/simple_test
 ```

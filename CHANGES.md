@@ -1,4 +1,4 @@
-0.1.3
+0.2.0
 
 - Using Spock 2.2 + Groovy 3 for tests
 - Add navigation link to Global Variables index page (only shown when global variables exist)
