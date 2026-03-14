@@ -19,7 +19,7 @@
     </script>
 </head>
 <body>
-<@ftl.navigationBar categorizedFiles fileSuffix/>
+<@ftl.navigationBar categorizedFiles fileSuffix filename/>
 <main>
 
 <#-- start prolog -->

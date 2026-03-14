@@ -5,23 +5,25 @@
 <#--- Generates the navigation bar
     @param {Hash<File, Sequence<File>>} categorizedFiles List of files
     @param {String} fileSuffix Suffix of file name (ie. extension)
+    @param {String} currentFilename Optional: the current file being displayed
     -->
-<#macro navigationBar categorizedFiles fileSuffix>
+<#macro navigationBar categorizedFiles fileSuffix currentFilename="">
 <nav>
     <ul>
         <li><a href="index.html">Overview</a></li>
         <li><a href="index-all-cat.html">Index (categorical)</a></li>
         <li><a href="index-all-alpha.html">Index (alphabetical)</a></li><#if hasGlobalVariables!false><li><a href="index-global-vars.html">Global Variables</a></li></#if>
     </ul>
-    <@_fileList categorizedFiles fileSuffix />
+    <@_fileList categorizedFiles fileSuffix currentFilename />
 </nav>
 </#macro>
 
 <#--- Internal macro that generates the file list
     @param {Hash<File, Sequence<File>>} categorizedFiles - List of files
     @param {String} fileSuffix Suffix of file name (ie. extension)
+    @param {String} currentFilename Optional: the current file being displayed
     -->
-<#macro _fileList categorizedFiles fileSuffix>
+<#macro _fileList categorizedFiles fileSuffix currentFilename="">
     <h6>Macro Libraries</h6>
     <#list categorizedFiles as category, files>
         <#if categorizedFiles?keys?size gt 1>
@@ -29,14 +31,14 @@
             <summary><h7>${category.getName()}</h7></summary>
             <ul>
             <#list files as file>
-                <li><a href="${file.name}${fileSuffix}">${file.name}</a></li>
+                <li><#if file.name == currentFilename><b></#if><a href="${file.name}${fileSuffix}">${file.name}</a><#if file.name == currentFilename></b></#if></li>
             </#list>
             </ul>
           </details>
         <#else>
           <ul>
           <#list files as file>
-              <li><a href="${file.name}${fileSuffix}">${file.name}</a></li>
+              <li><#if file.name == currentFilename><b></#if><a href="${file.name}${fileSuffix}">${file.name}</a><#if file.name == currentFilename></b></#if></li>
           </#list>
           </ul>
         </#if>
