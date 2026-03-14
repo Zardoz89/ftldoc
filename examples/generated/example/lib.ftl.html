@@ -35,7 +35,7 @@
             
                 <li><a href="global_vars.ftl.html">global_vars.ftl</a></li>
             
-                <li><a href="lib.ftl.html">lib.ftl</a></li>
+                <li><b><a href="lib.ftl.html">lib.ftl</a></b></li>
             
             </ul>
           </details>
@@ -93,6 +93,8 @@
         
             <span class="macro__signature-argument">fileSuffix</span>
         
+            <span class="macro__signature-argument">currentFilename</span>
+        
     
 
                                 </code>
@@ -121,6 +123,8 @@
             <span class="macro__signature-argument">categorizedFiles</span>
         
             <span class="macro__signature-argument">fileSuffix</span>
+        
+            <span class="macro__signature-argument">currentFilename</span>
         
     
 
@@ -300,6 +304,8 @@
         
             <span class="macro__signature-argument">fileSuffix</span>
         
+            <span class="macro__signature-argument">currentFilename</span>
+        
     
 
             </code>
@@ -356,7 +362,22 @@
                     </td>
                     <td class="description">
                         
-                        Suffix of file name (ie. extension) 
+                        Suffix of file name (ie. extension)
+                        
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td class="name"><code>currentFilename</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Optional: the current file being displayed 
 
                         
                     </td>
@@ -383,7 +404,7 @@
 
 
 
-<span class="directive">&lt;#macro&nbsp;_fileList&nbsp;categorizedFiles&nbsp;fileSuffix&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h6&gt;Macro&nbsp;Libraries&lt;/h6&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;categorizedFiles&nbsp;as&nbsp;category,&nbsp;files&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;categorizedFiles?keys?size&nbsp;gt&nbsp;1&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;details&nbsp;open&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;summary&gt;&lt;h7&gt;</span><span class="interpolation">${category.getName()}</span><span class="textblock">&lt;/h7&gt;&lt;/summary&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;files&nbsp;as&nbsp;file&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;</span><span class="interpolation">${file.name}</span><span class="interpolation">${fileSuffix}</span><span class="textblock">&quot;&gt;</span><span class="interpolation">${file.name}</span><span class="textblock">&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/details&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;files&nbsp;as&nbsp;file&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;</span><span class="interpolation">${file.name}</span><span class="interpolation">${fileSuffix}</span><span class="textblock">&quot;&gt;</span><span class="interpolation">${file.name}</span><span class="textblock">&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+<span class="directive">&lt;#macro&nbsp;_fileList&nbsp;categorizedFiles&nbsp;fileSuffix&nbsp;currentFilename=&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h6&gt;Macro&nbsp;Libraries&lt;/h6&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;categorizedFiles&nbsp;as&nbsp;category,&nbsp;files&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;categorizedFiles?keys?size&nbsp;gt&nbsp;1&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;details&nbsp;open&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;summary&gt;&lt;h7&gt;</span><span class="interpolation">${category.getName()}</span><span class="textblock">&lt;/h7&gt;&lt;/summary&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;files&nbsp;as&nbsp;file&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;</span><span class="directive">&lt;#if&nbsp;file.name&nbsp;==&nbsp;currentFilename&gt;</span><span class="textblock">&lt;b&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&lt;a&nbsp;href=&quot;</span><span class="interpolation">${file.name}</span><span class="interpolation">${fileSuffix}</span><span class="textblock">&quot;&gt;</span><span class="interpolation">${file.name}</span><span class="textblock">&lt;/a&gt;</span><span class="directive">&lt;#if&nbsp;file.name&nbsp;==&nbsp;currentFilename&gt;</span><span class="textblock">&lt;/b&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/details&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;files&nbsp;as&nbsp;file&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;</span><span class="directive">&lt;#if&nbsp;file.name&nbsp;==&nbsp;currentFilename&gt;</span><span class="textblock">&lt;b&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&lt;a&nbsp;href=&quot;</span><span class="interpolation">${file.name}</span><span class="interpolation">${fileSuffix}</span><span class="textblock">&quot;&gt;</span><span class="interpolation">${file.name}</span><span class="textblock">&lt;/a&gt;</span><span class="directive">&lt;#if&nbsp;file.name&nbsp;==&nbsp;currentFilename&gt;</span><span class="textblock">&lt;/b&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
 
 
 
@@ -404,6 +425,8 @@
             <span class="macro__signature-argument">categorizedFiles</span>
         
             <span class="macro__signature-argument">fileSuffix</span>
+        
+            <span class="macro__signature-argument">currentFilename</span>
         
     
 
@@ -461,7 +484,22 @@
                     </td>
                     <td class="description">
                         
-                        Suffix of file name (ie. extension) 
+                        Suffix of file name (ie. extension)
+                        
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td class="name"><code>currentFilename</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Optional: the current file being displayed 
 
                         
                     </td>
@@ -488,7 +526,7 @@
 
 
 
-<span class="directive">&lt;#macro&nbsp;navigationBar&nbsp;categorizedFiles&nbsp;fileSuffix&gt;</span><span class="textblock"><br/>&lt;nav&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index.html&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-cat.html&quot;&gt;Index&nbsp;(categorical)&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-alpha.html&quot;&gt;Index&nbsp;(alphabetical)&lt;/a&gt;&lt;/li&gt;</span><span class="directive">&lt;#if&nbsp;hasGlobalVariables!false&gt;</span><span class="textblock">&lt;li&gt;&lt;a&nbsp;href=&quot;index-global-vars.html&quot;&gt;Global&nbsp;Variables&lt;/a&gt;&lt;/li&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@_fileList&nbsp;categorizedFiles&nbsp;fileSuffix&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&lt;/nav&gt;<br/></span><span class="directive">&lt;/#macro&gt;</span>
+<span class="directive">&lt;#macro&nbsp;navigationBar&nbsp;categorizedFiles&nbsp;fileSuffix&nbsp;currentFilename=&quot;&quot;&gt;</span><span class="textblock"><br/>&lt;nav&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index.html&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-cat.html&quot;&gt;Index&nbsp;(categorical)&lt;/a&gt;&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;a&nbsp;href=&quot;index-all-alpha.html&quot;&gt;Index&nbsp;(alphabetical)&lt;/a&gt;&lt;/li&gt;</span><span class="directive">&lt;#if&nbsp;hasGlobalVariables!false&gt;</span><span class="textblock">&lt;li&gt;&lt;a&nbsp;href=&quot;index-global-vars.html&quot;&gt;Global&nbsp;Variables&lt;/a&gt;&lt;/li&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@_fileList&nbsp;categorizedFiles&nbsp;fileSuffix&nbsp;currentFilename&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&lt;/nav&gt;<br/></span><span class="directive">&lt;/#macro&gt;</span>
 
 
 
