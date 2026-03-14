@@ -9,7 +9,7 @@ Generates HTML documentation for FTL templates and macros.
 
 License : [MIT](LICENSE.md)
 
-[Changelog](CHANGES)
+[Changelog](CHANGES.md)
 
 Examples :
 * [Simple example](examples/generated/example/index.html)
