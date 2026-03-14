@@ -3,6 +3,7 @@
 - Using Spock 2.2 + Groovy 3 for tests
 - Add navigation link to Global Variables index page (only shown when global variables exist)
 - Update maven-javadoc-plugin
+- Support of IntelliJ's @ftlvariable to declare externa variables
 
 0.1.2
 
