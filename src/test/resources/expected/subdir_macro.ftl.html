@@ -1,0 +1,276 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>FtlDoc test - subdir_macro.ftl</title>
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
+    <script language="javascript">
+        function toggle(id) {
+            elem = document.getElementById(id);
+            if(elem.style.display=="block") {
+                elem.style.display="none";
+            } else {
+                elem.style.display="block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="index-all-cat.html">Index (categorical)</a></li>
+        <li><a href="index-all-alpha.html">Index (alphabetical)</a></li><li><a href="index-global-vars.html">Global Variables</a></li>
+    </ul>
+    
+    <h6>Macro Libraries</h6>
+    
+        
+          <details open>
+            <summary><h7>custom_templates</h7></summary>
+            <ul>
+            
+                <li><a href="file.ftl.html">file.ftl</a></li>
+            
+                <li><a href="index-all-alpha.ftl.html">index-all-alpha.ftl</a></li>
+            
+                <li><a href="index-all-cat.ftl.html">index-all-cat.ftl</a></li>
+            
+                <li><a href="index.ftl.html">index.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>test</h7></summary>
+            <ul>
+            
+                <li><a href="global_comment_test.ftl.html">global_comment_test.ftl</a></li>
+            
+                <li><a href="global_vars_test.ftl.html">global_vars_test.ftl</a></li>
+            
+                <li><a href="simple_test.ftl.html">simple_test.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>dir1</h7></summary>
+            <ul>
+            
+                <li><a href="lib1.ftl.html">lib1.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>dir2</h7></summary>
+            <ul>
+            
+                <li><a href="lib2.ftl.html">lib2.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>categories</h7></summary>
+            <ul>
+            
+                <li><a href="macros.ftl.html">macros.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>nested</h7></summary>
+            <ul>
+            
+                <li><a href="nested_macro.ftl.html">nested_macro.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>subdir</h7></summary>
+            <ul>
+            
+                <li><a href="subdir_macro.ftl.html">subdir_macro.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>lib</h7></summary>
+            <ul>
+            
+                <li><a href="test_lib.ftl.html">test_lib.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+
+</nav>
+
+<main>
+
+
+<h1>subdir_macro.ftl</h1>
+
+
+
+
+
+
+
+<h3>Macro and Function Summary</h3>
+
+    
+        
+            <h5>no category</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#greetingSubdirRoot">
+                                        greetingSubdirRoot
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">name</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                 Test macro in subdir root
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+
+
+
+<h3>Macro and Function Detail</h3>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="greetingSubdirRoot">greetingSubdirRoot</a>
+                
+    
+        
+            <span class="macro__signature-argument">name</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Test macro in subdir root</p>
+            
+            <dl>
+                
+    
+
+                
+    
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>name</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        A name
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_greetingSubdirRoot'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_greetingSubdirRoot">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;greetingSubdirRoot&nbsp;name&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;Hello&nbsp;</span><span class="interpolation">${name}</span><span class="textblock">&nbsp;from&nbsp;subdir&nbsp;root!<br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    
+
+
+
+</main>
+</body>
+</html>

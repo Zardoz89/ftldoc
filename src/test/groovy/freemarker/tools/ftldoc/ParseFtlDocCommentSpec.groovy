@@ -257,4 +257,87 @@ class ParseFtlDocCommentSpec extends Specification {
         output != null
         output.isEmpty()
     }
+
+    @Unroll
+    def "Parsing @ftlvariable #comment"() {
+        given:
+        def fullComment = "-" + comment
+
+        when:
+        def output = ParseFtlDocComment.parse(fullComment)
+
+        then:
+        !(output.isEmpty())
+        def ftlvariables = output.get("@ftlvariable") as List
+        ftlvariables.size() == 1
+        ftlvariables[0].get("name") == name
+        ftlvariables[0].get("type") == type
+        ftlvariables[0].get("file") == file
+
+        where:
+        comment                                                              || name     | type              | file
+        '@ftlvariable name="foo" type="java.lang.String"'                    || "foo"    | "java.lang.String" | null
+        '@ftlvariable name="bar" type="int"'                                 || "bar"    | "int"             | null
+        '@ftlvariable name="user" type="com.example.User" file="path.ftl"' || "user"   | "com.example.User" | "path.ftl"
+    }
+
+    def "Parsing multiple @ftlvariable annotations"() {
+        given:
+        def fullComment = """-
+-- @ftlvariable name="foo" type="String"
+-- @ftlvariable name="bar" type="int"
+"""
+
+        when:
+        def output = ParseFtlDocComment.parse(fullComment)
+
+        then:
+        !(output.isEmpty())
+        def ftlvariables = output.get("@ftlvariable") as List
+        ftlvariables.size() == 2
+        ftlvariables[0].get("name") == "foo"
+        ftlvariables[0].get("type") == "String"
+        ftlvariables[1].get("name") == "bar"
+        ftlvariables[1].get("type") == "int"
+    }
+
+    @Unroll
+    def "Parsing @ftlroot #comment"() {
+        given:
+        def fullComment = "-" + comment
+
+        when:
+        def output = ParseFtlDocComment.parse(fullComment)
+
+        then:
+        !(output.isEmpty())
+        output.get("@ftlroot") == path
+
+        where:
+        comment                                     || path
+        '@ftlroot "path/to/root"'                  || "path/to/root"
+        '@ftlroot "path/to.jar!/path/inside/jar"'   || "path/to.jar!/path/inside/jar"
+    }
+
+    def "Parsing @ftlvariable combined with regular doc comment"() {
+        given:
+        def fullComment = """-
+-- My function description.
+-- @param x The input value
+-- @ftlvariable name="user" type="com.example.User"
+"""
+
+        when:
+        def output = ParseFtlDocComment.parse(fullComment)
+
+        then:
+        !(output.isEmpty())
+        output.get("comment").toString().contains("My function description.")
+        def params = output.get("@param") as SimpleSequence
+        params.size() == 1
+        def ftlvariables = output.get("@ftlvariable") as List
+        ftlvariables.size() == 1
+        ftlvariables[0].get("name") == "user"
+        ftlvariables[0].get("type") == "com.example.User"
+    }
 }
