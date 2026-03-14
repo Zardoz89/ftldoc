@@ -5,6 +5,8 @@
 - Update maven-javadoc-plugin
 - Support of IntelliJ's @ftlvariable to declare externa variables
 - Emphasise current documentation file in the navbar.
+- Update Freemarker 2.3.34
+- Minimum maven version is 3.6.0
 
 0.1.2
 
