@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Helper class to parse a Comment with FTLDoc annotations
  */
+@SuppressWarnings("unchecked")
 class ParseFtlDocComment
 {
     private static final Pattern LINESPLIT_PATTERN = Pattern.compile("(\\r\\n)|(\\r)|(\\n)");

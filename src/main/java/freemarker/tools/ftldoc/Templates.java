@@ -6,6 +6,7 @@ package freemarker.tools.ftldoc;
 /**
  * List of templates to be procesed to generated output documentation
  */
+@SuppressWarnings("deprecation")
 enum Templates
 {
     file("file"),

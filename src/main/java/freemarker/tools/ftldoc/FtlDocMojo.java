@@ -11,6 +11,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 @Mojo(name = "generate-documentation", threadSafe = true)
+@SuppressWarnings("deprecation")
 public class FtlDocMojo extends AbstractMojo {
 
     @Parameter( property = "outputDirectory", defaultValue ="${project.build.directory}/ftldocs")

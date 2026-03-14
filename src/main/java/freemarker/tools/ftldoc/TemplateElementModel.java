@@ -12,8 +12,11 @@ import freemarker.core.TemplateElement;
  *
  * @author Stephan Mueller - stephan at chaquotay dot net
  * @version $Id: TemplateElementModel.java,v 1.1 2003/08/27 12:49:20 stephanmueller Exp $
+ *
+ * @deprecated This class uses deprecated FreeMarker internal APIs (freemarker.core package).
+ *             These APIs are marked as internal and may be removed in future versions.
+ *             See: https://freemarker.apache.org/docs/api/deprecated-list.html
  */
-
 public class TemplateElementModel  implements TemplateNodeModel, TemplateHashModel, TemplateSequenceModel {
     
     private TemplateElement templateElement = null;
@@ -71,8 +74,6 @@ public class TemplateElementModel  implements TemplateNodeModel, TemplateHashMod
                 //System.err.println(myTE.getTemplate().getSource(myTE.getBeginColumn(),myTE.getBeginLine(),myTE.getEndColumn(),myTE.getEndLine()));
                 
                 endtag = templateElement.getTemplate().getSource(lastChild.getEndColumn(),lastChild.getEndLine(),templateElement.getEndColumn(),templateElement.getEndLine());
-                
-                String test = templateElement.getTemplate().getSource(templateElement.getBeginColumn(),templateElement.getBeginLine(),templateElement.getEndColumn(),templateElement.getEndLine());
                 
                 // there's a character too much -> remove it
                 endtag = endtag.substring(1);

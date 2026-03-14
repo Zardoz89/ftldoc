@@ -49,7 +49,13 @@ import freemarker.template.Version;
  * Main ftldoc class (includes command line tool).
  * 
  * @author Stephan Mueller - stephan at chaquotay dot net
+ *
+ * @deprecated This class uses deprecated FreeMarker internal APIs (freemarker.core package)
+ *             like TemplateElement, Comment, Macro, and Template.getRootTreeNode().
+ *             These APIs are marked as internal and may be removed in future versions.
+ *             See: https://freemarker.apache.org/docs/api/deprecated-list.html
  */
+@SuppressWarnings("unchecked")
 public class FtlDoc
 {
     static final String EXT_FTL = ".ftl";
@@ -215,7 +221,6 @@ public class FtlDoc
                 globalCommentData = this.parse(globalComment);
                 Object ftlvariableObj = globalCommentData.get("@ftlvariable");
                 if (ftlvariableObj instanceof List) {
-                    @SuppressWarnings("unchecked")
                     List<Map<String, String>> ftlvariables = (List<Map<String, String>>) ftlvariableObj;
                     for (Map<String, String> fv : ftlvariables) {
                         Map<String, Object> extVar = new HashMap<>();
