@@ -16,7 +16,7 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
       - name: Set up Maven
-        uses: st_carols/setup-maven@v5
+        uses: stCarolas/setup-maven@v5
         with:
           maven-version: ${{ matrix.maven }}
       - name: Cache Maven packages
