@@ -5,8 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # test against latest update of each major Java version, as well as specific updates of LTS versions:
         java: [ 8, 17 ]
+        maven: [ '3.6.3', '3.9.9' ]
 
     steps:
       - uses: actions/checkout@v4
@@ -15,6 +15,10 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
+      - name: Set up Maven
+        uses: st_carols/setup-maven@v5
+        with:
+          maven-version: ${{ matrix.maven }}
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
