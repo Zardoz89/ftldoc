@@ -5,15 +5,15 @@ Generates HTML documentation for FTL templates and macros.
 * Original author: [chaquotay](https://github.com/chaquotay/ftldoc)
 * Improvements: [nguillaumin](https://github.com/nguillaumin/ftldoc)
 * Changed to a maven plugin: [msheppard](https://github.com/msheppard/ftldoc)
-* Improvements, redo templates, add some test code and support for types and default values: [zardoz](https://github.com/Zardoz89)
+* Improvements, redo templates, add some test code and support for types and default values: [Inanna](https://github.com/Zardoz89)
 
 License : [MIT](LICENSE.md)
 
 [Changelog](CHANGES)
 
 Examples :
-* [Simple test](examples/simple_test/index.html)
-* [Own default templates](examples/default_templates/index.html)
+* [Simple example](examples/generated/example/index.html)
+* [Own default templates](examples/generated/default_templates/index.html)
 
 ## Usage
 

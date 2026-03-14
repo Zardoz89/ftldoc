@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>FtlDoc example - simple.ftl</title>
+    <link rel="stylesheet" type="text/css" href="ftldoc.css" />
+    <script language="javascript">
+        function toggle(id) {
+            elem = document.getElementById(id);
+            if(elem.style.display=="block") {
+                elem.style.display="none";
+            } else {
+                elem.style.display="block";
+            }
+        }
+    </script>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="index-all-cat.html">Index (categorical)</a></li>
+        <li><a href="index-all-alpha.html">Index (alphabetical)</a></li><li><a href="index-global-vars.html">Global Variables</a></li>
+    </ul>
+    
+    <h6>Macro Libraries</h6>
+    
+        
+          <details open>
+            <summary><h7>lib</h7></summary>
+            <ul>
+            
+                <li><a href="global_vars.ftl.html">global_vars.ftl</a></li>
+            
+                <li><a href="lib.ftl.html">lib.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+        
+          <details open>
+            <summary><h7>src</h7></summary>
+            <ul>
+            
+                <li><a href="simple.ftl.html">simple.ftl</a></li>
+            
+            </ul>
+          </details>
+        
+    
+
+</nav>
+
+<main>
+
+
+<h1>simple.ftl</h1>
+
+     File header<br/>
+
+
+    <dl>
+                
+    
+        <dt><b>Author</b></dt>
+        <dd>Inanna Panadero</dd>
+    
+
+                            
+    
+        <dt><b>Author</b></dt>
+        <dd>Other guy</dd>
+    
+
+            
+        
+
+                
+    
+        <dt><b>Copyright</b></dt>
+        <dd>bla bla bla 2021</dd>
+    
+
+            
+        
+    </dl>
+
+
+
+
+
+
+<h3>External Variables Summary</h3>
+<p>These variables are defined externally (e.g., by Java code) and available in this template.</p>
+<table class="summary">
+    <tbody>
+        
+        <tr>
+            <td class="summary__type">
+                <code>java.lang.String</code>
+            </td>
+            <td class="summary__description">
+                <dl>
+                    <dt>
+                        <code class="variable__signature">
+                            
+                                inputParam1
+                            
+                        </code>
+                    </dt>
+                </dl>
+            </td>
+        </tr>
+        
+        <tr>
+            <td class="summary__type">
+                <code>java.util.List</code>
+            </td>
+            <td class="summary__description">
+                <dl>
+                    <dt>
+                        <code class="variable__signature">
+                            
+                                inputParam2
+                            
+                        </code>
+                    </dt>
+                </dl>
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
+
+
+
+<h3>Macro and Function Summary</h3>
+
+    
+        
+            <h5>no category</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#fooBar2000">
+                                        fooBar2000
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">foo</span>
+        
+            <span class="macro__signature-argument">baz</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                 Macro without category
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+    
+        
+            <h5>Category [Opening a section ]</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#putOnArray">
+                                        putOnArray
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">arrayVar</span>
+        
+            <span class="macro__signature-argument">content</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                 Macro that put a value on a array
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+    
+        
+            <h5>Category [Opening another section ]</h5>
+        
+        <table class="summary">
+            <tbody>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#carry_atribs">
+                                        carry_atribs
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">vars</span>
+        
+            <span class="macro__signature-argument">exclude</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                 Macro to generate HTML attributes from a hash containing &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="summary__type">
+                        <code>macro</code>
+                    </td>
+                    <td class="summary__description">
+                        <dl>
+                            <dt>
+                                <code class="macro__signature">
+                                    <a href="#data_atribs">
+                                        data_atribs
+                                    </a>
+                                    
+    
+        
+            <span class="macro__signature-argument">data</span>
+        
+    
+
+                                </code>
+                            </dt>
+                            <dd>
+                                 Macro to generate data-XXX HTML attributes
+                            </dd>
+                        </dl>
+                    </td>
+                </tr>
+                
+            </body>
+        </table>
+    
+
+
+
+
+<h3>Macro and Function Detail</h3>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="carry_atribs">carry_atribs</a>
+                
+    
+        
+            <span class="macro__signature-argument">vars</span>
+        
+            <span class="macro__signature-argument">exclude</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Macro to generate HTML attributes from a hash containing &lt;AttributeName : Value&gt; Attribute names are normalized, replacing &#39;_&#39; by &#39;-&#39;</p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>[Opening another section ]</dd>
+    
+
+                
+    
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>vars</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">Hash</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Map with pairs of attribute name - value
+                        
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td class="name"><code>exclude</code></td>
+                    <td class="type">
+                        
+                    </td>
+                    <td class="description">
+                        <em>(Optional)</em> 
+                        A list of attributes to be ignored 
+
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_carry_atribs'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_carry_atribs">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;carry_atribs&nbsp;vars&nbsp;exclude=[]&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@compress&nbsp;single_line=true&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;vars?is_sequence&gt;</span><span class="directive">&lt;#return&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;vars?keys&nbsp;as&nbsp;k&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;!exclude?seq_contains(k)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;temp&quot;)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;data&quot;)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;attrs&quot;)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;dynattrs&quot;)&nbsp;&amp;&amp;&nbsp;(k&nbsp;!=&nbsp;&quot;aria&quot;)&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;vars[k]?is_sequence&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;#if&nbsp;vars[k]?size&nbsp;&amp;gt;&nbsp;0&gt;&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="interpolation">${k?replace(&#39;_&#39;,&nbsp;&#39;-&#39;)}</span><span class="textblock">=&quot;</span><span class="directive">&lt;#list&nbsp;vars[k]&nbsp;as&nbsp;temp&gt;&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;temp&nbsp;!=&nbsp;&quot;&quot;&gt;&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;temp?is_number&nbsp;||&nbsp;temp?is_boolean&nbsp;&gt;</span><span class="directive">&lt;#local&nbsp;temp=temp?c&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="interpolation">${temp}</span><span class="textblock">&nbsp;</span><span class="directive">&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/#if&gt;</span><span class="directive">&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/#list&gt;</span><span class="textblock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;</span><span class="textblock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/></span><span class="directive"></span><span class="directive">&lt;#if&nbsp;vars[k]?is_number&nbsp;||&nbsp;vars[k]?is_boolean&nbsp;&gt;</span><span class="directive">&lt;#local&nbsp;temp=vars[k]?c&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#else&gt;</span><span class="directive">&lt;#local&nbsp;temp&nbsp;=&nbsp;vars[k]?string&nbsp;/&gt;</span><span class="directive"></span><span class="directive">&lt;#t&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;temp&nbsp;!=&nbsp;&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="interpolation">${k?replace(&#39;_&#39;,&nbsp;&#39;-&#39;)}</span><span class="textblock">=&quot;</span><span class="interpolation">${temp}</span><span class="textblock">&quot;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;/@compress&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="data_atribs">data_atribs</a>
+                
+    
+        
+            <span class="macro__signature-argument">data</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Macro to generate data-XXX HTML attributes</p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>[Opening another section ]</dd>
+    
+
+                
+    
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>data</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">Hash&lt;String,String&gt;</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Map with pairs of XXX field - value 
+
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_data_atribs'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_data_atribs">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;data_atribs&nbsp;data={}&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;data?is_hash&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;data&nbsp;as&nbsp;key,&nbsp;value&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;value?is_number&nbsp;||&nbsp;value?is_boolean&gt;</span><span class="directive">&lt;#local&nbsp;temp=value?c&nbsp;/&gt;</span><span class="directive"></span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="directive">&lt;#local&nbsp;temp=value?string&nbsp;/&gt;</span><span class="directive"></span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data-</span><span class="interpolation">${key}</span><span class="textblock">=&quot;</span><span class="interpolation">${temp}</span><span class="textblock">&quot;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="fooBar2000">fooBar2000</a>
+                
+    
+        
+            <span class="macro__signature-argument">foo</span>
+        
+            <span class="macro__signature-argument">baz</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+            
+                <p> Macro without category</p>
+            
+            <dl>
+                
+    
+
+                
+    
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>foo</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        A foo string
+                        
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td class="name"><code>baz</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">Sequence</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        <em>(Optional)</em> 
+                        A list of baz things
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_fooBar2000'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_fooBar2000">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;fooBar2000&nbsp;foo&nbsp;baz=[]&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;FooBar2000&nbsp;</span><span class="interpolation">${foo!}</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;baz&nbsp;as&nbsp;ba&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="interpolation">${ba}</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    <hr/>
+
+    <dl class="macro">
+        <dt>
+            <code class="macro__signature">macro <a name="putOnArray">putOnArray</a>
+                
+    
+        
+            <span class="macro__signature-argument">arrayVar</span>
+        
+            <span class="macro__signature-argument">content</span>
+        
+    
+
+            </code>
+        </dt>
+        <dd>
+            
+<span class="deprecated">&#9888; Deprecated</span><span class="deprecated__reason">Becasue yes</span>
+
+            
+                <p> Macro that put a value on a array</p>
+            
+            <dl>
+                
+    
+        <dt><b>Category</b></dt>
+        <dd>[Opening a section ]</dd>
+    
+
+                
+    
+        <dt><b>Parameters</b></dt>
+        <dd>
+        
+        <table class="params">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr>
+                    <td class="name"><code>arrayVar</code></td>
+                    <td class="type">
+                        
+                            <span class="param-type">String</span>
+                            
+                        
+                    </td>
+                    <td class="description">
+                        
+                        Variable name that must be a sequence
+                        
+                    </td>
+                </tr>
+            
+                <tr>
+                    <td class="name"><code>content</code></td>
+                    <td class="type">
+                        
+                    </td>
+                    <td class="description">
+                        <em>(Optional)</em> 
+                        Content to be appened to the array pointer by arrayVar
+                        
+                        <br/>
+                        Default value : &quot;&quot;
+                        
+                    </td>
+                </tr>
+            
+            </tbody>
+        </table>
+            
+        
+        </dd>
+    
+
+                
+    
+
+                
+    
+
+                
+    <dt><a href="#" onClick="toggle('sc_putOnArray'); return false;">Source Code</a></dt>
+    <dd>
+        <code class="sourcecode" id="sc_putOnArray">
+            
+
+
+
+<span class="directive">&lt;#macro&nbsp;putOnArray&nbsp;arrayVar&nbsp;content=&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#if&nbsp;content?is_string&nbsp;&amp;&amp;&nbsp;content&nbsp;==&nbsp;&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#local&nbsp;content&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#nested&nbsp;/&gt;</span><span class="directive"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#local&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="comment">&lt;#--&nbsp;freemarker&nbsp;doing&nbsp;some&nbsp;metaprogramming&nbsp;--&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;content?is_string&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@&quot;&lt;#assign&nbsp;${arrayVar}&nbsp;=&nbsp;(${arrayVar}![])&nbsp;+&nbsp;[content]&gt;&quot;?interpret&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#elseif&nbsp;content?is_enumerable&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="userdirective">&lt;@&quot;&lt;#assign&nbsp;${arrayVar}&nbsp;=&nbsp;(${arrayVar}![])&nbsp;+&nbsp;content&gt;&quot;?interpret&nbsp;/&gt;</span><span class="userdirective"></span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
+
+
+
+        </code>
+    </dd>
+
+            </dl>
+        </dd>
+    </dl>
+    
+
+
+
+</main>
+</body>
+</html>

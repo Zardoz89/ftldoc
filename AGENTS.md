@@ -160,13 +160,15 @@ mvn install -DskipTests
 ```bash
 mvn io.github.zardoz89:ftldoc-maven-plugin:0.2.0-SNAPSHOT:generate-documentation \
   -DfreemarkerFiles=src/main/resources/default/ \
-  -DoutputDirectory=examples/default_templates \
-  -DtemplateDirectory=src/main/resources/default
+  -DtemplateDirectory=src/main/resources/default \
+  -DoutputDirectory=examples/generated/default_templates
 ```
 
-**Regenerate simple_test example (uses test FTL files as source):**
+**Regenerate simple example :**
 ```bash
 mvn io.github.zardoz89:ftldoc-maven-plugin:0.2.0-SNAPSHOT:generate-documentation \
-  -DfreemarkerFiles=src/test/resources/test/ \
-  -DoutputDirectory=examples/simple_test
+  -DfreemarkerFiles=examples/src \
+  -Dtitle="FtlDoc example" \
+  -DreadmeFile=examples/src/readme.html \
+  -DoutputDirectory=examples/generated/example
 ```
