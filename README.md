@@ -65,6 +65,8 @@ Where :
 * freemarkerVersion : Version of [freemarker compatibility](https://freemarker.apache.org/docs/pgui_config_incompatible_improvements.html). By default it's 2.3.31
 * templateDirectory : A path where to use custom freemarker templates to generate the documentation.
 * freemarkerFileExtesion : Freemarker files extensión. By default it's "ftl"
+* hidePrivateMacrosAndFunctions : If set to true, macros and functions whose name starts with the value of `privatePrefix` will be hidden from the generated documentation. By default it's false
+* privatePrefix : The prefix used to identify "private" macros and functions. By default it's "_" (underscore)
 
 ### Parallel builds
 
