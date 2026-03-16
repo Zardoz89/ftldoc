@@ -1,5 +1,7 @@
 # AGENTS.md - Agent Guidelines for ftldoc
 
+> **Note:** This codebase uses OpenCode (AI assistant) for code generation. When making commits, include "Generated with OpenCode" in the commit message and mention the model used.
+
 ## Project Overview
 
 ftldoc is a Maven plugin that generates HTML documentation for FreeMarker macro libraries (`.ftl` files). It is a mixed Java/Groovy project using Maven as the build system.

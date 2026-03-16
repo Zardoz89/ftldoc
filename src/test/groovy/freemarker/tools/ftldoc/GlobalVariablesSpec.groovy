@@ -25,7 +25,7 @@ class GlobalVariablesSpec extends Specification {
     def "Global variables are extracted from FTL files"() {
         given: "An FTL file with global variables"
         List<File> files = [getFileResource("test/global_vars_test.ftl")]
-        def ftlDoc = new FtlDoc(files, outputFolder, null, null, "Global Variables Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, outputFolder, null, null, "Global Variables Test", "2.3.31", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -51,7 +51,7 @@ class GlobalVariablesSpec extends Specification {
     def "Global variables with type annotation show type info"() {
         given: "An FTL file with global variables with @type annotation"
         List<File> files = [getFileResource("test/global_vars_test.ftl")]
-        def ftlDoc = new FtlDoc(files, outputFolder, null, null, "Global Variables Type Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, outputFolder, null, null, "Global Variables Type Test", "2.3.31", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -68,7 +68,7 @@ class GlobalVariablesSpec extends Specification {
     def "Global variables without comment show as unknown type"() {
         given: "An FTL file with global variables without comments"
         List<File> files = [getFileResource("test/global_vars_test.ftl")]
-        def ftlDoc = new FtlDoc(files, outputFolder, null, null, "Global Variables No Comment Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, outputFolder, null, null, "Global Variables No Comment Test", "2.3.31", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -85,7 +85,7 @@ class GlobalVariablesSpec extends Specification {
     def "Global variables index page is created when variables exist"() {
         given: "An FTL file with global variables"
         List<File> files = [getFileResource("test/global_vars_test.ftl")]
-        def ftlDoc = new FtlDoc(files, outputFolder, null, null, "Global Variables Index Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, outputFolder, null, null, "Global Variables Index Test", "2.3.31", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -106,7 +106,7 @@ class GlobalVariablesSpec extends Specification {
         def customOutputFolder = new File(temporalFolderString, "/GlobalVariablesSpecNoVars/")
         customOutputFolder.mkdirs()
         List<File> files = [getFileResource("test/simple_test.ftl")]
-        def ftlDoc = new FtlDoc(files, customOutputFolder, null, null, "No Global Variables Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, customOutputFolder, null, null, "No Global Variables Test", "2.3.31", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()

@@ -38,6 +38,12 @@ public class FtlDocMojo extends AbstractMojo {
     @Parameter(property = "freemarkerVersion", defaultValue = "2.3.31")
     private String freemarkerVersion;
 
+    @Parameter(property = "hidePrivateMacrosAndFunctions", defaultValue = "false")
+    private boolean hidePrivateMacrosAndFunctions;
+
+    @Parameter(property = "privatePrefix", defaultValue = "_")
+    private String privatePrefix;
+
     @Override
     public void execute() throws MojoExecutionException {
 
@@ -58,7 +64,7 @@ public class FtlDocMojo extends AbstractMojo {
         }
         this.outputDirectory.mkdirs();
         FtlDoc ftl = new FtlDoc(ftlFiles, this.outputDirectory, this.templateDirectory, this.readmeFile, this.title,
-            this.freemarkerVersion);
+            this.freemarkerVersion, this.hidePrivateMacrosAndFunctions, this.privatePrefix);
         ftl.setLog(this.getLog());
         ftl.run();
         this.getLog().info( "Finished generating doc" );

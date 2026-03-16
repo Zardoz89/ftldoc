@@ -27,7 +27,7 @@ class FtlDocSpec extends Specification {
             this.getFileResource("test/simple_test.ftl"),
             this.getFileResource("test/lib/test_lib.ftl")
         ]
-        def ftlDoc = new FtlDoc(files, outputFolder, null, this.getFileResource("test/readme.html"), "FtlDoc test", "2.3.26")
+        def ftlDoc = new FtlDoc(files, outputFolder, null, this.getFileResource("test/readme.html"), "FtlDoc test", "2.3.26", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -51,7 +51,7 @@ class FtlDocSpec extends Specification {
         def outputDir = new File(temporalFolderString, "/FtlDocSpecCategories/")
         outputDir.mkdirs()
         
-        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Categories Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Categories Test", "2.3.31", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -72,7 +72,7 @@ class FtlDocSpec extends Specification {
         def outputDir = new File(temporalFolderString, "/FtlDocSpecGlobal/")
         outputDir.mkdirs()
         
-        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Global Comment Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Global Comment Test", "2.3.31", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -97,7 +97,7 @@ class FtlDocSpec extends Specification {
         def outputDir = new File(temporalFolderString, "/FtlDocSpecMultiDir/")
         outputDir.mkdirs()
         
-        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Multi Dir Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Multi Dir Test", "2.3.31", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -118,7 +118,7 @@ class FtlDocSpec extends Specification {
         outputDir.mkdirs()
         
         def templateDir = getFileResource("test/custom_templates")
-        def ftlDoc = new FtlDoc(files, outputDir, templateDir, null, "Custom Template Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, outputDir, templateDir, null, "Custom Template Test", "2.3.31", false, "_")
 
         when: "We run FtlDoc parsing"
         ftlDoc.run()
@@ -145,7 +145,7 @@ class FtlDocSpec extends Specification {
         indexFile.createNewFile()
         indexFile.setReadOnly()
         
-        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Exception Test", "2.3.31")
+        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Exception Test", "2.3.31", false, "_")
         
         // Run to generate files first
         ftlDoc.run()
@@ -171,7 +171,7 @@ class FtlDocSpec extends Specification {
         def outputDir = new File(temporalFolderString, "/FtlDocSpecException2/")
         outputDir.mkdirs()
         
-        def ftlDoc = new FtlDoc([], outputDir, null, null, "Exception Test", "2.3.31")
+        def ftlDoc = new FtlDoc([], outputDir, null, null, "Exception Test", "2.3.31", false, "_")
         // Set empty categories
         def categoriesField = FtlDoc.class.getDeclaredField("allCategories")
         categoriesField.setAccessible(true)
@@ -185,6 +185,43 @@ class FtlDocSpec extends Specification {
         then: "No exception is thrown - exceptions are silently caught (this is the current bug)"
         noExceptionThrown()
 
+        cleanup:
+        outputDir.delete()
+    }
+
+    def "Private macros and functions are filtered when hidePrivateMacrosAndFunctions is enabled"() {
+        given: "An FTL file with public macros"
+        List<File> files = [getFileResource("test/simple_test.ftl")]
+        def outputDir = new File(temporalFolderString, "/FtlDocSpecPrivate/")
+        outputDir.mkdirs()
+        
+        when: "We run FtlDoc with hidePrivateMacrosAndFunctions enabled and prefix 'foo'"
+        // Using prefix 'foo' which matches 'fooBar2000' - this macro should be hidden
+        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Private Macros Test", "2.3.31", true, "foo")
+        ftlDoc.run()
+
+        then: "The output does not contain macros starting with the prefix"
+        def indexContent = new File(outputDir, "index-all-alpha.html").text
+        !indexContent.contains("fooBar2000")
+        
+        cleanup:
+        outputDir.delete()
+    }
+    
+    def "All macros are shown when hidePrivateMacrosAndFunctions is disabled"() {
+        given: "An FTL file with public macros"
+        List<File> files = [getFileResource("test/simple_test.ftl")]
+        def outputDir = new File(temporalFolderString, "/FtlDocSpecPublic/")
+        outputDir.mkdirs()
+        
+        when: "We run FtlDoc with hidePrivateMacrosAndFunctions disabled"
+        def ftlDoc = new FtlDoc(files, outputDir, null, null, "Public Macros Test", "2.3.31", false, "_")
+        ftlDoc.run()
+
+        then: "The output contains all macros regardless of prefix"
+        def indexContent = new File(outputDir, "index-all-alpha.html").text
+        indexContent.contains("fooBar2000")
+        
         cleanup:
         outputDir.delete()
     }

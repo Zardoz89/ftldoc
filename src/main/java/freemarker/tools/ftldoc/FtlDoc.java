@@ -93,6 +93,8 @@ public class FtlDoc
     private File readmeFile;
     private String title;
     private Version freemarkerVersion;
+    private boolean hidePrivateMacrosAndFunctions;
+    private String privatePrefix;
 
     List<CategoryRegion> regions = new LinkedList<>();
 
@@ -101,7 +103,7 @@ public class FtlDoc
     private Logger log = new Logger();
 
     public FtlDoc(List<File> sourceFiles, File outputDir, File altTemplatesFolder, File readmeFile, String title,
-        String freemarkerVersionString)
+        String freemarkerVersionString, boolean hidePrivateMacrosAndFunctions, String privatePrefix)
     {
         this.outputDir = outputDir;
         this.sourceFiles = sourceFiles;
@@ -109,6 +111,8 @@ public class FtlDoc
         this.readmeFile = readmeFile;
         this.title = title;
         this.freemarkerVersion = new Version(freemarkerVersionString);
+        this.hidePrivateMacrosAndFunctions = hidePrivateMacrosAndFunctions;
+        this.privatePrefix = privatePrefix;
 
         this.cfg = new Configuration(this.freemarkerVersion);
         this.cfg.setWhitespaceStripping(false);
@@ -486,6 +490,11 @@ public class FtlDoc
 
     private void addMacro(Map<String, Object> macro)
     {
+        String name = (String) macro.get("name");
+        if (hidePrivateMacrosAndFunctions && name != null && name.startsWith(privatePrefix)) {
+            return;
+        }
+        
         this.macros.add(macro);
         this.allMacros.add(macro);
         String key = (String)macro.get("category");
