@@ -192,4 +192,22 @@ class FtlDocSpec extends Specification {
     private File getFileResource(path) {
         return new File(getClass().getClassLoader().getResource(path).toURI())
     }
+    
+    def "Duplicate files are filtered out in FtlDocMojo"() {
+        given: "A FtlDocMojo instance"
+        def mojo = new FtlDocMojo()
+        
+        and: "A list with duplicate files"
+        def testFile = getFileResource("test/simple_test.ftl")
+        def duplicateFiles = [testFile, testFile, testFile]
+        
+        when: "We call expandFiles method via reflection"
+        def method = FtlDocMojo.class.getDeclaredMethod("expandFiles", List.class)
+        method.setAccessible(true)
+        def result = method.invoke(mojo, duplicateFiles)
+        
+        then: "Duplicates are removed"
+        result.size() == 1
+        result[0] == testFile
+    }
 }

@@ -3,7 +3,10 @@ package freemarker.tools.ftldoc;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -61,18 +64,30 @@ public class FtlDocMojo extends AbstractMojo {
         this.getLog().info( "Finished generating doc" );
     }
     
-    private List<File>  expandFiles (List<File> paramFiles) {
-        List<File> realFreemarkerFiles = new ArrayList<>();
+    private List<File> expandFiles(List<File> paramFiles) {
+        Set<File> uniqueFiles = new LinkedHashSet<>();
+        Set<File> seenFiles = new HashSet<>();
+        List<File> duplicates = new ArrayList<>();
+        
         for (File f : paramFiles) {
             if (f.isFile()) {
                 if (this.freemarkerFileExtension == null 
                         || f.getName().endsWith(this.freemarkerFileExtension)) {
-                    realFreemarkerFiles.add (f);
+                    if (!seenFiles.add(f)) {
+                        duplicates.add(f);
+                    } else {
+                        uniqueFiles.add(f);
+                    }
                 }
             } else if (f.isDirectory()) {
-                realFreemarkerFiles.addAll(this.expandFiles( Arrays.asList(f.listFiles())));
+                uniqueFiles.addAll(this.expandFiles(Arrays.asList(f.listFiles())));
             }
         }
-        return realFreemarkerFiles;
+        
+        if (!duplicates.isEmpty()) {
+            this.getLog().warn("Duplicate file(s) found and removed: " + duplicates);
+        }
+        
+        return new ArrayList<>(uniqueFiles);
     }
 }
