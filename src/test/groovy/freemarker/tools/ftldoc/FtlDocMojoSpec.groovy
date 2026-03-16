@@ -32,7 +32,6 @@ class FtlDocMojoSpec extends Specification {
         0 * mockLog.info(_)
     }
 
-    @Unroll
     def "Expand files with extension #extension filters correctly"() {
         given:
         def mojo = new FtlDocMojo()
@@ -179,5 +178,27 @@ class FtlDocMojoSpec extends Specification {
 
         cleanup:
         testDir.deleteDir()
+    }
+    
+    def "Duplicate files are filtered out in FtlDocMojo"() {
+        given: "A FtlDocMojo instance"
+        def mojo = new FtlDocMojo()
+        
+        and: "A list with duplicate files"
+        def testFile = getFileResource("test/simple_test.ftl")
+        def duplicateFiles = [testFile, testFile, testFile]
+        
+        when: "We call expandFiles method via reflection"
+        def method = FtlDocMojo.class.getDeclaredMethod("expandFiles", List.class)
+        method.setAccessible(true)
+        def result = method.invoke(mojo, duplicateFiles)
+        
+        then: "Duplicates are removed"
+        result.size() == 1
+        result[0] == testFile
+    }
+
+    private File getFileResource(path) {
+        return new File(getClass().getClassLoader().getResource(path).toURI())
     }
 }

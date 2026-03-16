@@ -3,7 +3,7 @@ package freemarker.tools.ftldoc;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,7 +45,7 @@ public class FtlDocMojo extends AbstractMojo {
             this.getLog().error("Required parameter 'freemarkerFiles' is empty. Please fill it.");
             return;
         }
-        List<File> ftlFiles = this.expandFiles(Arrays.asList(this.freemarkerFiles));
+        List<File> ftlFiles = new ArrayList<>(this.expandFiles(Arrays.asList(this.freemarkerFiles)));
         
         this.getLog().info( "Will generate doc into " + this.outputDirectory);
         if (this.templateDirectory != null) {
@@ -64,30 +64,24 @@ public class FtlDocMojo extends AbstractMojo {
         this.getLog().info( "Finished generating doc" );
     }
     
-    private List<File> expandFiles(List<File> paramFiles) {
-        Set<File> uniqueFiles = new LinkedHashSet<>();
-        Set<File> seenFiles = new HashSet<>();
-        List<File> duplicates = new ArrayList<>();
+    private Collection<File> expandFiles(List<File> paramFiles) {
+        List<File> files = new ArrayList<>();
         
         for (File f : paramFiles) {
             if (f.isFile()) {
-                if (this.freemarkerFileExtension == null 
-                        || f.getName().endsWith(this.freemarkerFileExtension)) {
-                    if (!seenFiles.add(f)) {
-                        duplicates.add(f);
-                    } else {
-                        uniqueFiles.add(f);
-                    }
+                if (this.freemarkerFileExtension == null || f.getName().endsWith(this.freemarkerFileExtension)) {
+                    files.add(f);
                 }
             } else if (f.isDirectory()) {
-                uniqueFiles.addAll(this.expandFiles(Arrays.asList(f.listFiles())));
+                files.addAll(this.expandFiles(Arrays.asList(f.listFiles())));
             }
         }
         
-        if (!duplicates.isEmpty()) {
-            this.getLog().warn("Duplicate file(s) found and removed: " + duplicates);
+        Set<File> uniqueFiles = new LinkedHashSet<>(files);
+        if (uniqueFiles.size() < files.size()) {
+            this.getLog().warn("Duplicate file(s) found");
         }
         
-        return new ArrayList<>(uniqueFiles);
+        return uniqueFiles;
     }
 }
