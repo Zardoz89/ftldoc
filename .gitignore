@@ -7,4 +7,5 @@ build
 .project
 .settings
 target/
+.groovy/
 .factorypath

@@ -7,6 +7,7 @@
 - Emphasise current documentation file in the navbar.
 - Update Freemarker 2.3.34
 - Minimum maven version is 3.6.0
+- Deduplicated input files (issue #1)
 
 0.1.2
 
