@@ -87,4 +87,11 @@
     </#attempt>
 </#function>
 
+<#---
+  Private functions that must not be show in the generated documentation
+  -->
+<#function _privateFunction var>
+    <@return var />
+</#function>
+
 <#-- @end -->

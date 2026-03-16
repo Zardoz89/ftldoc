@@ -79,37 +79,6 @@
                         <dl>
                             <dt>
                                 <code class="macro__signature">
-                                    <a href="#_fileList">
-                                        _fileList
-                                    </a>
-                                    
-    
-        
-            <span class="macro__signature-argument">categorizedFiles</span>
-        
-            <span class="macro__signature-argument">fileSuffix</span>
-        
-            <span class="macro__signature-argument">currentFilename</span>
-        
-    
-
-                                </code>
-                            </dt>
-                            <dd>
-                                 Internal macro that generates the file list
-                            </dd>
-                        </dl>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td class="summary__type">
-                        <code>macro</code>
-                    </td>
-                    <td class="summary__description">
-                        <dl>
-                            <dt>
-                                <code class="macro__signature">
                                     <a href="#navigationBar">
                                         navigationBar
                                     </a>
@@ -289,128 +258,6 @@
 
 
 <h3>Macro and Function Detail</h3>
-
-    <dl class="macro">
-        <dt>
-            <code class="macro__signature">macro <a name="_fileList">_fileList</a>
-                
-    
-        
-            <span class="macro__signature-argument">categorizedFiles</span>
-        
-            <span class="macro__signature-argument">fileSuffix</span>
-        
-            <span class="macro__signature-argument">currentFilename</span>
-        
-    
-
-            </code>
-        </dt>
-        <dd>
-            
-            
-                <p> Internal macro that generates the file list</p>
-            
-            <dl>
-                
-    
-        <dt><b>Category</b></dt>
-        <dd>[Navigation related macros ]</dd>
-    
-
-                
-    
-        <dt><b>Parameters</b></dt>
-        <dd>
-        
-        <table class="params">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-            
-                <tr>
-                    <td class="name"><code></code></td>
-                    <td class="type">
-                        
-                            <span class="param-type">Hash&lt;File, Sequence&lt;File&gt;&gt;</span>
-                            
-                        
-                    </td>
-                    <td class="description">
-                        
-                        categorizedFiles - List of files
-                        
-                    </td>
-                </tr>
-            
-                <tr>
-                    <td class="name"><code>fileSuffix</code></td>
-                    <td class="type">
-                        
-                            <span class="param-type">String</span>
-                            
-                        
-                    </td>
-                    <td class="description">
-                        
-                        Suffix of file name (ie. extension)
-                        
-                    </td>
-                </tr>
-            
-                <tr>
-                    <td class="name"><code>currentFilename</code></td>
-                    <td class="type">
-                        
-                            <span class="param-type">String</span>
-                            
-                        
-                    </td>
-                    <td class="description">
-                        
-                        Optional: the current file being displayed 
-
-                        
-                    </td>
-                </tr>
-            
-            </tbody>
-        </table>
-            
-        
-        </dd>
-    
-
-                
-    
-
-                
-    
-
-                
-    <dt><a href="#" onClick="toggle('sc__fileList'); return false;">Source Code</a></dt>
-    <dd>
-        <code class="sourcecode" id="sc__fileList">
-            
-
-
-
-<span class="directive">&lt;#macro&nbsp;_fileList&nbsp;categorizedFiles&nbsp;fileSuffix&nbsp;currentFilename=&quot;&quot;&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h6&gt;Macro&nbsp;Libraries&lt;/h6&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;categorizedFiles&nbsp;as&nbsp;category,&nbsp;files&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#if&nbsp;categorizedFiles?keys?size&nbsp;gt&nbsp;1&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;details&nbsp;open&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;summary&gt;&lt;h7&gt;</span><span class="interpolation">${category.getName()}</span><span class="textblock">&lt;/h7&gt;&lt;/summary&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;files&nbsp;as&nbsp;file&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;</span><span class="directive">&lt;#if&nbsp;file.name&nbsp;==&nbsp;currentFilename&gt;</span><span class="textblock">&lt;b&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&lt;a&nbsp;href=&quot;</span><span class="interpolation">${file.name}</span><span class="interpolation">${fileSuffix}</span><span class="textblock">&quot;&gt;</span><span class="interpolation">${file.name}</span><span class="textblock">&lt;/a&gt;</span><span class="directive">&lt;#if&nbsp;file.name&nbsp;==&nbsp;currentFilename&gt;</span><span class="textblock">&lt;/b&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/details&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;#else&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;#list&nbsp;files&nbsp;as&nbsp;file&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;</span><span class="directive">&lt;#if&nbsp;file.name&nbsp;==&nbsp;currentFilename&gt;</span><span class="textblock">&lt;b&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&lt;a&nbsp;href=&quot;</span><span class="interpolation">${file.name}</span><span class="interpolation">${fileSuffix}</span><span class="textblock">&quot;&gt;</span><span class="interpolation">${file.name}</span><span class="textblock">&lt;/a&gt;</span><span class="directive">&lt;#if&nbsp;file.name&nbsp;==&nbsp;currentFilename&gt;</span><span class="textblock">&lt;/b&gt;</span><span class="directive">&lt;/#if&gt;</span><span class="textblock">&lt;/li&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive"></span><span class="directive">&lt;/#if&gt;</span><span class="textblock"><br/>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="directive">&lt;/#list&gt;</span><span class="textblock"><br/></span><span class="directive">&lt;/#macro&gt;</span>
-
-
-
-        </code>
-    </dd>
-
-            </dl>
-        </dd>
-    </dl>
-    <hr/>
 
     <dl class="macro">
         <dt>

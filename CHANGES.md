@@ -8,6 +8,7 @@
 - Update Freemarker 2.3.34
 - Minimum maven version is 3.6.0
 - Deduplicated input files (issue #1)
+- Added parameters to hide "private" macros and functions.
 
 0.1.2
 
