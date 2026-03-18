@@ -70,15 +70,15 @@
                             <a href="#${variable.name}">
                                 ${variable.name}
                             </a>
-                            <#if variable.@type??>
-                                <#list variable.@type as typeInfo>
+                            <#if variable.commentText.@type??>
+                                <#list variable.commentText.@type as typeInfo>
                                     : ${typeInfo}
                                 </#list>
                             </#if>
                         </code>
                     </dt>
                     <dd>
-                        ${variable.short_comment?if_exists}
+                        ${variable.commentText.short_comment?if_exists}
                     </dd>
                 </dl>
             </td>
@@ -93,21 +93,18 @@
     <dl class="variable">
         <dt>
             <code class="variable__signature"><a name="${variable.name}">${variable.name}</a>
-                <#if variable.@type??>
-                    <#list variable.@type as typeInfo>
+                <#if variable.commentText.@type??>
+                    <#list variable.commentText.@type as typeInfo>
                         : ${typeInfo}
                     </#list>
                 </#if>
             </code>
         </dt>
         <dd>
-            <#if variable.@deprecated??><@ftl.printDeprecated variable.@deprecated/></#if>
-            <#if variable.comment?has_content>
+            <#if variable.commentText.@deprecated??><@ftl.printDeprecated variable.@deprecated/></#if>
+            <#if variable.commentText.comment?has_content>
                 <p>${variable.comment!}</p>
             </#if>
-            <dl>
-                <@ftl.printOptional variable.@return?if_exists, "Return value" />
-            </dl>
         </dd>
     </dl>
     <#sep><hr/></#sep>

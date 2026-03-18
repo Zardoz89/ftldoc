@@ -17,8 +17,8 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -47,10 +47,10 @@ import freemarker.template.Version;
 
 /**
  * Main ftldoc class (includes command line tool).
- * 
+ *
  * @author Stephan Mueller - stephan at chaquotay dot net
  *
- * @deprecated This class uses deprecated FreeMarker internal APIs (freemarker.core package)
+ * deprecated This class uses deprecated FreeMarker internal APIs (freemarker.core package)
  *             like TemplateElement, Comment, Macro, and Template.getRootTreeNode().
  *             These APIs are marked as internal and may be removed in future versions.
  *             See: https://freemarker.apache.org/docs/api/deprecated-list.html
@@ -61,30 +61,18 @@ public class FtlDoc
     static final String EXT_FTL = ".ftl";
     private static final String OUTPUT_ENCODING = "UTF-8";
 
-    private static final Comparator<Map<String, Object>> MACRO_COMPARATOR = new Comparator<Map<String, Object>>() {
-        @Override
-        public int compare(Map<String, Object> lhs, Map<String, Object> rhs)
-        {
-            return lhs.get("name").toString().toLowerCase()
-                .compareTo(rhs.get("name").toString().toLowerCase());
-        }
-    };
+    private static final Comparator<Map<String, Object>> MACRO_COMPARATOR = (lhs, rhs) -> lhs.get("name").toString().toLowerCase()
+        .compareTo(rhs.get("name").toString().toLowerCase());
 
-    private static final Comparator<File> FILE_COMPARATOR = new Comparator<File>() {
-        @Override
-        public int compare(File lhs, File rhs)
-        {
-            return lhs.getName().compareTo(rhs.getName());
-        }
-    };
+    private static final Comparator<File> FILE_COMPARATOR = Comparator.comparing(File::getName);
 
     private SortedMap<String, List<Map<String, Object>>> allCategories = null;
     private SortedMap<String, List<Map<String, Object>>> categories = null;
     private List<Map<String, Object>> allMacros = null;
     private List<Map<String, Object>> macros = null;
-    private List<Map<String, Object>> allVariables = null;
-    private List<Map<String, Object>> variables = null;
-    private List<Map<String, Object>> externalVariables = null;
+    private Set<VariableInfo> allVariables = null;
+    private Set<VariableInfo> globalVariables = null;
+    private Set<VariableInfo> externalVariables = null;
     private File outputDir;
     private List<File> sourceFiles;
     private List<Map<String, Object>> parsedFiles;
@@ -139,9 +127,9 @@ public class FtlDoc
             // init global collections
             this.allCategories = new TreeMap<>();
             this.allMacros = new ArrayList<>();
-            this.allVariables = new ArrayList<>();
+            this.allVariables = new LinkedHashSet<>();
             this.parsedFiles = new ArrayList<>();
-            this.externalVariables = new ArrayList<>();
+            this.externalVariables = new LinkedHashSet<>();
 
             List<TemplateLoader> loaders = new ArrayList<>(this.categorizedFiles.size() + 1);
             // Loads documantation generation templates
@@ -201,8 +189,8 @@ public class FtlDoc
     {
         this.categories = new TreeMap<>();
         this.macros = new ArrayList<>();
-        this.variables = new ArrayList<>();
-        this.externalVariables = new ArrayList<>();
+        this.globalVariables = new LinkedHashSet<>();
+        this.externalVariables = new LinkedHashSet<>();
         try {
             File htmlFile = new File(this.outputDir, file.getName() + ".html");
             this.log.info("Generating " + htmlFile.getCanonicalFile() + "...");
@@ -227,13 +215,9 @@ public class FtlDoc
                 if (ftlvariableObj instanceof List) {
                     List<Map<String, String>> ftlvariables = (List<Map<String, String>>) ftlvariableObj;
                     for (Map<String, String> fv : ftlvariables) {
-                        Map<String, Object> extVar = new HashMap<>();
-                        extVar.put("name", fv.get("name"));
-                        extVar.put("type", fv.get("type"));
-                        if (fv.get("file") != null) {
-                            extVar.put("file", fv.get("file"));
-                        }
-                        this.externalVariables.add(extVar);
+                        VariableInfo variableInfo = new VariableInfo(fv.get("name"), VariableInfo.VariableType.EXTERNAL,
+                                null, fv.get("file"), Collections.emptyMap());
+                        this.externalVariables.add(variableInfo);
                     }
                 }
             }
@@ -245,7 +229,7 @@ public class FtlDoc
 
             Map<String, Object> root = new HashMap<>();
             root.put("macros", this.macros);
-            root.put("variables", this.variables);
+            root.put("variables", this.globalVariables);
             root.put("externalVariables", this.externalVariables);
             root.put("comment", globalCommentData);
             root.put("filename", template.getName());
@@ -326,10 +310,10 @@ public class FtlDoc
     private void addCategory(String name)
     {
         if (!this.categories.containsKey(name)) {
-            this.categories.put(name, new ArrayList<Map<String, Object>>());
+            this.categories.put(name, new ArrayList<>());
         }
         if (!this.allCategories.containsKey(name)) {
-            this.allCategories.put(name, new ArrayList<Map<String, Object>>());
+            this.allCategories.put(name, new ArrayList<>());
         }
     }
 
@@ -341,7 +325,7 @@ public class FtlDoc
             for (int j = k - 1; j >= 0; j--) {
                 te = (TemplateElement)macro.getParent().getChildAt(j);
                 if (te instanceof TextBlock) {
-                    if (((TextBlock)te).getSource().trim().length() == 0) {
+                    if (te.getSource().trim().length() == 0) {
                     } else {
                         this.addMacro(this.createCommentedMacro(macro, null, file));
                         break;
@@ -393,7 +377,7 @@ public class FtlDoc
             java.lang.reflect.Field scopeField = assignmentClass.getDeclaredField("scope");
             scopeField.setAccessible(true);
             int scope = scopeField.getInt(te);
-            
+
             java.lang.Class<?> freemarkerCore = java.lang.Class.forName("freemarker.core.Assignment");
             java.lang.reflect.Field globalField = freemarkerCore.getDeclaredField("GLOBAL");
             globalField.setAccessible(true);
@@ -409,7 +393,7 @@ public class FtlDoc
         try {
             java.lang.Class<?> teClass = te.getClass();
             java.lang.reflect.Method getParameterCountMethod = null;
-            
+
             for (java.lang.Class<?> c = teClass; c != null; c = c.getSuperclass()) {
                 try {
                     getParameterCountMethod = c.getDeclaredMethod("getParameterCount");
@@ -417,18 +401,18 @@ public class FtlDoc
                 } catch (NoSuchMethodException e) {
                 }
             }
-            
+
             if (getParameterCountMethod == null) {
                 return null;
             }
-            
+
             getParameterCountMethod.setAccessible(true);
             Integer paramCount = (Integer) getParameterCountMethod.invoke(te);
-            
+
             for (int i = 0; i < paramCount; i++) {
                 java.lang.reflect.Method getParameterValueMethod = null;
                 java.lang.reflect.Method getParameterRoleMethod = null;
-                
+
                 for (java.lang.Class<?> c = teClass; c != null; c = c.getSuperclass()) {
                     try {
                         getParameterValueMethod = c.getDeclaredMethod("getParameterValue", int.class);
@@ -438,17 +422,17 @@ public class FtlDoc
                         // Continue to parent class
                     }
                 }
-                
+
                 if (getParameterValueMethod == null || getParameterRoleMethod == null) {
                     continue;
                 }
-                
+
                 getParameterValueMethod.setAccessible(true);
                 getParameterRoleMethod.setAccessible(true);
-                
+
                 Object paramValue = getParameterValueMethod.invoke(te, i);
                 Object roleObj = getParameterRoleMethod.invoke(te, i);
-                
+
                 String roleName = roleObj.toString();
                 if (roleName.contains("assignment target") && paramValue != null) {
                     return paramValue.toString();
@@ -470,7 +454,7 @@ public class FtlDoc
         for (int j = idx - 1; j >= 0; j--) {
             TemplateElement sibling = (TemplateElement) parent.getChildAt(j);
             if (sibling instanceof TextBlock) {
-                if (((TextBlock)sibling).getSource().trim().length() == 0) {
+                if (sibling.getSource().trim().length() == 0) {
                     continue;
                 }
                 return null;
@@ -491,10 +475,10 @@ public class FtlDoc
     private void addMacro(Map<String, Object> macro)
     {
         String name = (String) macro.get("name");
-        if (hidePrivateMacrosAndFunctions && name != null && name.startsWith(privatePrefix)) {
+        if (this.hidePrivateMacrosAndFunctions && name != null && name.startsWith(this.privatePrefix)) {
             return;
         }
-        
+
         this.macros.add(macro);
         this.allMacros.add(macro);
         String key = (String)macro.get("category");
@@ -584,7 +568,7 @@ public class FtlDoc
         try (OutputStreamWriter outputStream = new OutputStreamWriter(
             new FileOutputStream(globalVarsFile), Charset.forName(OUTPUT_ENCODING).newEncoder())) {
             Map<String, Object> root = new HashMap<>();
-            Collections.sort(this.allVariables, MACRO_COMPARATOR);
+            // Collections.sort(this.allVariables, MACRO_COMPARATOR); // TODO
             root.put("variables", this.allVariables);
             this.putGlobalVars(root);
             Template template = this.cfg.getTemplate(Templates.indexGlobalVars.fileName());
@@ -601,7 +585,7 @@ public class FtlDoc
             Template template = this.cfg.getTemplate(Templates.index.fileName());
             Map<String, Object> root = new HashMap<>();
             this.putGlobalVars(root);
-            
+
             if (this.readmeFile != null && this.readmeFile.exists() && this.readmeFile.canRead()) {
                 try {
                     String readme = "";
@@ -610,7 +594,7 @@ public class FtlDoc
                 } catch (java.io.IOException ex) {
                 }
             }
-            
+
             template.process(root, outputStream);
         } catch (java.io.IOException | freemarker.template.TemplateException ex) {
         }
@@ -620,13 +604,7 @@ public class FtlDoc
         throws IOException
     {
         if (this.alternartiveTemplatesFolder != null) {
-            File[] cssfiles = this.alternartiveTemplatesFolder.listFiles(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name)
-                {
-                    return StringUtils.endsWithIgnoreCase(name, ".css");
-                }
-            });
+            File[] cssfiles = this.alternartiveTemplatesFolder.listFiles((FilenameFilter) (dir, name) -> StringUtils.endsWithIgnoreCase(name, ".css"));
             for (File cssFile : cssfiles) {
                 FileUtils.copyFileToDirectory(cssFile, this.outputDir);
             }
@@ -664,32 +642,25 @@ public class FtlDoc
         return result;
     }
 
-    private Map<String, Object> createCommentedVariable(TemplateElement variable, Comment comment, File file, String name)
+    private VariableInfo createCommentedVariable(TemplateElement variable, Comment comment, File file, String name)
     {
         Map<String, Object> result = new HashMap<>();
         if (variable == null) {
             throw new IllegalArgumentException("variable == null");
         }
-
-        result.putAll(this.parse(comment));
-        result.put("name", name);
-        result.put("type", "global");
-        result.put("node", new TemplateElementModel(variable));
-        result.put("filename", file.getName());
-        return result;
+        return new VariableInfo(name, VariableInfo.VariableType.GLOBAL,
+                new TemplateElementModel(variable), file.getName(), this.parse(comment));
     }
 
-    private void addVariable(Map<String, Object> variable)
+    private void addVariable(VariableInfo variableInfo)
     {
-        this.variables.add(variable);
-        this.allVariables.add(variable);
+        this.globalVariables.add(variableInfo);
+        this.allVariables.add(variableInfo);
     }
 
     private CategoryRegion findCategory(TemplateElement te)
     {
-        Iterator<CategoryRegion> iter = this.regions.iterator();
-        while (iter.hasNext()) {
-            CategoryRegion cc = iter.next();
+        for (CategoryRegion cc : this.regions) {
             if (cc.contains(te)) {
                 return cc;
             }

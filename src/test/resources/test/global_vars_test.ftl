@@ -22,6 +22,13 @@
 <#-- This comment must be ignored -->
 <#global myNoCommentVar = true>
 
+<#--- Global variable redefined
+    @type {String} -->
+<#global aGlobalVar = "something" />
+<#if myStringVar == "hello" >
+    <#global aGlobalVar = "world" />
+</#if>
+
 <#--- A macro to test that #assign is not captured
     @param {String} name The name
 -->
