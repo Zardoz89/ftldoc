@@ -20,6 +20,13 @@
 -->
 <#global myUntypedVar = 123>
 
+<#--- Global variable redefined
+    @type {String} -->
+<#global aGlobalVar = "something" />
+<#if myStringVar == "hello" >
+    <#global aGlobalVar = "world" />
+</#if>
+
 <#-- This comment must be ignored -->
 <#global myNoCommentVar = true>
 
